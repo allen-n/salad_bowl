@@ -3,7 +3,7 @@ var io = require('socket.io').listen(port);
 console.log("Listening on allennikka.com:" + port + "/...");
 
 
-var active_game_rooms = [];
+// var active_game_rooms = [];
 var game_rooms_set = new Set(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 
 io.sockets.on('connection', function(socket) {
@@ -21,21 +21,22 @@ io.sockets.on('connection', function(socket) {
         console.log("Active Rooms: ");
         for (let item of game_rooms_set) console.log(item);
         console.log("My rom ID: " + socket.room_id);
-        console.log("active game arr len: " + active_game_rooms.length);
+        // console.log("active game arr len: " + active_game_rooms.length);
     });
 
     // remove a game room identifier
     socket.on('remove_room_id', function(data) {
         console.log("ID beign removed: " + socket.room_id);
         game_rooms_set.delete(socket.room_id);
-        clearRoom(socket.room_id, active_game_rooms);
+        // clearRoom(socket.room_id, active_game_rooms);
         console.log("Active Rooms: ");
         for (let item of game_rooms_set) console.log(item);
-        console.log("active game arr len: " + active_game_rooms.length);
+        // console.log("active game arr len: " + active_game_rooms.length);
     });
 
     // add game paramaters to active_game_rooms[], begin card submit phase
     socket.on('goto_card_submit_master', function(data) {
+        // socket.join(socket.room_id); //joining the room for our game
         var temp_room_id = data.active_room_c;
         var game_room_settings = {
             master_name: data.master_name_c,
@@ -48,27 +49,31 @@ io.sockets.on('connection', function(socket) {
             room_id: temp_room_id,
             room_settings: game_room_settings
         };
-        active_game_rooms.push(game_room_obj);
-        var active_room = getRoom(temp_room_id, active_game_rooms);
+        socket.room_settings = game_room_settings;
+        // active_game_rooms.push(game_room_obj);
+        // var active_room = getRoom(temp_room_id, active_game_rooms);
+        console.log("Room ID " + socket.room_id);
+        console.log(socket.room_settings);
+        // console.log(active_room);
     });
 
 });
 
 // socket.join(socket.room_id);
 
-var getRoom = function(room_id, arr) {
-    var elementPos = arr.map(function(x) {
-        return x.room_id;
-    }).indexOf(room_id);
-    return arr[elementPos];
-}
+// var getRoom = function(room_id, arr) {
+//     var elementPos = arr.map(function(x) {
+//         return x.room_id;
+//     }).indexOf(room_id);
+//     return arr[elementPos];
+// }
 
-var clearRoom = function(room_id, arr) {
-    var elementPos = arr.map(function(x) {
-        return x.room_id;
-    }).indexOf(room_id);
-    if (elementPos !== -1) arr.splice(elementPos, 1);
-}
+// var clearRoom = function(room_id, arr) {
+//     var elementPos = arr.map(function(x) {
+//         return x.room_id;
+//     }).indexOf(room_id);
+//     if (elementPos !== -1) arr.splice(elementPos, 1);
+// }
 
 // ID Generator courtesy of: https://www.fiznool.com/blog/2014/11/16/short-id-generation-in-javascript/
 // var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

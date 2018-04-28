@@ -60,14 +60,14 @@ under the License.
                     <label>Players/Team: <input type="number" id="num_players_team" value="2" min="2" max="8" class="game_param"></label>
                     <label>Turn Time (min): <input type="number" id="turn_time_min" value="1" min="0" max="2" class="game_param"></label>
                     <label>Turn Time (s): <input type="number" id="turn_time_sec" value="30" min="0" max="59" class="game_param"></label>
-                    <input type="button" id="send_invites" value="Create Game Room">
+                    <input type="button" id="submit_game_setup" value="Create Game Room">
                     <input type="button" id="return_home" value="Go Back">
                 </form>
 
                 <!-- card submit form -->
                  <form action="index_submit" method="get" accept-charset="utf-8" id="card_submit_form">
                     <label>Your Cards: <input type="textarea" id="card_list" class="game_param" placeholder="Put in famous names dummy"></label>
-                    <input type="button" id="send_invites" value="Submit Cards">
+                    <input type="button" id="submit_cards" value="Submit Cards">
                     <input type="button" id="return_game_setup" value="Go Back">
                 </form>
             </div>
@@ -88,8 +88,8 @@ under the License.
 
             // NOTE: code to function on web for debugging
             $(".start_btns").click(function(data) {
-                $("#game_start_join").hide();
                 if (data.target.name === 'start') {
+                    $("#game_start_join").hide();
                     $("#game_setup_form").show();
                     socket.emit('get_room_id', {})
                 } else {
@@ -102,7 +102,7 @@ under the License.
                 console.log("ACTIVE ROOM: " + active_room);
             });
 
-            $("#send_invites").click(function() {
+            $("#submit_game_setup").click(function() {
                 var master_name_c = $("#master_name").val();
                 var num_teams_c = $("#num_teams").val();
                 var num_players_team_c = $("#num_players_team").val();
@@ -122,6 +122,7 @@ under the License.
 
             $("#return_home").click(function() {
                 $("#game_setup_form").hide();
+                // $("#game_setup_form").reset();
                 $("#game_start_join").show();
                 if (active_room) socket.emit('remove_room_id', {
                     room_id_c: active_room
@@ -130,12 +131,13 @@ under the License.
 
             $("#return_game_setup").click(function() {
                 $("#game_setup_form").hide();
-                $("#game_start_join").hide();
+                $("#game_setup_form").reset();
+                $("#game_start_join").show();
                 if (active_room) socket.emit('remove_room_id', {
                     room_id_c: active_room
                 });
-                $("#game_setup_form").show();
                 $("#card_submit_form").hide();
+                // $("#card_submit_form").reset();
             });
         </script>
     </body>
