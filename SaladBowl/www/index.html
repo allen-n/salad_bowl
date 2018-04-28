@@ -53,9 +53,17 @@ under the License.
                     <input type="button" id="join_game_init" name="join" value="Join Existing Game" class="start_btns">
                 </form>
 
+                <!-- Form for joining an existing game -->
+                <form action="index_submit" method="get" accept-charset="utf-8" id="join_game_form">
+                    <label> Game Code: <input type="number" id="game_join_id" name="start" placeholder="Put Game Code Here" min="0" max="99999999"></label>
+                    <input type="button" id="join_game_btn" name="join" value="Join!">
+                    <input type="button" id="return_home" value="Go Back">
+                </form>
+
                 <!-- game setup form -->
                  <form action="index_submit" method="get" accept-charset="utf-8" id="game_setup_form">
                     <label>Your Name: <input type="text" id="master_name" class="game_param" placeholder="What other players will see"></label>
+                    <label># Cards/Player: <input type="number" id="num_cards" value="0" class="game_param" min="5" max="20"></label>
                     <label># Players: <input type="number" id="num_teams" value="0" class="game_param"></label>
                     <label>Players/Team: <input type="number" id="num_players_team" value="2" min="2" max="8" class="game_param"></label>
                     <label>Turn Time (min): <input type="number" id="turn_time_min" value="1" min="0" max="2" class="game_param"></label>
@@ -66,6 +74,7 @@ under the License.
 
                 <!-- card submit form -->
                  <form action="index_submit" method="get" accept-charset="utf-8" id="card_submit_form">
+                    <label>Your game code is: <h1 id="game_code_display"></h1></label>
                     <label>Your Cards: <input type="textarea" id="card_list" class="game_param" placeholder="Put in famous names dummy"></label>
                     <input type="button" id="submit_cards" value="Submit Cards">
                     <input type="button" id="return_game_setup" value="Go Back">
@@ -81,10 +90,12 @@ under the License.
             app.initialize();
             $("#game_setup_form").hide();
             $("#card_submit_form").hide();
+            $("#join_game_form").hide();
             var socket = io.connect('http://allennikka.com:3001');
 
             // global vars
             var active_room = null;
+            var game_settings = null;
 
             // NOTE: code to function on web for debugging
             $(".start_btns").click(function(data) {
@@ -93,35 +104,69 @@ under the License.
                     $("#game_setup_form").show();
                     socket.emit('get_room_id', {})
                 } else {
-                    console.log('join');
+                    $("#game_start_join").hide();
+                    $("#join_game_form").show();
                 }
             });
 
+            // callback from homepage to give room id number
             socket.on('return_room_id', function(data) {
                 active_room = data.room_id_s;
                 console.log("ACTIVE ROOM: " + active_room);
             });
 
+            // event listener to go to join game screen
+            $("#join_game_btn").click(function() {
+                var game_id_c = $("#game_join_id").val();
+                socket.emit('goto_join_game', {
+                    game_id_c: game_id_c
+                });
+            });
+
+            socket.on('goto_join_game_success', function(data) {
+                if (data.join_success) {
+                    active_room = data.room_id;
+                    game_settings = data.game_settings;
+                    $("#game_code_display").text("" + active_room);
+                    $("#join_game_form").hide();
+                    $("#game_start_join").hide();
+                    $("#card_submit_form").show();
+                } else {
+                    $("#game_join_id").val('');
+                    alert("Game Room " + data.room_id + " is invalid, please check and try again.");
+                }
+            });
+            // event listener for game master to submit game settings
             $("#submit_game_setup").click(function() {
                 var master_name_c = $("#master_name").val();
                 var num_teams_c = $("#num_teams").val();
                 var num_players_team_c = $("#num_players_team").val();
                 var turn_time_min_c = $("#turn_time_min").val();
                 var turn_time_sec_c = $("#turn_time_sec").val();
+                var num_cards_c = $("#num_cards").val();;
                 socket.emit('goto_card_submit_master', {
                     master_name_c: master_name_c,
                     num_teams_c: num_teams_c,
                     num_players_team_c: num_players_team_c,
+                    num_cards_c: num_cards_c,
                     turn_time_min_c: turn_time_min_c,
                     turn_time_sec_c: turn_time_sec_c,
                     active_room_c: active_room
                 });
-                $("#game_setup_form").hide();
-                $("#card_submit_form").show();
             });
 
+            socket.on('send_game_settings', function(data){
+                game_settings = data.room_settings;
+                $("#join_game_form").hide();
+                $("#game_setup_form").hide();
+                $("#card_submit_form").show();
+                $("#game_code_display").text("" + active_room);
+            });
+
+            // return button to get back to homescreen
             $("#return_home").click(function() {
                 $("#game_setup_form").hide();
+                $("#join_game_form").hide();
                 // $("#game_setup_form").reset();
                 $("#game_start_join").show();
                 if (active_room) socket.emit('remove_room_id', {
@@ -129,15 +174,21 @@ under the License.
                 });
             });
 
+            // depreciated call to go back to game setup screen
             $("#return_game_setup").click(function() {
                 $("#game_setup_form").hide();
-                $("#game_setup_form").reset();
+                // $("#game_setup_form").reset();
                 $("#game_start_join").show();
                 if (active_room) socket.emit('remove_room_id', {
                     room_id_c: active_room
                 });
                 $("#card_submit_form").hide();
                 // $("#card_submit_form").reset();
+            });
+
+            // debug connections from server
+            socket.on('alert_msg', function(data) {
+                console.log(data);
             });
         </script>
     </body>
