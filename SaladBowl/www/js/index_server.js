@@ -31,20 +31,20 @@ io.sockets.on('connection', function(socket) {
 
     // add game paramaters to active_game_rooms[], begin card submit phase
     socket.on('goto_card_submit_master', function(data) {
-    	var game_room_settings = {
-    		master_settings: {
-    			master_name: data.master_name_c,
-    			num_teams: data.num_teams_c,
-    			num_players_team: data.num_players_team_c,
-    			turn_time_min: data.turn_time_min_c,
-    			turn_time_sec: data.turn_time_sec_c
-	    	}
-	    };
-    	var game_room_obj = {data.active_room_c:master_settings};
+        var game_room_settings = {
+            master_name: data.master_name_c,
+            num_teams: data.num_teams_c,
+            num_players_team: data.num_players_team_c,
+            turn_time_min: data.turn_time_min_c,
+            turn_time_sec: data.turn_time_sec_c
+        };
+        var temp_room_id = data.active_room_c;
+        var game_room_obj = {
+            room_id: temp_room_id,
+            room_settings: game_room_settings
+        };
         active_game_rooms.push(game_room_obj);
-        var active_room = active_game_rooms.indexOf(data.active_room_c);
-        active_room.master_name = data.master_name_c;
-        console.log(active_room.master_name);
+        var active_room = getRoom(temp_room_id, active_game_rooms);
     });
 
     // master_name_c: master_name_c,
@@ -64,6 +64,12 @@ io.sockets.on('connection', function(socket) {
 });
 
 
+var getRoom = function(room_id, arr) {
+    var elementPos = arr.map(function(x) {
+        return x.room_id;
+    }).indexOf(room_id);
+    return arr[elementPos];
+}
 
 // ID Generator courtesy of: https://www.fiznool.com/blog/2014/11/16/short-id-generation-in-javascript/
 // var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

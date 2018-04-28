@@ -122,7 +122,7 @@ under the License.
 
             $("#return_home").click(function() {
                 $("#game_setup_form").hide();
-                $("#game_start_join").hide();
+                $("#game_start_join").show();
                 if (active_room) socket.emit('remove_room_id', {
                     room_id_c: active_room
                 });
