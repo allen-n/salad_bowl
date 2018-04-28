@@ -98,8 +98,8 @@ under the License.
             });
 
             socket.on('return_room_id', function(data) {
-                console.log(data.room_id_s);
                 active_room = data.room_id_s;
+                console.log("ACTIVE ROOM: " + active_room);
             });
 
             $("#send_invites").click(function() {
@@ -137,23 +137,6 @@ under the License.
                 $("#game_setup_form").show();
                 $("#card_submit_form").hide();
             });
-
-            // socket.on('news', function(data) {
-            //     socket.emit('my other event', {
-            //         my: 'data'
-            //     });
-            //     console.log('WORKING');
-            // });
-
-            // // NOTE: code to function on mobile natively
-            // document.addEventListener('deviceready', function() {
-            //     socket.on('news', function(data) {
-            //         socket.emit('my other event', {
-            //             my: 'data'
-            //         });
-            //         // alert('WORKING');
-            //     });
-            // });
         </script>
     </body>
 </html>

@@ -13,24 +13,30 @@ io.sockets.on('connection', function(socket) {
         // console.log(generateUnique(game_rooms_set));
         var room_id = generateUnique(game_rooms_set);
         game_rooms_set.add(room_id);
+        socket.room_id = room_id;
+        socket.is_master = true;
         socket.emit('return_room_id', {
             room_id_s: room_id
         });
         console.log("Active Rooms: ");
         for (let item of game_rooms_set) console.log(item);
+        console.log("My rom ID: " + socket.room_id);
+        console.log("active game arr len: " + active_game_rooms.length);
     });
 
     // remove a game room identifier
     socket.on('remove_room_id', function(data) {
-        // console.log(generateUnique(game_rooms_set));
-        var room_id = generateUnique(game_rooms_set);
-        game_rooms_set.delete(data.room_id_c);
+        console.log("ID beign removed: " + socket.room_id);
+        game_rooms_set.delete(socket.room_id);
+        clearRoom(socket.room_id, active_game_rooms);
         console.log("Active Rooms: ");
         for (let item of game_rooms_set) console.log(item);
+        console.log("active game arr len: " + active_game_rooms.length);
     });
 
     // add game paramaters to active_game_rooms[], begin card submit phase
     socket.on('goto_card_submit_master', function(data) {
+        var temp_room_id = data.active_room_c;
         var game_room_settings = {
             master_name: data.master_name_c,
             num_teams: data.num_teams_c,
@@ -38,7 +44,6 @@ io.sockets.on('connection', function(socket) {
             turn_time_min: data.turn_time_min_c,
             turn_time_sec: data.turn_time_sec_c
         };
-        var temp_room_id = data.active_room_c;
         var game_room_obj = {
             room_id: temp_room_id,
             room_settings: game_room_settings
@@ -47,28 +52,22 @@ io.sockets.on('connection', function(socket) {
         var active_room = getRoom(temp_room_id, active_game_rooms);
     });
 
-    // master_name_c: master_name_c,
-    //     num_teams_c: num_teams_c,
-    //     num_players_team_c: num_players_team_c,
-    //     turn_time_min_c: turn_time_min_c,
-    //     turn_time_sec_c: turn_time_sec_c
-
-
-    // // test code
-    // socket.emit('news', {
-    //     hello: 'world'
-    // });
-    // socket.on('my other event', function(data) {
-    //     console.log(data);
-    // });
 });
 
+// socket.join(socket.room_id);
 
 var getRoom = function(room_id, arr) {
     var elementPos = arr.map(function(x) {
         return x.room_id;
     }).indexOf(room_id);
     return arr[elementPos];
+}
+
+var clearRoom = function(room_id, arr) {
+    var elementPos = arr.map(function(x) {
+        return x.room_id;
+    }).indexOf(room_id);
+    if (elementPos !== -1) arr.splice(elementPos, 1);
 }
 
 // ID Generator courtesy of: https://www.fiznool.com/blog/2014/11/16/short-id-generation-in-javascript/
