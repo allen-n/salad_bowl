@@ -89,8 +89,11 @@ io.sockets.on('connection', function(socket) {
                 socket.in(room_id_temp).emit('alert_msg', 'New User Socket has joined!');
                 game_settings = active_room.room_settings;
                 delete name_check;
-            }
+                io.in(socket.room_id).emit('ui_update', {
+                    room_obj: active_room
+                });
 
+            }
         }
         socket.emit('goto_join_game_success', {
             id_correct: id_correct,
@@ -104,7 +107,7 @@ io.sockets.on('connection', function(socket) {
 
     // Mixed Functions-----------------------------------
     socket.on('submit_card_data', function(data) {
-        socket.card_arr = data.card_arr;
+        socket.card_arr = data.card_arr; //cards are associated with sockets that made them
         var active_room = getRoom(socket.room_id, active_game_rooms);
         var set1 = active_room.room_card_set;
         var set2 = new Set(data.card_arr);
@@ -127,10 +130,21 @@ io.sockets.on('connection', function(socket) {
             console.log("Active Rooms: ");
             for (let item of game_rooms_set) console.log(item);
             console.log("active game arr len: " + active_game_rooms.length);
+            socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
         } else {
             console.log("Client left, room not being deleted");
         }
-
+        var name = socket.player_name;
+        var active_room = getRoom(socket.room_id, active_game_rooms);
+        if (socket.team != null) {
+            var arr = active_room.room_team_arr[socket.team];
+            var elementPos = arr.indexOf(name);
+            if (elementPos !== -1) arr.splice(elementPos, 1);
+            delete arr;
+            io.in(socket.room_id).emit('ui_update', {
+	            room_obj: active_room
+	        });
+        }
     });
 
     socket.on('team_select', function(data) {
@@ -138,10 +152,9 @@ io.sockets.on('connection', function(socket) {
         var team = data.team;
         team -= 1; //acount for non 0 indexing
         var active_room = getRoom(socket.room_id, active_game_rooms);
-        console.log("socket.team = " + socket.team);
         if (socket.team != null) {
-        	var arr = active_room.room_team_arr[socket.team];
-            var elementPos = arr.indexOf(name);
+            var arr = active_room.room_team_arr[socket.team];
+            var elementPos = arr.indexOf(socket.player_name);
             if (elementPos !== -1) arr.splice(elementPos, 1);
             delete arr;
         }
@@ -149,7 +162,7 @@ io.sockets.on('connection', function(socket) {
         // for (let item of active_room.team_arr) console.log(item);
         active_room.room_team_arr[team].push(name);
         socket.team = team;
-        // console.log('user ' + name + 'now on team ' + team);
+        console.log(active_room.room_team_arr);
         io.in(socket.room_id).emit('ui_update', {
             room_obj: active_room
         });

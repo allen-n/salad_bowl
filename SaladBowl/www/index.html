@@ -57,18 +57,18 @@ under the License.
                     <label> Player Name: <input type="text" id="game_join_player_name" placeholder="Your name here..."></label>
                     <label> Game Code: <input type="number" id="game_join_id" name="start" placeholder="Put Game Code Here" min="0" max="99999999"></label>
                     <input type="button" id="join_game_btn" name="join" value="Join!">
-                    <input type="button" id="return_home_btn_1" value="Go Back" class="return_home">
+                    <input type="button" id="return_home_btn_1" value="Exit" class="return_home">
                 </form>
                 <!-- game setup form -->
                 <form action="index_submit" method="get" accept-charset="utf-8" id="game_setup_form">
                     <label>Your Name: <input type="text" id="master_name" class="game_param" placeholder="What other players will see"></label>
-                    <label># Cards/Player: <input type="number" id="num_cards" value="0" class="game_param" min="5" max="20"></label>
-                    <label># Teams: <input type="number" id="num_teams" value="0" class="game_param"></label>
-                    <label># Players: <input type="number" id="num_players" value="2" min="2" max="8" class="game_param"></label>
-                    <label>Turn Time (min): <input type="number" id="turn_time_min" value="1" min="0" max="2" class="game_param"></label>
-                    <label>Turn Time (s): <input type="number" id="turn_time_sec" value="30" min="0" max="59" class="game_param"></label>
+                    <label># Cards/Player: <input type="number" id="num_cards" value="5" class="game_param" min="5" max="20"></label>
+                    <label># Teams: <input type="number" id="num_teams" value="2" class="game_param" min="2" max="8"></label>
+                    <label># Players: <input type="number" id="num_players" value="4" min="4" max="10" class="game_param"></label>
+                   <!--  <label>Turn Time (min): <input type="number" id="turn_time_min" value="1" min="0" max="2" class="game_param"></label> -->
+                    <label>Turn Time (s): <input type="number" id="turn_time_sec" value="60" min="60" max="120" class="game_param"></label>
                     <input type="button" id="submit_game_setup" value="Create Game Room">
-                    <input type="button" id="return_home_btn_2" value="Go Back" class="return_home">
+                    <input type="button" id="return_home_btn_2" value="Exit" class="return_home">
                 </form>
                 <!-- waiting area form -->
                 <form action="index_submit" method="get" accept-charset="utf-8" id="waiting_area_form">
@@ -83,11 +83,13 @@ under the License.
                         </select>
                     </label>
                     <input type="button" id="open_card_dialog" value="Add To Bowl">
-                    <input type="button" id="return_game_setup" value="Go Back" class="return_home">
+                    <input type="button" id="return_game_setup" value="Exit" class="return_home">
                 </form>
                 <!-- dialog with cards to be filled out -->
                 <dialog id="card_dialog">
                     <button type="submit" id="submit_cards">Submit Cards</button>
+                    <div id="card_input_div">
+                    </div>
                 </dialog>
 
                 <table id="team_table">
@@ -181,7 +183,7 @@ under the License.
                 if (data.name_correct && data.id_correct) {
                     active_room = data.room_id;
                     game_settings = data.room_settings;
-                    createCardInput(game_settings.num_cards, $("#card_dialog"));
+                    createCardInput(game_settings.num_cards, $("#card_input_div"));
                     createTeamInput(game_settings.num_teams, $("#team_select"));
                     console.log(game_settings);
                     $("#game_code_display").text("" + active_room);
@@ -226,7 +228,7 @@ under the License.
                 var master_name_c = $("#master_name").val();
                 var num_teams_c = $("#num_teams").val();
                 var num_players_c = $("#num_players").val();
-                var turn_time_min_c = $("#turn_time_min").val();
+                var turn_time_min_c = null; //$("#turn_time_min").val(); //We'll just use seconds
                 var turn_time_sec_c = $("#turn_time_sec").val();
                 var num_cards_c = $("#num_cards").val();;
                 socket.emit('goto_card_submit_master', {
@@ -243,7 +245,7 @@ under the License.
             socket.on('send_game_settings', function(data) {
                 game_settings = data.room_settings;
                 console.log(game_settings);
-                createCardInput(game_settings.num_cards, $("#card_dialog"));
+                createCardInput(game_settings.num_cards, $("#card_input_div"));
                 createTeamInput(game_settings.num_teams, $("#team_select"));
                 stateManager(game_states.WAITING_TEAM_SEL);
                 var num_players = game_settings.num_players;
@@ -254,9 +256,24 @@ under the License.
             // return button to get back to homescreen
             $(".return_home").click(function() {
                 stateManager(game_states.HOME_SCREEN);
-                if (active_room) socket.emit('remove_room_id', {
-                    room_id_c: active_room
-                });
+                if (active_room){
+                    socket.emit('remove_room_id', {
+                        room_id_c: active_room
+                    });
+                    active_room = null;
+                    cards_in_bowl = null;
+                    game_settings = null;
+                }
+            });
+
+            socket.on('kick_from_game', function(data){
+                alert(data);
+                stateManager(game_states.HOME_SCREEN);
+                if (active_room){
+                    active_room = null;
+                    cards_in_bowl = null;
+                    game_settings = null;
+                }
             });
             // GAME_SETUP end-----------------------------------
 
@@ -293,9 +310,9 @@ under the License.
                 append_element.empty();
                 for (var i = 0; i < room_team_arr.length; i++) {
                     var k = i+1;
-                    var str = '<tr> <td> Team ' + k + '</td>';
+                    var str = '<tr> <td> Team ' + k + ': </td>';
                     for(var j = 0; j < room_team_arr[i].length; j++){
-                        str += '<td>' + room_team_arr[i][j] + '</td>';
+                        str += '<td>' + room_team_arr[i][j] + ',</td>';
                     }
                     str += '</tr>';
                     append_element.append(str);
@@ -307,6 +324,9 @@ under the License.
                 if(cards_in_bowl){
                     $("#submit_cards").hide();
                     $("#open_card_dialog").hide();
+                } else {
+                    $("#submit_cards").show();
+                    $("#open_card_dialog").show();
                 }
                 switch (state) {
                     case game_states.HOME_SCREEN:
@@ -316,6 +336,7 @@ under the License.
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
                         $("#team_table").hide();
+                        window.location.reload();
                         break;
                     case game_states.GAME_SETUP:
                         $("#game_start_join").hide();
