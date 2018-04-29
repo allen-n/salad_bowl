@@ -75,15 +75,19 @@ under the License.
                     <label>Pick a team:
                         <select id="team_select">
                             <option value="noTeam"></option>
-                            <option value="team1">Team 1</option>
-                            <option value="team2">Team 2</option>
-                            <option value="team3">Team 3</option>
-                            <option value="team4">Team 4</option>
+                            <option value="1">Team 1</option>
+                            <option value="2">Team 2</option>
+                            <option value="3">Team 3</option>
+                            <option value="4">Team 4</option>
                         </select>
                     </label>
-                    <input type="button" id="submit_cards" value="Add To Deck">
+                    <input type="button" id="open_card_dialog" value="Add To Deck">
                     <input type="button" id="return_game_setup" value="Go Back" class="return_home">
                 </form>
+
+                <dialog id="card_dialog">
+                    <button type="submit" id="submit_cards">Submit Cards</button>
+                </dialog>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
@@ -112,9 +116,17 @@ under the License.
             }
         });
 
+        $("#open_card_dialog").click(function(){
+            $("#card_dialog").show();
+        });
+
+        $("#submit_cards").click(function(){
+            $("#card_dialog").hide();
+        });
+
         //callback to get team selection async
         $('#team_select').change(function(event) {
-            console.log($('#team_select option:selected').text());
+            console.log($('#team_select option:selected').val());
         });
         // callback from homepage to give room id number
         socket.on('return_room_id', function(data) {
@@ -132,6 +144,7 @@ under the License.
             if (data.join_success) {
                 active_room = data.room_id;
                 game_settings = data.room_settings;
+                createCardInput(game_settings.num_cards, $("#card_dialog"));
                 console.log(game_settings);
                 $("#game_code_display").text("" + active_room);
                 $("#join_game_form").hide();
@@ -163,6 +176,7 @@ under the License.
         socket.on('send_game_settings', function(data) {
             game_settings = data.room_settings;
             console.log(game_settings);
+            createCardInput(game_settings.num_cards, $("#card_dialog"));
             $("#join_game_form").hide();
             $("#game_setup_form").hide();
             $("#waiting_area_form").show();
@@ -183,6 +197,14 @@ under the License.
         socket.on('alert_msg', function(data) {
             console.log(data);
         });
+
+        // $("#card_dialog").append( '<input type="text" name="card" value="" placeholder="Type Here..." id="card' + 1 + '" >');
+
+        var createCardInput = function(num_cards, append_element){
+            for (var i = 0; i < num_cards; i++) {
+                append_element.append( '<input type="text" name="card" value="" placeholder="Type Here..." id="card' + i + '" >');
+            }
+        }
         </script>
     </body>
 </html>
