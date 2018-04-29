@@ -49,6 +49,7 @@ io.sockets.on('connection', function(socket) {
             room_card_set: room_card_set,
             room_team_arr: team_arr
         };
+        socket.player_name = data.master_name_c;
         socket.room_settings = game_room_settings;
         active_game_rooms.push(game_room_obj);
         var active_room = getRoom(temp_room_id, active_game_rooms);
@@ -120,6 +121,18 @@ io.sockets.on('connection', function(socket) {
             console.log("Client left, room not being deleted");
         }
 
+    });
+
+    socket.on('team_select', function(data) {
+        var name = socket.player_name;
+        var team = data.team;
+        var active_room = getRoom(socket.room_id, active_game_rooms);
+        if (socket.team) //TODO: remove when they switch
+            active_room.room_team_arr[team].push(name);
+        socket.team = team;
+        io.in(socket.room_id).emit('ui_update', {
+            room_obj: active_room
+        });
     });
 
 });

@@ -87,8 +87,22 @@ under the License.
                 </form>
                 <!-- dialog with cards to be filled out -->
                 <dialog id="card_dialog">
-                <button type="submit" id="submit_cards">Submit Cards</button>
+                    <button type="submit" id="submit_cards">Submit Cards</button>
                 </dialog>
+
+                <table>
+                    <caption>Teams:</caption>
+                    <thead>
+                        <tr>
+                            <th>Team Number:</th>
+                        </tr>
+                    </thead>
+                    <tbody id="team_list">
+                        <!-- <tr>
+                            <td>data</td>
+                        </tr> -->
+                    </tbody>
+                </table>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
@@ -157,6 +171,10 @@ under the License.
             // WAITING_TEAM_SEL start------------------------------
             $('#team_select').change(function(event) {
                 console.log($('#team_select option:selected').val());
+                var team = $('#team_select option:selected').val()
+                socket.emit('team_select', {
+                    team: team
+                });
             });
 
             socket.on('goto_join_game_success', function(data) {
@@ -177,6 +195,7 @@ under the License.
 
             socket.on('ui_update', function(data){
                 console.log(data);
+                appendTeamNames(data.room_obj.room_team_arr, $("#team_list"));
                  // Total Players: <li id="total_players"></li>
                  //        Players in Game: <li id="players_in_game"></li>
                  //        Players who have submitted cards: <li id="players_submitted_cards"></li>
@@ -257,6 +276,20 @@ under the License.
                 append_element.append('<option value="noTeam">Pick Below</option>');
                 for (var i = 1; i <= num_teams; i++) {
                     append_element.append('<option value="'+ i +'"> Team ' + i + '</option>');
+                }
+            }
+
+            var appendTeamNames = function(room_team_arr, append_element) {
+                // <li class="team_name_list"></li>
+                for (var i = 0; i < room_team_arr.length; i++) {
+                    var k = i+1;
+                    var str = '<tr> <td> Team ' + k + '</td>';
+                    for(var j = 0; j < room_team_arr[i].length; j++){
+                        str += '<td>' + room_team_arr[i][j] + '</td>';
+                    }
+                    str += '</tr>';
+                    append_element.append(str);
+                    console.log('name appended');
                 }
             }
 
