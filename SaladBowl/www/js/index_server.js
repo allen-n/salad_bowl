@@ -44,17 +44,22 @@ io.sockets.on('connection', function(socket) {
         console.log("Active Rooms: ");
         for (let item of game_rooms_set) console.log(item);
         console.log("My rom ID: " + socket.room_id);
-        // console.log("active game arr len: " + active_game_rooms.length);
+        console.log("active game arr len: " + active_game_rooms.length);
     });
 
     // remove a game room identifier
     socket.on('remove_room_id', function(data) {
-        console.log("ID being removed: " + socket.room_id);
-        game_rooms_set.delete(socket.room_id);
-        clearRoom(socket.room_id, active_game_rooms);
-        console.log("Active Rooms: ");
-        for (let item of game_rooms_set) console.log(item);
-        // console.log("active game arr len: " + active_game_rooms.length);
+        if (socket.is_master) {
+            console.log("ID being removed: " + socket.room_id);
+            game_rooms_set.delete(socket.room_id);
+            clearRoom(socket.room_id, active_game_rooms);
+            console.log("Active Rooms: ");
+            for (let item of game_rooms_set) console.log(item);
+            console.log("active game arr len: " + active_game_rooms.length);
+        } else {
+        	console.log("Client left, room not being deleted");
+        }
+
     });
 
     // add game paramaters to active_game_rooms[], begin card submit phase
