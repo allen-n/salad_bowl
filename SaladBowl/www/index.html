@@ -46,7 +46,7 @@ under the License.
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-            <div id="allen_test">
+            <div id="Salad Bowl Scenes">
                 <!-- home page form -->
                 <form action="index_submit" method="get" accept-charset="utf-8" id="game_start_join">
                     <input type="button" id="start_game_init" name="start" value="Start New Game" class="start_btns">
@@ -54,6 +54,7 @@ under the License.
                 </form>
                 <!-- Form for joining an existing game -->
                 <form action="index_submit" method="get" accept-charset="utf-8" id="join_game_form">
+                    <label> Player Name: <input type="text" id="game_join_player_name" placeholder="Your name here..."></label>
                     <label> Game Code: <input type="number" id="game_join_id" name="start" placeholder="Put Game Code Here" min="0" max="99999999"></label>
                     <input type="button" id="join_game_btn" name="join" value="Join!">
                     <input type="button" id="return_home_btn_1" value="Go Back" class="return_home">
@@ -62,31 +63,31 @@ under the License.
                 <form action="index_submit" method="get" accept-charset="utf-8" id="game_setup_form">
                     <label>Your Name: <input type="text" id="master_name" class="game_param" placeholder="What other players will see"></label>
                     <label># Cards/Player: <input type="number" id="num_cards" value="0" class="game_param" min="5" max="20"></label>
-                    <label># Players: <input type="number" id="num_teams" value="0" class="game_param"></label>
-                    <label>Players/Team: <input type="number" id="num_players_team" value="2" min="2" max="8" class="game_param"></label>
+                    <label># Teams: <input type="number" id="num_teams" value="0" class="game_param"></label>
+                    <label># Players: <input type="number" id="num_players" value="2" min="2" max="8" class="game_param"></label>
                     <label>Turn Time (min): <input type="number" id="turn_time_min" value="1" min="0" max="2" class="game_param"></label>
                     <label>Turn Time (s): <input type="number" id="turn_time_sec" value="30" min="0" max="59" class="game_param"></label>
                     <input type="button" id="submit_game_setup" value="Create Game Room">
                     <input type="button" id="return_home_btn_2" value="Go Back" class="return_home">
                 </form>
-                <!-- card submit form -->
+                <!-- waiting area form -->
                 <form action="index_submit" method="get" accept-charset="utf-8" id="waiting_area_form">
+                    <ul>
+                        Total Players: <li id="total_players"></li>
+                        Players in Game: <li id="players_in_game"></li>
+                        Players who have submitted cards: <li id="players_submitted_cards"></li>
+                    </ul>
                     <label>Your game code is: <h1 id="game_code_display"></h1></label>
                     <label>Pick a team:
                         <select id="team_select">
-                            <option value="noTeam"></option>
-                            <option value="1">Team 1</option>
-                            <option value="2">Team 2</option>
-                            <option value="3">Team 3</option>
-                            <option value="4">Team 4</option>
                         </select>
                     </label>
-                    <input type="button" id="open_card_dialog" value="Add To Deck">
+                    <input type="button" id="open_card_dialog" value="Add To Bowl">
                     <input type="button" id="return_game_setup" value="Go Back" class="return_home">
                 </form>
-
+                <!-- dialog with cards to be filled out -->
                 <dialog id="card_dialog">
-                    <button type="submit" id="submit_cards">Submit Cards</button>
+                <button type="submit" id="submit_cards">Submit Cards</button>
                 </dialog>
             </div>
         </div>
@@ -95,116 +96,252 @@ under the License.
         <script type="text/javascript" src="http://allennikka.com:3001/socket.io/socket.io.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript">
-        // initialization
-        app.initialize();
-        $("#game_setup_form").hide();
-        $("#waiting_area_form").hide();
-        $("#join_game_form").hide();
-        var socket = io.connect('http://allennikka.com:3001');
-        // global vars
-        var active_room = null;
-        var game_settings = null;
-        // NOTE: code to function on web for debugging
-        $(".start_btns").click(function(data) {
-            if (data.target.name === 'start') {
-                $("#game_start_join").hide();
-                $("#game_setup_form").show();
-                socket.emit('get_room_id', {})
-            } else {
-                $("#game_start_join").hide();
-                $("#join_game_form").show();
-            }
-        });
-
-        $("#open_card_dialog").click(function(){
-            $("#card_dialog").show();
-        });
-
-        $("#submit_cards").click(function(){
-            $("#card_dialog").hide();
-        });
-
-        //callback to get team selection async
-        $('#team_select').change(function(event) {
-            console.log($('#team_select option:selected').val());
-        });
-        // callback from homepage to give room id number
-        socket.on('return_room_id', function(data) {
-            active_room = data.room_id_s;
-            console.log("ACTIVE ROOM: " + active_room);
-        });
-        // event listener to go to join game screen
-        $("#join_game_btn").click(function() {
-            var game_id_c = $("#game_join_id").val();
-            socket.emit('goto_join_game', {
-                game_id_c: game_id_c
-            });
-        });
-        socket.on('goto_join_game_success', function(data) {
-            if (data.join_success) {
-                active_room = data.room_id;
-                game_settings = data.room_settings;
-                createCardInput(game_settings.num_cards, $("#card_dialog"));
-                console.log(game_settings);
-                $("#game_code_display").text("" + active_room);
-                $("#join_game_form").hide();
-                $("#game_start_join").hide();
-                $("#waiting_area_form").show();
-            } else {
-                $("#game_join_id").val('');
-                alert("Game Room " + data.room_id + " is invalid, please check and try again.");
-            }
-        });
-        // event listener for game master to submit game settings
-        $("#submit_game_setup").click(function() {
-            var master_name_c = $("#master_name").val();
-            var num_teams_c = $("#num_teams").val();
-            var num_players_team_c = $("#num_players_team").val();
-            var turn_time_min_c = $("#turn_time_min").val();
-            var turn_time_sec_c = $("#turn_time_sec").val();
-            var num_cards_c = $("#num_cards").val();;
-            socket.emit('goto_card_submit_master', {
-                master_name_c: master_name_c,
-                num_teams_c: num_teams_c,
-                num_players_team_c: num_players_team_c,
-                num_cards_c: num_cards_c,
-                turn_time_min_c: turn_time_min_c,
-                turn_time_sec_c: turn_time_sec_c,
-                active_room_c: active_room
-            });
-        });
-        socket.on('send_game_settings', function(data) {
-            game_settings = data.room_settings;
-            console.log(game_settings);
-            createCardInput(game_settings.num_cards, $("#card_dialog"));
-            $("#join_game_form").hide();
+            // initialization-----------------------------------
+            app.initialize();
+            var socket = io.connect('http://allennikka.com:3001');
             $("#game_setup_form").hide();
-            $("#waiting_area_form").show();
-            $("#game_code_display").text("" + active_room);
-        });
-        // return button to get back to homescreen
-        $(".return_home").click(function() {
-            $("#game_setup_form").hide();
-            $("#join_game_form").hide();
             $("#waiting_area_form").hide();
-            // $("#game_setup_form").reset();
-            $("#game_start_join").show();
-            if (active_room) socket.emit('remove_room_id', {
-                room_id_c: active_room
+            $("#join_game_form").hide();
+            // global vars
+            var active_room = null;
+            var game_settings = null;
+            var game_states = Object.freeze({
+                HOME_SCREEN: "home_screen",
+                GAME_SETUP: "game_setup",
+                JOIN_GAME: "join_game",
+                WAITING_TEAM_SEL: "waiting_team_sel",
+                WAITING_CARD_ADD: "waiting_card_add",
+                PASS_PHONE: "pass_phone",
+                QUESTION_ASK: "question_ask",
+                SCORE_CARD: "score_card",
+                FINAL_SCORE_CARD: "final_score_card"
             });
-        });
-        // debug connections from server
-        socket.on('alert_msg', function(data) {
-            console.log(data);
-        });
+            // HOME_SCREEN start-----------------------------------
+            $(".start_btns").click(function(data) {
+                if (data.target.name === 'start') {
+                    // $("#game_start_join").hide();
+                    // $("#game_setup_form").show();
+                    stateManager(game_states.GAME_SETUP);
+                    socket.emit('get_room_id', {})
+                } else {
+                    stateManager(game_states.JOIN_GAME)
+                }
+            });
+            // callback from homepage to give room id number
+            socket.on('return_room_id', function(data) {
+                active_room = data.room_id_s;
+                console.log("ACTIVE ROOM: " + active_room);
+            });
+            // HOME_SCREEN end-----------------------------------
+            // WAITING_CARD_ADD start---------------------------
+            $("#open_card_dialog").click(function() {
+                stateManager(game_states.WAITING_CARD_ADD);
+            });
 
-        // $("#card_dialog").append( '<input type="text" name="card" value="" placeholder="Type Here..." id="card' + 1 + '" >');
+            var cards_in_bowl = false;
+            $("#submit_cards").click(function() {
+                var card_arr = getCardInput(game_settings.num_cards);
+                var check_set = new Set(card_arr);
+                if(check_set.has("") || check_set.has(" ")){
+                    alert("You must fill in all the cards!")
+                } else {
+                    cards_in_bowl = true;
+                    socket.emit('submit_card_data', {
+                        card_arr: card_arr
+                    });
+                    stateManager(game_states.WAITING_TEAM_SEL);
+                }
+                delete check_set;
+            });
+            // WAITING_CARD_ADD end--------------------------------
+            // WAITING_TEAM_SEL start------------------------------
+            $('#team_select').change(function(event) {
+                console.log($('#team_select option:selected').val());
+            });
 
-        var createCardInput = function(num_cards, append_element){
-            for (var i = 0; i < num_cards; i++) {
-                append_element.append( '<input type="text" name="card" value="" placeholder="Type Here..." id="card' + i + '" >');
+            socket.on('goto_join_game_success', function(data) {
+                if (data.join_success) {
+                    active_room = data.room_id;
+                    game_settings = data.room_settings;
+                    createCardInput(game_settings.num_cards, $("#card_dialog"));
+                    createTeamInput(game_settings.num_teams, $("#team_select"));
+                    console.log(game_settings);
+                    $("#game_code_display").text("" + active_room);
+                   stateManager(game_states.WAITING_TEAM_SEL);
+                } else {
+                    stateManager(game_states.JOIN_GAME);
+                    $("#game_join_id").val('');
+                    alert("Game Room " + data.room_id + " is invalid, please check and try again.");
+                }
+            });
+
+            socket.on('ui_update', function(data){
+                console.log(data);
+                 // Total Players: <li id="total_players"></li>
+                 //        Players in Game: <li id="players_in_game"></li>
+                 //        Players who have submitted cards: <li id="players_submitted_cards"></li>
+            });
+            // WAITING_TEAM_SEL end-------------------------------
+            // JOIN_GAME start------------------------------------
+            // event listener to go to join game screen
+            $("#join_game_btn").click(function() {
+                var game_id_c = $("#game_join_id").val();
+                var player_name_c = $("#game_join_player_name").text();
+                socket.emit('goto_join_game', {
+                    game_id_c: game_id_c,
+                    player_name_c: player_name_c
+                });
+            });
+            // JOIN_GAME end-----------------------------------
+            // GAME_SETUP start--------------------------------
+            // event listener for game master to submit game settings
+            $("#submit_game_setup").click(function() {
+                var master_name_c = $("#master_name").val();
+                var num_teams_c = $("#num_teams").val();
+                var num_players_c = $("#num_players").val();
+                var turn_time_min_c = $("#turn_time_min").val();
+                var turn_time_sec_c = $("#turn_time_sec").val();
+                var num_cards_c = $("#num_cards").val();;
+                socket.emit('goto_card_submit_master', {
+                    master_name_c: master_name_c,
+                    num_teams_c: num_teams_c,
+                    num_players_c: num_players_c,
+                    num_cards_c: num_cards_c,
+                    turn_time_min_c: turn_time_min_c,
+                    turn_time_sec_c: turn_time_sec_c,
+                    active_room_c: active_room
+                });
+            });
+
+            socket.on('send_game_settings', function(data) {
+                game_settings = data.room_settings;
+                console.log(game_settings);
+                createCardInput(game_settings.num_cards, $("#card_dialog"));
+                createTeamInput(game_settings.num_teams, $("#team_select"));
+                stateManager(game_states.WAITING_TEAM_SEL);
+                var num_players = game_settings.num_players;
+                console.log("numplayers: " + num_players);
+                $("#total_players").text("" + num_players);
+                $("#game_code_display").text("" + active_room);
+            });
+            // return button to get back to homescreen
+            $(".return_home").click(function() {
+                stateManager(game_states.HOME_SCREEN);
+                if (active_room) socket.emit('remove_room_id', {
+                    room_id_c: active_room
+                });
+            });
+            // GAME_SETUP end-----------------------------------
+
+            // debug connections from server-----------------------
+            socket.on('alert_msg', function(data) {
+                console.log(data);
+            });
+            // Function delclarations start
+            var createCardInput = function(num_cards, append_element) {
+                for (var i = 0; i < num_cards; i++) {
+                    append_element.append('<input type="text" name="card" value="" placeholder="Type Here..." id="card' + i + '" class="player_cards">');
+                }
             }
-        }
+
+            var getCardInput = function(num_cards) {
+                var card_arr = new Set();
+                var cards = $(".player_cards");
+                for (var i = 0; i < cards.length; i++) {
+                    card_arr.add(cards[i].value);
+                }
+                return [...card_arr]
+            }
+
+             var createTeamInput = function(num_teams, append_element) {
+                append_element.append('<option value="noTeam">Pick Below</option>');
+                for (var i = 1; i <= num_teams; i++) {
+                    append_element.append('<option value="'+ i +'"> Team ' + i + '</option>');
+                }
+            }
+
+            // createTeamInput(game_settings.num_teams, $("#team_select"));
+        //        <select id="team_select">
+        //     <option value="noTeam"></option>
+        //     <option value="1">Team 1</option>
+        //     <option value="2">Team 2</option>
+        //     <option value="3">Team 3</option>
+        //     <option value="4">Team 4</option>
+        // </select>
+            var stateManager = function(state) {
+                if(cards_in_bowl){
+                    $("#submit_cards").hide();
+                    $("#open_card_dialog").hide();
+                }
+                switch (state) {
+                    case game_states.HOME_SCREEN:
+                        $("#game_start_join").show();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").hide();
+                        $("#waiting_area_form").hide();
+                        $("#card_dialog").hide();
+                        break;
+                    case game_states.GAME_SETUP:
+                        $("#game_start_join").hide();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").show();
+                        $("#waiting_area_form").hide();
+                        $("#card_dialog").hide();
+                        break;
+                    case game_states.JOIN_GAME:
+                        $("#game_start_join").hide();
+                        $("#join_game_form").show();
+                        $("#game_setup_form").hide();
+                        $("#waiting_area_form").hide();
+                        $("#card_dialog").hide();
+                        break;
+                    case game_states.WAITING_TEAM_SEL:
+                        $("#game_start_join").hide();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").hide();
+                        $("#waiting_area_form").show();
+                        $("#card_dialog").hide();
+                        break;
+                    case game_states.WAITING_CARD_ADD:
+                        $("#game_start_join").hide();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").hide();
+                        $("#waiting_area_form").show();
+                        $("#card_dialog").show();
+                        break;
+                    case game_states.PASS_PHONE:
+                        $("#game_start_join").show();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").hide();
+                        $("#waiting_area_form").hide();
+                        $("#card_dialog").hide();
+                        break;
+                    case game_states.QUESTION_ASK:
+                        $("#game_start_join").hide();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").show();
+                        $("#waiting_area_form").hide();
+                        $("#card_dialog").hide();
+                        break;
+                    case game_states.SCORE_CARD:
+                        $("#game_start_join").show();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").hide();
+                        $("#waiting_area_form").hide();
+                        $("#card_dialog").hide();
+                        break;
+                    case game_states.FINAL_SCORE_CARD:
+                        $("#game_start_join").hide();
+                        $("#join_game_form").hide();
+                        $("#game_setup_form").show();
+                        $("#waiting_area_form").hide();
+                        $("#card_dialog").hide();
+                        break;
+                    default:
+                        break;
+                }
+                // Function delclarations end
+            }
         </script>
     </body>
 </html>

@@ -10,9 +10,67 @@ io.sockets.on('connection', function(socket) {
     console.log('New Connection from socket: ' + socket);
     // getting a unique identifier for the game room
 
+    // Master Functions-----------------------------------
+    socket.on('get_room_id', function() {
+        // console.log(generateUnique(game_rooms_set));
+        var room_id = generateUnique(game_rooms_set);
+        game_rooms_set.add(room_id);
+        socket.room_id = room_id;
+        socket.is_master = true;
+        socket.emit('return_room_id', {
+            room_id_s: room_id
+        });
+        console.log("Active Rooms: ");
+        for (let item of game_rooms_set) console.log(item);
+        console.log("My rom ID: " + socket.room_id);
+        console.log("active game arr len: " + active_game_rooms.length);
+    });
+
+    // add game paramaters to active_game_rooms[], begin card submit phase
+    socket.on('goto_card_submit_master', function(data) {
+        var temp_room_id = socket.room_id;
+        var game_room_settings = {
+            master_name: data.master_name_c,
+            num_teams: data.num_teams_c,
+            num_players: data.num_players_c,
+            num_cards: data.num_cards_c,
+            turn_time_min: data.turn_time_min_c,
+            turn_time_sec: data.turn_time_sec_c
+        };
+        var room_card_set = new Set();
+        var team_arr = [];
+        for (var i = 0; i < data.num_teams_c; i++) {
+            var team_list = [];
+            team_arr.push(team_list);
+        }
+        var game_room_obj = {
+            room_id: temp_room_id,
+            room_settings: game_room_settings,
+            room_card_set: room_card_set,
+            room_team_arr: team_arr
+        };
+        socket.room_settings = game_room_settings;
+        active_game_rooms.push(game_room_obj);
+        var active_room = getRoom(temp_room_id, active_game_rooms);
+        socket.emit('send_game_settings', {
+            room_settings: active_room.room_settings
+        });
+        // console.log("Room ID " + socket.room_id);
+        // console.log(socket.room_settings);
+        socket.join(temp_room_id)
+        console.log("Joined room " + temp_room_id);
+        io.in(socket.room_id).emit('ui_update', {
+            room_obj: game_room_obj
+        });
+    });
+
+
+
+    // User Functions-----------------------------------
     socket.on('goto_join_game', function(data) {
         socket.is_master = false;
         socket.room_id = data.game_id_c;
+        socket.player_name = data.player_name_C;
         var room_id_temp = socket.room_id;
         var join_success = false;
         var game_settings = null;
@@ -32,19 +90,21 @@ io.sockets.on('connection', function(socket) {
     });
 
 
-    socket.on('get_room_id', function() {
-        // console.log(generateUnique(game_rooms_set));
-        var room_id = generateUnique(game_rooms_set);
-        game_rooms_set.add(room_id);
-        socket.room_id = room_id;
-        socket.is_master = true;
-        socket.emit('return_room_id', {
-            room_id_s: room_id
+
+    // Mixed Functions-----------------------------------
+    socket.on('submit_card_data', function(data) {
+        socket.card_arr = data.card_arr;
+        var active_room = getRoom(socket.room_id, active_game_rooms);
+        var set1 = active_room.room_card_set;
+        var set2 = new Set(data.card_arr);
+        // for (let item of set1) console.log(item);
+        // for (let item of set2) console.log(item);
+        var merged = getUnion(set1, set2);
+        for (let item of merged) console.log(item);
+        active_room.room_card_set = [...merged];
+        io.in(socket.room_id).emit('ui_update', {
+            room_obj: active_room
         });
-        console.log("Active Rooms: ");
-        for (let item of game_rooms_set) console.log(item);
-        console.log("My rom ID: " + socket.room_id);
-        console.log("active game arr len: " + active_game_rooms.length);
     });
 
     // remove a game room identifier
@@ -57,40 +117,14 @@ io.sockets.on('connection', function(socket) {
             for (let item of game_rooms_set) console.log(item);
             console.log("active game arr len: " + active_game_rooms.length);
         } else {
-        	console.log("Client left, room not being deleted");
+            console.log("Client left, room not being deleted");
         }
 
     });
 
-    // add game paramaters to active_game_rooms[], begin card submit phase
-    socket.on('goto_card_submit_master', function(data) {
-        var temp_room_id = socket.room_id;
-        var game_room_settings = {
-            master_name: data.master_name_c,
-            num_teams: data.num_teams_c,
-            num_players_team: data.num_players_team_c,
-            num_cards: data.num_cards_c,
-            turn_time_min: data.turn_time_min_c,
-            turn_time_sec: data.turn_time_sec_c
-        };
-        var game_room_obj = {
-            room_id: temp_room_id,
-            room_settings: game_room_settings
-        };
-        socket.room_settings = game_room_settings;
-        active_game_rooms.push(game_room_obj);
-        var active_room = getRoom(temp_room_id, active_game_rooms);
-        socket.emit('send_game_settings', {
-            room_settings: active_room.room_settings
-        });
-        // console.log("Room ID " + socket.room_id);
-        // console.log(socket.room_settings);
-        socket.join(temp_room_id)
-        console.log("Joined room " + temp_room_id);
-    });
-
 });
 
+// Other Functions-----------------------------------
 
 var getRoom = function(room_id, arr) {
     var elementPos = arr.map(function(x) {
@@ -136,3 +170,11 @@ var generateUnique = function(room_set) {
 
     return id;
 };
+
+var getUnion = function(setA, setB) {
+    var union = new Set(setA);
+    for (var elem of setB) {
+        union.add(elem);
+    }
+    return union;
+}
