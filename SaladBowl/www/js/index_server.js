@@ -15,19 +15,19 @@ io.sockets.on('connection', function(socket) {
         socket.room_id = data.game_id_c;
         var room_id_temp = socket.room_id;
         var join_success = false;
-        var active_room = null;
+        var game_settings = null;
         if (game_rooms_set.has(room_id_temp)) {
             socket.join(room_id_temp);
             join_success = true;
             console.log("non master joined room with id " + socket.room_id);
             socket.to(room_id_temp).emit('alert_msg', 'New User Socket has joined!');
-            active_room = getRoom(room_id_temp, active_game_rooms);
-            active_room = active_room.game_room_settings;
+            var active_room = getRoom(room_id_temp, active_game_rooms);
+            game_settings = active_room.room_settings;
         }
         socket.emit('goto_join_game_success', {
             join_success: join_success,
             room_id: room_id_temp,
-            room_settings: active_room
+            room_settings: game_settings
         });
     });
 
@@ -76,7 +76,7 @@ io.sockets.on('connection', function(socket) {
         active_game_rooms.push(game_room_obj);
         var active_room = getRoom(temp_room_id, active_game_rooms);
         socket.emit('send_game_settings', {
-            room_settings: active_room.game_room_settings
+            room_settings: active_room.room_settings
         });
         // console.log("Room ID " + socket.room_id);
         // console.log(socket.room_settings);

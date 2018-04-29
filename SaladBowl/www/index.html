@@ -57,7 +57,7 @@ under the License.
                 <form action="index_submit" method="get" accept-charset="utf-8" id="join_game_form">
                     <label> Game Code: <input type="number" id="game_join_id" name="start" placeholder="Put Game Code Here" min="0" max="99999999"></label>
                     <input type="button" id="join_game_btn" name="join" value="Join!">
-                    <input type="button" id="return_home" value="Go Back">
+                    <input type="button" id="return_home_btn_1" value="Go Back" class="return_home">
                 </form>
 
                 <!-- game setup form -->
@@ -69,7 +69,7 @@ under the License.
                     <label>Turn Time (min): <input type="number" id="turn_time_min" value="1" min="0" max="2" class="game_param"></label>
                     <label>Turn Time (s): <input type="number" id="turn_time_sec" value="30" min="0" max="59" class="game_param"></label>
                     <input type="button" id="submit_game_setup" value="Create Game Room">
-                    <input type="button" id="return_home" value="Go Back">
+                    <input type="button" id="return_home_btn_2" value="Go Back" class="return_home">
                 </form>
 
                 <!-- card submit form -->
@@ -88,9 +88,11 @@ under the License.
         <script type="text/javascript">
             // initialization
             app.initialize();
+
             $("#game_setup_form").hide();
             $("#card_submit_form").hide();
             $("#join_game_form").hide();
+
             var socket = io.connect('http://allennikka.com:3001');
 
             // global vars
@@ -126,7 +128,8 @@ under the License.
             socket.on('goto_join_game_success', function(data) {
                 if (data.join_success) {
                     active_room = data.room_id;
-                    game_settings = data.game_settings;
+                    game_settings = data.room_settings;
+                    console.log(game_settings);
                     $("#game_code_display").text("" + active_room);
                     $("#join_game_form").hide();
                     $("#game_start_join").hide();
@@ -157,6 +160,7 @@ under the License.
 
             socket.on('send_game_settings', function(data){
                 game_settings = data.room_settings;
+                console.log(game_settings);
                 $("#join_game_form").hide();
                 $("#game_setup_form").hide();
                 $("#card_submit_form").show();
@@ -164,26 +168,15 @@ under the License.
             });
 
             // return button to get back to homescreen
-            $("#return_home").click(function() {
+            $(".return_home").click(function() {
                 $("#game_setup_form").hide();
                 $("#join_game_form").hide();
-                // $("#game_setup_form").reset();
-                $("#game_start_join").show();
-                if (active_room) socket.emit('remove_room_id', {
-                    room_id_c: active_room
-                });
-            });
-
-            // depreciated call to go back to game setup screen
-            $("#return_game_setup").click(function() {
-                $("#game_setup_form").hide();
-                // $("#game_setup_form").reset();
-                $("#game_start_join").show();
-                if (active_room) socket.emit('remove_room_id', {
-                    room_id_c: active_room
-                });
                 $("#card_submit_form").hide();
-                // $("#card_submit_form").reset();
+                // $("#game_setup_form").reset();
+                $("#game_start_join").show();
+                if (active_room) socket.emit('remove_room_id', {
+                    room_id_c: active_room
+                });
             });
 
             // debug connections from server
