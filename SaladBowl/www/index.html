@@ -90,8 +90,7 @@ under the License.
                     <button type="submit" id="submit_cards">Submit Cards</button>
                 </dialog>
 
-                <table>
-                    <caption>Teams:</caption>
+                <table id="team_table">
                     <thead>
                         <tr>
                             <th>Team Number:</th>
@@ -116,6 +115,7 @@ under the License.
             $("#game_setup_form").hide();
             $("#waiting_area_form").hide();
             $("#join_game_form").hide();
+            $("#team_table").hide();
             // global vars
             var active_room = null;
             var game_settings = null;
@@ -178,7 +178,7 @@ under the License.
             });
 
             socket.on('goto_join_game_success', function(data) {
-                if (data.join_success) {
+                if (data.name_correct && data.id_correct) {
                     active_room = data.room_id;
                     game_settings = data.room_settings;
                     createCardInput(game_settings.num_cards, $("#card_dialog"));
@@ -186,9 +186,12 @@ under the License.
                     console.log(game_settings);
                     $("#game_code_display").text("" + active_room);
                    stateManager(game_states.WAITING_TEAM_SEL);
+                } else if(data.id_correct){
+                    $("#game_join_player_name").val('');
+                    alert("Someone in Game Room " + data.room_id + " aleready has that name, please pick another.");
                 } else {
-                    stateManager(game_states.JOIN_GAME);
                     $("#game_join_id").val('');
+                    $("#game_join_player_name").val('');
                     alert("Game Room " + data.room_id + " is invalid, please check and try again.");
                 }
             });
@@ -205,11 +208,16 @@ under the License.
             // event listener to go to join game screen
             $("#join_game_btn").click(function() {
                 var game_id_c = $("#game_join_id").val();
-                var player_name_c = $("#game_join_player_name").text();
-                socket.emit('goto_join_game', {
-                    game_id_c: game_id_c,
-                    player_name_c: player_name_c
-                });
+                var player_name_c = $("#game_join_player_name").val();
+                //check for name before joining
+                if(player_name_c === "") {
+                    alert("Player name can't be blank. Please enter a name to join the game!");
+                } else {
+                    socket.emit('goto_join_game', {
+                        game_id_c: game_id_c,
+                        player_name_c: player_name_c
+                    });
+                }
             });
             // JOIN_GAME end-----------------------------------
             // GAME_SETUP start--------------------------------
@@ -258,6 +266,7 @@ under the License.
             });
             // Function delclarations start
             var createCardInput = function(num_cards, append_element) {
+                append_element.empty();
                 for (var i = 0; i < num_cards; i++) {
                     append_element.append('<input type="text" name="card" value="" placeholder="Type Here..." id="card' + i + '" class="player_cards">');
                 }
@@ -273,6 +282,7 @@ under the License.
             }
 
              var createTeamInput = function(num_teams, append_element) {
+                append_element.empty();
                 append_element.append('<option value="noTeam">Pick Below</option>');
                 for (var i = 1; i <= num_teams; i++) {
                     append_element.append('<option value="'+ i +'"> Team ' + i + '</option>');
@@ -280,7 +290,7 @@ under the License.
             }
 
             var appendTeamNames = function(room_team_arr, append_element) {
-                // <li class="team_name_list"></li>
+                append_element.empty();
                 for (var i = 0; i < room_team_arr.length; i++) {
                     var k = i+1;
                     var str = '<tr> <td> Team ' + k + '</td>';
@@ -293,14 +303,6 @@ under the License.
                 }
             }
 
-            // createTeamInput(game_settings.num_teams, $("#team_select"));
-        //        <select id="team_select">
-        //     <option value="noTeam"></option>
-        //     <option value="1">Team 1</option>
-        //     <option value="2">Team 2</option>
-        //     <option value="3">Team 3</option>
-        //     <option value="4">Team 4</option>
-        // </select>
             var stateManager = function(state) {
                 if(cards_in_bowl){
                     $("#submit_cards").hide();
@@ -313,6 +315,7 @@ under the License.
                         $("#game_setup_form").hide();
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
+                        $("#team_table").hide();
                         break;
                     case game_states.GAME_SETUP:
                         $("#game_start_join").hide();
@@ -320,6 +323,7 @@ under the License.
                         $("#game_setup_form").show();
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
+                        $("#team_table").hide();
                         break;
                     case game_states.JOIN_GAME:
                         $("#game_start_join").hide();
@@ -327,6 +331,7 @@ under the License.
                         $("#game_setup_form").hide();
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
+                        $("#team_table").hide();
                         break;
                     case game_states.WAITING_TEAM_SEL:
                         $("#game_start_join").hide();
@@ -334,6 +339,7 @@ under the License.
                         $("#game_setup_form").hide();
                         $("#waiting_area_form").show();
                         $("#card_dialog").hide();
+                        $("#team_table").show();
                         break;
                     case game_states.WAITING_CARD_ADD:
                         $("#game_start_join").hide();
@@ -341,6 +347,7 @@ under the License.
                         $("#game_setup_form").hide();
                         $("#waiting_area_form").show();
                         $("#card_dialog").show();
+                        $("#team_table").show();
                         break;
                     case game_states.PASS_PHONE:
                         $("#game_start_join").show();
@@ -348,6 +355,7 @@ under the License.
                         $("#game_setup_form").hide();
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
+                        $("#team_table").hide();
                         break;
                     case game_states.QUESTION_ASK:
                         $("#game_start_join").hide();
@@ -355,6 +363,7 @@ under the License.
                         $("#game_setup_form").show();
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
+                        $("#team_table").hide();
                         break;
                     case game_states.SCORE_CARD:
                         $("#game_start_join").show();
@@ -362,6 +371,7 @@ under the License.
                         $("#game_setup_form").hide();
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
+                        $("#team_table").hide();
                         break;
                     case game_states.FINAL_SCORE_CARD:
                         $("#game_start_join").hide();
@@ -369,6 +379,7 @@ under the License.
                         $("#game_setup_form").show();
                         $("#waiting_area_form").hide();
                         $("#card_dialog").hide();
+                        $("#team_table").hide();
                         break;
                     default:
                         break;

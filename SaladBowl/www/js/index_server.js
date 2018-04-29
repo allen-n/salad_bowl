@@ -43,11 +43,13 @@ io.sockets.on('connection', function(socket) {
             var team_list = [];
             team_arr.push(team_list);
         }
+        var names_arr = [data.master_name_c];
         var game_room_obj = {
             room_id: temp_room_id,
             room_settings: game_room_settings,
             room_card_set: room_card_set,
-            room_team_arr: team_arr
+            room_team_arr: team_arr,
+            room_names_arr: names_arr
         };
         socket.player_name = data.master_name_c;
         socket.room_settings = game_room_settings;
@@ -69,22 +71,30 @@ io.sockets.on('connection', function(socket) {
 
     // User Functions-----------------------------------
     socket.on('goto_join_game', function(data) {
-        socket.is_master = false;
-        socket.room_id = data.game_id_c;
-        socket.player_name = data.player_name_C;
-        var room_id_temp = socket.room_id;
-        var join_success = false;
+        var room_id_temp = data.game_id_c;
+        var id_correct = false;
+        var name_correct = false;
         var game_settings = null;
         if (game_rooms_set.has(room_id_temp)) {
-            socket.join(room_id_temp);
-            join_success = true;
-            console.log("non master joined room with id " + socket.room_id);
-            socket.to(room_id_temp).emit('alert_msg', 'New User Socket has joined!');
+            id_correct = true;
             var active_room = getRoom(room_id_temp, active_game_rooms);
-            game_settings = active_room.room_settings;
+            var name_check = new Set(active_room.room_names_arr);
+            if (!(name_check.has(data.player_name_c))) {
+                name_correct = true;
+                socket.is_master = false;
+                socket.room_id = data.game_id_c;
+                socket.player_name = data.player_name_c;
+                socket.join(room_id_temp);
+                console.log("non master joined room with id " + socket.room_id);
+                socket.in(room_id_temp).emit('alert_msg', 'New User Socket has joined!');
+                game_settings = active_room.room_settings;
+                delete name_check;
+            }
+
         }
         socket.emit('goto_join_game_success', {
-            join_success: join_success,
+            id_correct: id_correct,
+            name_correct: name_correct,
             room_id: room_id_temp,
             room_settings: game_settings
         });
@@ -126,10 +136,20 @@ io.sockets.on('connection', function(socket) {
     socket.on('team_select', function(data) {
         var name = socket.player_name;
         var team = data.team;
+        team -= 1; //acount for non 0 indexing
         var active_room = getRoom(socket.room_id, active_game_rooms);
-        if (socket.team) //TODO: remove when they switch
-            active_room.room_team_arr[team].push(name);
+        console.log("socket.team = " + socket.team);
+        if (socket.team != null) {
+        	var arr = active_room.room_team_arr[socket.team];
+            var elementPos = arr.indexOf(name);
+            if (elementPos !== -1) arr.splice(elementPos, 1);
+            delete arr;
+        }
+        // console.log(active_room);
+        // for (let item of active_room.team_arr) console.log(item);
+        active_room.room_team_arr[team].push(name);
         socket.team = team;
+        // console.log('user ' + name + 'now on team ' + team);
         io.in(socket.room_id).emit('ui_update', {
             room_obj: active_room
         });

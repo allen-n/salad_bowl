@@ -1,3 +1,4 @@
+"# Salad Bowl: The Game"
 TODO:
 <!-- -Finish refactoring and organizing index.html -->
 <!-- -Refactor and organize index_server.js -->
