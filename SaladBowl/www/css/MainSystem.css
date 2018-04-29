@@ -1,0 +1,1042 @@
+
+/* Universal Styles*/
+
+body {
+	height: 100%;
+	max-width: 100%;
+	margin:0px;
+	overflow-x: hidden;
+}
+
+@font-face {
+font-family: "Whitney-Semibold";
+src: url("Whitney_Real/Whitney-semibold.eot");
+src: 
+	url("Whitney_Real/Whitney-semibold.otf")
+	format('opentype');
+}
+
+@font-face {
+font-family: "Whitney-Book";
+src: url("Whitney_Real/Whitney-Book.eot");
+src: 
+	url("Whitney_Real/Whitney-Book.otf")
+	format('opentype');
+}
+
+
+h1 {
+	font-family: Whitney-Semibold;
+	font-size: 26px;
+	color: #2B2B2B;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+h2 {
+	font-family: Whitney-Semibold;
+	font-size: 20px;
+	color: #F7A1A1;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+.eighteen_black {
+	font-family: Whitney-Semibold;
+	font-size: 18px;
+	color: #2B2B2B;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+.eighteen_white {
+	font-family: Whitney-Semibold;
+	font-size: 18px;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+.eighteen_salmon {
+	font-family: Whitney-Semibold;
+	font-size: 18px;
+	color: #F7A1A1;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+.eighteen_light_salmon {
+	font-family: Whitney-Semibold;
+	font-size: 18px;
+	color: #FFD5D5;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+h3 {
+	font-family: Whitney-Book;
+	font-size: 18px;
+	color: #2B2B2B;
+	letter-spacing: 1px;
+	font-weight: normal;
+}
+
+h4 {
+	font-family: Whitney-Book;
+	font-size: 14px;
+	color: #2B2B2B;
+	letter-spacing: 1px;
+	font-weight: normal;
+}
+
+.room_code_font {
+	font-family: Whitney-Semibold;
+	font-size: 42px;
+	color: #F7A1A1;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+.game_timer_font {
+	font-family: Whitney-Semibold;
+	font-size: 42px;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+.pink_h1 {
+	font-family: Whitney-Semibold;
+	font-size: 26px;
+	color: #F7A1A1;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+.button_text {
+	margin: 0px;
+
+}
+
+.small_pink_line {
+	width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:10px;
+	margin-bottom: 20px;
+	background-color: #F7A1A1;
+
+}
+
+.in_app_orange_buttons {
+	position: relative;
+	display: inline-block;
+	width: 166px;
+	height: 49px;
+	background: linear-gradient(140deg, #FFDBB5, #FFE0C4);
+	border-radius: 100px;
+	outline: none;
+	border: hidden;
+	margin-left: 50%;
+	transform: translate(-50%);
+	margin-bottom: 55px;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.10);
+}
+
+.page_header {
+	text-align: center;
+	margin:0px;
+}
+
+.page_body {
+	text-align: center;
+}
+
+.white_h1{
+	font-family: Whitney-Semibold;
+	font-size: 26px;
+	color: white;
+	letter-spacing: 2px;
+	font-weight: normal;
+}
+
+.small_white_line {
+	width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:10px;
+	margin-bottom: 20px;
+	background-color: white;
+}
+
+/*Navigation Styles */
+
+#navigation_wrapper_pink {
+	position: relative;
+    display: block;
+    margin-top: 15%;
+    height: 90px;
+    width: 100%;
+    z-index: 1;
+
+
+}
+#navigation_wrapper {
+	position: relative;
+    display: block;
+    margin-top: 15%;
+    height: 90px;
+    width: 100%;
+    display: none;
+    z-index: 1; 
+
+
+}
+#rules_page_icon_wrapper {
+	position: absolute;
+    display: inline-block;
+    top: 9%;
+    left: 13%;
+    transform: translate(-50%, -50%);
+
+}
+#rules_page_icon_underline {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:8px;
+	margin-bottom: 20px;
+	background-color: #E1E1E1;
+}
+
+#rules_page_icon_underline2 {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:8px;
+	margin-bottom: 20px;
+	background-color: #F2C3F2;
+}
+
+#shop_page_icon_wrapper {
+	position: absolute;
+    display: inline-block;
+    top: 9%;
+    left: 28%;
+    transform: translate(-50%, -50%);
+}
+
+#shop_page_icon_underline2 {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:8px;
+	margin-bottom: 20px;
+	background-color: #F2C3F2;
+}
+
+#shop_page_icon_underline {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:8px;
+	margin-bottom: 20px;
+	background-color: #E1E1E1;
+}
+
+#home_page_icon_wrapper {
+	position: absolute;
+    display: inline-block;
+    top: 9%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#random_page_icon_wrapper {
+	position: absolute;
+    display: inline-block;
+    top: 9%;
+    left: 72%;
+    transform: translate(-50%, -50%);
+}
+
+#random_page_icon_underline {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:8px;
+	margin-bottom: 20px;
+	background-color: #E1E1E1;
+}
+
+#random_page_icon_underline2 {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:8px;
+	margin-bottom: 20px;
+	background-color: #F2C3F2;
+}
+
+#settings_page_icon_wrapper {
+	position: absolute;
+    display: inline-block;
+    top: 9%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+}
+
+#settings_page_icon_underline {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:7px;
+	margin-bottom: 20px;
+	background-color: #E1E1E1;
+}
+
+#settings_page_icon_underline2 {
+	position: absolute;
+    width: 32px;
+	height: 2px;
+	border-radius: 100px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	margin-top:7px;
+	margin-bottom: 20px;
+	background-color: #F2C3F2;
+}
+
+/*Home Screen Styles*/
+
+#home_screen_wrapper {
+	visibility: hidden;
+}
+
+#salad_bowl_header_wrapper {
+	position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 277px;
+    height: 225px;
+}
+
+#salad_bowl_icon {
+	position: relative;
+    margin: 0px;
+    margin-bottom: 20px;
+    width: 158px;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+#salad_bowl_header {
+	text-align: center;
+	margin:0px;
+}
+
+#salad_bowl_body {
+	text-align: center;
+}
+
+
+#button_home_screen_wrapper {
+	position: absolute;
+	bottom: 21px;
+	left: 50%;
+	transform: translate(-50%);
+
+}
+
+.landing_page_buttons {
+	position: relative;
+	display: inline-block;
+	width: 269px;
+	height: 49px;
+	background: linear-gradient(140deg, #FFDBB5, #FFE0C4);
+	border-radius: 100px;
+	outline: none;
+	border: hidden;
+	margin-left: 50%;
+	transform: translate(-50%);
+	margin-bottom: 24px;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.22);
+
+}
+
+/*Host Game Screen Styles*/
+
+#host_game_screen_wrapper {
+	display: none;
+}
+
+#host_a_new_game_header_wrapper{
+	position: relative;
+	margin-bottom: 50px;
+}
+#enter_player_name_wrapper {
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#player_name_header {
+	text-align: center;
+}
+
+#enter_player_name_input {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border: solid 2px;
+	border-color: #FFD5D5;
+	border-radius: 10px;
+	width: 246px;
+	height: 48px;
+	outline: none;
+	font-family: Whitney-Book;
+	font-size: 26px;
+	color: #2B2B2B;
+	letter-spacing: 1px;
+	font-weight: normal;
+	text-align: center;
+}
+
+#enter_number_of_teams_wrapper {
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#number_of_teams_header {
+	text-align: center;
+}
+
+#enter_size_of_teams_wrapper {
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#size_of_teams_header {
+	text-align: center;
+}
+
+#person_selector_wrapper {
+	width: 288px;
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px
+}
+
+.pink_person_host_page {
+	margin: 8px;
+	position: relative;
+	display: inline-block;
+}
+
+#enter_length_of_turns_wrapper {
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#length_of_turns_header {
+	text-align: center;
+}
+
+#length_of_turns_construct_wrapper {
+	width: 65%;
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+}
+#arrow_left {
+	position: absolute;
+	left: 0px;
+	top: 55%;
+	transform: translate(0%,-50%);
+}
+#arrow_right {
+	position: absolute;
+	right: 0px;
+	top: 55%;
+	transform: translate(0%,-50%);
+}
+#length_of_turns_string {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	font-family: Whitney-Book;
+	font-size: 26px;
+	color: #2B2B2B;
+	letter-spacing: 1px;
+	font-weight: normal;
+	text-align: center;
+
+}
+
+#enter_cards_per_player_wrapper {
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#cards_per_player_header {
+	text-align: center;
+}
+
+#cards_playground_wrapper {
+	width: 65%;
+	height: 110px;
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+
+}
+#minus {
+	position: absolute;
+	left: 0px;
+	top: 55%;
+	transform: translate(0%,-50%);
+}
+#plus {
+	position: absolute;
+	right: 0px;
+	top: 55%;
+	transform: translate(0%,-50%);
+}
+
+.small_cards {
+	position: relative;
+	display: inline-block;
+	width: 79px;
+	height: 99px;
+	transform: translate(-50%);
+	margin-left: 50%;
+	background-color: white;
+	box-shadow: 0px 2px 10px rgba(152, 112, 75, 0.22);
+	border-radius: 5px;
+
+}
+
+#number_of_cards_per_player {
+	position: relative;
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+/*Join Game Screen Styles*/
+
+#join_game_screen_wrapper {
+	display: none;
+}
+
+#join_an_existing_game_header_wrapper{
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#enter_room_code_wrapper {
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#enter_room_code_header {
+	text-align: center;
+}
+
+#enter_room_code_input {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border: solid 2px;
+	border-color: #FFD5D5;
+	border-radius: 10px;
+	width: 246px;
+	height: 68px;
+	outline: none;
+	font-family: Whitney-SemiBold;
+	font-size: 42px;
+	color: #F7A1A1;
+	letter-spacing: 1px;
+	font-weight: normal;
+	text-align: center;
+}
+
+/*Game Waiting Area Screen Styles*/
+
+#game_waiting_area_screen_wrapper {
+	display: none;
+}
+
+#game_waiting_area_header_wrapper{
+	position: relative;
+	margin-bottom: 60px;
+}
+
+#game_waiting_area_header {
+	position: relative;
+	position: block;
+	margin-bottom: 10px;
+}
+
+#players_joined_counter {
+	position: relative;
+	position: block;
+	margin-top: 10px;
+	text-align: center;
+}
+#room_code_text {
+	position: relative;
+	position: block;
+	text-align: center;
+}
+
+#fun_fact_of_the_day_wrapper {
+	position: relative;
+	margin-bottom: 80px;
+}
+
+#fun_fact_header {
+	text-align: center;
+}
+
+#fun_fact_body_text {
+	width: 80%;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#team_selection_wrapper {
+	position: fixed;
+	height: 400px;
+	width: 100%;
+	bottom: 0px;
+}
+#team_selection_background {
+	position: absolute;
+	height: 400px;
+	width: 100%;
+	border-top-right-radius: 40px;
+	border-top-left-radius: 40px;
+	background-color: white;
+	box-shadow: 0px -3px 10px rgba(152, 112, 75, 0.10);
+	z-index: 2;
+
+}
+#team_selection_header_wrapper {
+	position: relative;
+	display: block;
+	margin-top: 0px;
+	width: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 2;
+
+}
+#arrow_up {
+	position: absolute;
+	left: 8%;
+	top: 55%;
+	transform: translate(-50%,-50%);
+}
+
+#team_selection_header {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 50px;
+	z-index: 2;
+}
+#change_team_name_wrapper {
+	visibility: hidden;
+}
+#change_team_name {
+	color: #F7A1A1;
+	z-index: 2;
+}
+
+
+#team_identifier_wrapper {
+	position: relative;
+	z-index: 2;
+}
+
+#team_saved_name {
+	position: relative;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#change_team_name {
+	position: relative;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -10px;
+}
+
+#team_list_icons_wrapper {
+	position: relative;
+    display: block;
+    margin-top: 25px;
+    z-index: 2;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+
+}
+.spot_wrapper {
+	position: relative;
+	display: inline-block;
+	width: 56px;
+	height: 57px;
+	margin-left: 50%;
+    margin-right: 50%;
+    transform: translate(-50%);
+}
+#spot_icon {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 3px;
+
+}
+.spot_text {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin-top: 0px;
+}
+
+.team_selection_button {
+	z-index: 2;
+}
+
+#breadcrumb_wrapper {
+	position: absolute;
+	z-index: 2;
+	transform: translate(-50%);
+	margin-left: 50%;
+	bottom: 30px;
+
+}
+
+.breadcrumb_inactive {
+	position: relative;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: #F7A1A1;
+	border-radius: 20px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+/*Add To The Deck Styles*/
+#add_to_the_deck_screen_wrapper {
+	z-index: 4;
+	display: none;
+}
+
+#add_to_the_deck_header_wrapper{
+	position: relative;
+	margin-bottom: 60px;
+	z-index: 4;
+}
+
+#add_to_the_deck_header {
+	position: relative;
+	display: block;
+	margin-bottom: 10px;
+	text-align: center;
+	z-index: 4;
+}
+
+#add_to_the_deck_body {
+	text-align: center;
+	z-index: 4;
+}
+
+#arrow_left_add_to_deck {
+	position: absolute;
+	left: 12%;
+	top: 18%;
+	transform: translate(0%,-50%);
+	z-index: 4;
+}
+
+#enter_player_name_wrapper {
+	position: relative;
+	margin-bottom: 50px;
+	z-index: 4;
+}
+
+#player_name_header {
+	text-align: center;
+	z-index: 4;
+}
+
+#enter_player_name_input {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border: solid 2px;
+	border-color: #FFD5D5;
+	border-radius: 10px;
+	width: 246px;
+	height: 48px;
+	outline: none;
+	font-family: Whitney-Book;
+	font-size: 26px;
+	color: #2B2B2B;
+	letter-spacing: 1px;
+	font-weight: normal;
+	text-align: center;
+	z-index: 4;
+}
+
+#add_to_the_deck_background {
+	position: absolute;
+	height: 600px;
+	width: 100%;
+	border-top-right-radius: 40px;
+	border-top-left-radius: 40px;
+	background-color: white;
+	box-shadow: 0px -5px 8px rgba(152, 112, 75, 0.10);
+	z-index: 3;
+	bottom: 0%;
+}
+
+.submit_to_the_deck_button {
+	z-index: 4;
+}
+
+/*Pass The Phone Page*/
+
+#in_game_background_color {
+	background: linear-gradient(140deg, #D15FE4, #944AD8);
+	height: 120%;
+	width: 100%;
+	position: fixed;
+	top: -10%;
+
+}
+
+#pass_the_phone_body {
+	font-family: Whitney-Book;
+	font-size: 26px;
+	color: #2B2B2B;
+	letter-spacing: 2px;
+	font-weight: normal;
+	text-align: center;
+	margin-top: 0px;
+}
+
+#pass_the_phone_to_screen_wrapper {
+	position: absolute;
+	top: 22%;
+	width: 100%;
+	height: 70%;
+	border-radius: 40px;
+	transform: translate(-50%);
+	left: 50%;
+	z-index: 4;
+	background-color: white;
+	display: none;
+
+}
+
+#pass_the_phone_button {
+	position: absolute;
+	bottom: 7%;
+	transform: translate(-50%);
+	left: 50%;
+}
+
+#phone_icon {
+	position: relative;
+    margin: 0px;
+    margin-bottom: 20px;
+    width: 90px;
+    margin-left: 50%;
+    margin-top: 18%;
+    transform: translate(-50%);
+    z-index: 4;
+}
+
+/*In-Game Card Swiping Screen*/
+
+
+#active_game_play_wrapper {
+	display: none;
+}
+
+#question_master_wrapper{
+	position: relative;
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+#question_giver_header {
+	margin-bottom: 28px;
+	margin-top: 0px;
+}
+
+#team_number {
+	text-align: center;
+}
+#question_giver {
+	text-align: center;
+	margin-top: 0px;
+}
+#playing_card1 {
+	position: absolute;
+	width: 100%;
+	height:35%;
+	z-index: 10;
+	background-color: white;
+	border-radius: 40px;
+	bottom: 10%;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.42);
+
+}
+
+#card_1_header {
+	position: relative;
+	display: block;
+	margin-top: 6%;
+	text-align: center;
+}
+
+.correct_card_button {
+	position: absolute;
+	display: block;
+	transform: translate(-50%);
+	left: 50%;
+	bottom: 12%;
+}
+
+.textsubmission {
+	text-align: center;
+}
+
+
+#playing_card2 {
+	position: absolute;
+	width: 100%;
+	height:35%;
+	z-index: 9;
+	background-color: #FFF7FE;
+	border-radius: 40px;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.42);
+	bottom: 12%;
+
+}
+#playing_card3 {
+	position: absolute;
+	width: 100%;
+	height:35%;
+	z-index: 8;
+	background-color: #FEE7FF;
+	border-radius: 40px;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.42);
+	bottom: 14%;
+
+}
+#playing_card4 {
+	position: absolute;
+	width: 100%;
+	height:35%;
+	z-index: 7;
+	background-color: #F5CEFF;
+	border-radius: 40px;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.42);
+	bottom: 16%;
+
+}
+#playing_card5 {
+	position: absolute;
+	width: 100%;
+	height:35%;
+	z-index: 6;
+	background-color: #ECA5FF;
+	border-radius: 40px;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.42);
+	bottom: 18%;
+
+}
+#playing_card6 {
+	position: absolute;
+	width: 100%;
+	height:35%;
+	z-index: 5;
+	background-color: #D672E9;
+	border-radius: 40px;
+	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.42);
+	bottom: 20%;
+
+}
+
+#game_timer{
+	position: absolute;
+	bottom: 2%;
+	transform: translate(-50%);
+	left: 50%;
+}
+
+/* <div id="active_game_play_wrapper">
+        <div id="question_master_wrapper">
+            <h1 class="twentysix_white">QUESTION MASTER</h1>
+            <div class="eighteen_white" id="team_number">TEAM 1</div>
+            <div class="small_white_line"></div>
+            <h1 class="twentysix_white" id="question_giver">JORDAN</h1>
+        </div>
+    </div>*/
