@@ -289,17 +289,17 @@ under the License.
                 <div id="playing_card1">
                     <div class="eighteen_black" id="card_1_header">Card #1</div>
                     <div class="small_pink_line"></div>
-                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <div class="pink_h1 textsubmission" id="card_value1">PARIS HILTON</div>
                     <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
                 </div>
                 <div id="playing_card2">
-                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="eighteen_black" id="card_2_header">Card #2</div>
                     <div class="small_pink_line"></div>
-                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <div class="pink_h1 textsubmission" id="card_value2">PARIS HILTON</div>
                     <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
                 </div>
                 <div id="playing_card3">
-                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="eighteen_black" id="card_1_header">Card #3</div>
                     <div class="small_pink_line"></div>
                     <div class="pink_h1 textsubmission">PARIS HILTON</div>
                     <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
@@ -322,8 +322,14 @@ under the License.
                     <div class="pink_h1 textsubmission">PARIS HILTON</div>
                     <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
                 </div>
-                <div class="game_timer_font" id="game_timer"> GO </div>
+                <div id="playing_card7">
+                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
+                </div>
             </div>
+            <div class="game_timer_font" id="game_timer"> GO </div>
         </div>
         <div id="round_breakdown_wrapper">
             <div id="round_breakdown_header_wrapper">
@@ -678,14 +684,17 @@ under the License.
             $("#team_number").empty();
             $("#team_number").text('TEAM ' + (global_game_manager_index + 1)); //because of 0 indexing
             global_timer = startTimer(global_room_obj.room_settings.turn_time_sec, $("#game_timer"));
-            $("#game_timer").on('change', function(event){
-                console.log($("#game_timer").text() === "00:00")
-            });
+            var set_spread = [...global_room_obj.room_card_set];
+            global_active_card = set_spread.pop();
+            var new_set = new Set(set_spread)
+            global_room_obj.room_card_set = new_set;
+            $("#card_value1").text(global_active_card);
+            $("#card_1_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
         });
             function timerCallback(){
                 console.log('timer ended');
                 clearInterval(global_timer);
-                
+                global_room_obj.room_card_set.add(global_active_card);
             }
             // src: https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
             function startTimer(duration, display) {
@@ -707,6 +716,81 @@ under the License.
                 }, 1000);
                 return out
             }
+
+            function cardResetCallback() {
+                $("#card_value1").text(global_active_card);
+                $("#card_1_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
+                $("#playing_card1").css("left", "");
+                $("#playing_card7").css({
+                    "right": "",
+                    "background-color": ""
+                });
+                $("#playing_card2").css({
+                    "bottom": "",
+                    "background-color": ""
+                });
+                $("#playing_card3").css({
+                    "bottom": "",
+                    "background-color": ""
+                });
+                $("#playing_card4").css({
+                    "bottom": "",
+                    "background-color": ""
+                });
+                $("#playing_card5").css({
+                    "bottom": "",
+                    "background-color": ""
+                });
+                $("#playing_card6").css({
+                    "bottom": "",
+                    "background-color": ""
+                });
+            }
+
+            var global_active_card = null
+            $("#playing_card1").on('click', function() {
+                var speed = 800;
+                global_game_manager[global_game_manager_index].cards_won.push(($("#card_value1").text()));
+                global_game_manager[global_game_manager_index].total_points += 1;
+                console.log(global_game_manager[global_game_manager_index].cards_won);
+                var set_spread = [...global_room_obj.room_card_set];
+                global_active_card = set_spread.pop();
+                var new_set = new Set(set_spread)
+                global_room_obj.room_card_set = new_set;
+                $("#card_value2").text(global_active_card);
+                $("#card_2_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
+
+                $("#playing_card1").animate({
+                    left: "500px"
+                }, speed, function() {
+                    $("#playing_card7").css({
+                        "right": "0px",
+                        "background-color": "#D3A2CC"
+                    });
+                    $("#playing_card2").css({
+                        "bottom": "10%",
+                        "background-color": "white"
+                    });
+                    $("#playing_card3").css({
+                        "bottom": "12%",
+                        "background-color": "#FFECF7"
+                    });
+                    $("#playing_card4").css({
+                        "bottom": "14%",
+                        "background-color": "#FEDAF2"
+                    });
+                    $("#playing_card5").css({
+                        "bottom": "16%",
+                        "background-color": "#F3C4E6"
+                    });
+                    $("#playing_card6").css({
+                        "bottom": "18%",
+                        "background-color": "#E1B1D7"
+                    });
+                    setTimeout(function(){cardResetCallback()}, speed/2);
+
+                });
+            });
         //active game end-----------------------------------------------------
         // JOIN_GAME start------------------------------------
         // event listener to go to join game screen
