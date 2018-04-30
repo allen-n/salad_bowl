@@ -294,7 +294,7 @@ h4 {
 	margin-left: 50%;
 	margin-top:8px;
 	margin-bottom: 20px;
-	background-color: #F2C3F2;
+	background-color: #FFEAEA;
 }
 
 #settings_page_icon_wrapper {
@@ -603,9 +603,9 @@ h4 {
 
 /*Game Waiting Area Screen Styles*/
 
-#game_waiting_area_screen_wrapper {
+/*#game_waiting_area_screen_wrapper {
 	display: none;
-}
+}*/
 
 #game_waiting_area_header_wrapper{
 	position: relative;
@@ -651,12 +651,12 @@ h4 {
 	transition: opacity 1s;
 }
 
-#team_selection_wrapper {
+/*#team_selection_wrapper {
 	position: fixed;
 	height: 400px;
 	width: 100%;
 	bottom: 0px;
-}
+}*/
 #team_selection_background {
 	position: absolute;
 	height: 596px;
@@ -668,7 +668,7 @@ h4 {
 	z-index: 2;
 
 }
-#team_selection_header_wrapper {
+/*#team_selection_header_wrapper {
 	position: relative;
 	display: block;
 	margin-top: 0px;
@@ -677,7 +677,7 @@ h4 {
 	margin-right: auto;
 	z-index: 2;
 
-}
+}*/
 #arrow_up {
 	position: absolute;
 	left: 8%;
@@ -754,7 +754,7 @@ h4 {
 /*    display: none;*/
 }
 
-#add_to_deck_button {
+/*#add_to_deck_button {
 	position: absolute;
     width: 166px;
     height: 49px;
@@ -766,7 +766,7 @@ h4 {
     margin: 0px;
     transform: translate(0%);
     display: block;
-}
+}*/
 
 .team_selected_button {
 	z-index: 2;
@@ -839,17 +839,17 @@ h4 {
 }
 
 /*Add To The Deck Styles*/
-#add_to_the_deck_screen_wrapper {
+/*#add_to_the_deck_screen_wrapper {
 	z-index: 4;
 	display: none;
 	animation-fill-mode: forwards;
-}
+}*/
 
-#add_to_the_deck_header_wrapper{
+/*#add_to_the_deck_header_wrapper{
 	position: relative;
 	margin-bottom: 60px;
 	z-index: 4;
-}
+}*/
 
 #add_to_the_deck_header {
 	position: relative;
@@ -865,13 +865,13 @@ h4 {
 	z-index: 4;
 }
 
-#arrow_left_add_to_deck {
+/*#arrow_left_add_to_deck {
 	position: absolute;
 	left: 12%;
 	top: 18%;
 	transform: translate(0%,-50%);
 	z-index: 4;
-}
+}*/
 
 #enter_player_name_wrapper {
 	position: relative;
@@ -906,6 +906,7 @@ h4 {
 	z-index: 4;
 }
 
+/*
 #add_to_the_deck_background {
 	position: absolute;
 	height: 82%;
@@ -916,8 +917,9 @@ h4 {
 	box-shadow: 0px -5px 8px rgba(152, 112, 75, 0.10);
 	z-index: 3;
 	bottom: 0%;
-	/*display: block;*/
 }
+ */
+
 
 .submit_to_the_deck_button {
 	z-index: 4;
@@ -1436,4 +1438,75 @@ width: 90%;
 margin-left: auto;
 margin-right: auto;
 text-align: center;
+}
+
+.fadeoutteam {
+opacity: 1;
+transition: opacity 1s;
+}
+
+/*Jordan CSS @ 3:43 on 4.30.18;*/
+#team_selection_header_wrapper {
+position: relative;
+display: block;
+margin-top: 0px;
+width: 250px;
+margin-left: auto;
+margin-right: auto;
+z-index: 2;
+}
+
+#team_selection_wrapper {
+position: fixed;
+height: 400px;
+width: 100%;
+bottom: -47%;
+}
+
+#add_to_deck_button {
+    position: absolute;
+    width: 166px;
+    height: 49px;
+    background: linear-gradient(140deg, #FFDBB5, #FFE0C4);
+    border-radius: 100px;
+    outline: none;
+    border: hidden;
+    left: 5%;
+    margin: 0px;
+    transform: translate(0%);
+}
+
+#add_to_the_deck_header_wrapper{
+position: relative;
+margin-bottom: 60px;
+z-index: 4;
+}
+
+#add_to_the_deck_background {
+position: absolute;
+height: 82%;
+width: 100%;
+border-top-right-radius: 40px;
+border-top-left-radius: 40px;
+background-color: white;
+box-shadow: 0px -5px 8px rgba(152, 112, 75, 0.10);
+z-index: 3;
+bottom: 0%;
+}
+
+#game_waiting_area_screen_wrapper {
+/* display: block;*/
+}
+
+#add_to_the_deck_screen_wrapper {
+z-index: 4;
+display: none;
+}
+
+#arrow_left_add_to_deck {
+position: absolute;
+left: 12%;
+top: 18%;
+transform: translate(0%,-50%);
+z-index: 4;
 }
