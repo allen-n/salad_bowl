@@ -136,7 +136,7 @@ io.sockets.on('connection', function(socket) {
         }
         var name = socket.player_name;
         var active_room = getRoom(socket.room_id, active_game_rooms);
-        if (socket.team != null) {
+        if (socket.team != null && active_room != null) {
             var arr = active_room.room_team_arr[socket.team];
             var elementPos = arr.indexOf(name);
             if (elementPos !== -1) arr.splice(elementPos, 1);
@@ -150,7 +150,8 @@ io.sockets.on('connection', function(socket) {
     socket.on('team_select', function(data) {
         var name = socket.player_name;
         var team = data.team;
-        team -= 1; //acount for non 0 indexing
+        console.log("team val = " + team);
+        // team -= 1; //acount for non 0 indexing
         var active_room = getRoom(socket.room_id, active_game_rooms);
         if (socket.team != null) {
             var arr = active_room.room_team_arr[socket.team];
@@ -189,7 +190,7 @@ var clearRoom = function(room_id, arr) {
 // ID Generator courtesy of: https://www.fiznool.com/blog/2014/11/16/short-id-generation-in-javascript/
 // var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var ALPHABET = '0123456789';
-var ID_LENGTH = 8;
+var ID_LENGTH = 5;
 var UNIQUE_RETRIES = 9999;
 
 var generate = function() {
