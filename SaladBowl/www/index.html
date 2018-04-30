@@ -685,6 +685,7 @@ under the License.
             $("#team_number").text('TEAM ' + (global_game_manager_index + 1)); //because of 0 indexing
             global_timer = startTimer(global_room_obj.room_settings.turn_time_sec, $("#game_timer"));
             var set_spread = [...global_room_obj.room_card_set];
+            if(set_spread.length === 0) stateManager(game_states.FINAL_SCORE_CARD);
             global_active_card = set_spread.pop();
             var new_set = new Set(set_spread)
             global_room_obj.room_card_set = new_set;
@@ -695,6 +696,7 @@ under the License.
                 console.log('timer ended');
                 clearInterval(global_timer);
                 global_room_obj.room_card_set.add(global_active_card);
+                stateManager(game_states.SCORE_CARD);
             }
             // src: https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
             function startTimer(duration, display) {
@@ -754,6 +756,7 @@ under the License.
                 global_game_manager[global_game_manager_index].total_points += 1;
                 console.log(global_game_manager[global_game_manager_index].cards_won);
                 var set_spread = [...global_room_obj.room_card_set];
+                if(set_spread.length === 0) stateManager(game_states.FINAL_SCORE_CARD);
                 global_active_card = set_spread.pop();
                 var new_set = new Set(set_spread)
                 global_room_obj.room_card_set = new_set;
