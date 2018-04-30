@@ -646,6 +646,11 @@ h4 {
 	margin-right: auto;
 }
 
+#team_selection_text_wrapper {
+	opacity: 1;
+	transition: opacity 1s;
+}
+
 #team_selection_wrapper {
 	position: fixed;
 	height: 400px;
@@ -760,6 +765,7 @@ h4 {
     left: 5%;
     margin: 0px;
     transform: translate(0%);
+    display: block;
 }
 
 .team_selected_button {
@@ -836,6 +842,7 @@ h4 {
 #add_to_the_deck_screen_wrapper {
 	z-index: 4;
 	display: none;
+	animation-fill-mode: forwards;
 }
 
 #add_to_the_deck_header_wrapper{
@@ -909,6 +916,7 @@ h4 {
 	box-shadow: 0px -5px 8px rgba(152, 112, 75, 0.10);
 	z-index: 3;
 	bottom: 0%;
+	/*display: block;*/
 }
 
 .submit_to_the_deck_button {
@@ -1338,6 +1346,10 @@ td {
 
 /*How To Play Screen*/
 
+#how_to_play_section_wrapper {
+	display: none;
+}
+
 #how_to_play_header_wrapper {
 	position: relative;
 	margin-bottom: 60px;
@@ -1368,4 +1380,60 @@ td {
 #rule_one_image {
 	position: relative;
 	display: block;
+}
+
+/*How To Play Screen*/
+
+#how_to_play_header_wrapper {
+position: relative;
+margin-bottom: 60px;
+z-index: 4;
+}
+#how_to_play_header {
+position: relative;
+display: block;
+margin-bottom: 10px;
+text-align: center;
+z-index: 4;
+margin-top: 10px;
+}
+
+#how_to_play_body {
+text-align: center;
+z-index: 4;
+}
+
+.rules_wrapper {
+position: relative;
+display: block;
+width: 80%;
+margin-right: auto;
+margin-left: auto;
+margin-bottom: 50px;
+}
+.rules_images {
+position: relative;
+display: block;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 15px;
+}
+
+.rules_headers {
+position: relative;
+text-align: center;
+display: block;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 20px;
+}
+
+.rules_body {
+position: relative;
+text-align: center;
+display: block;
+width: 90%;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
 }

@@ -161,8 +161,12 @@ io.sockets.on('connection', function(socket) {
         }
         // console.log(active_room);
         // for (let item of active_room.team_arr) console.log(item);
-        active_room.room_team_arr[team].push(name);
-        socket.team = team;
+        if(team === -1){
+        	socket.team = null;
+        } else {
+        	active_room.room_team_arr[team].push(name);
+        	socket.team = team;
+        }
         console.log(active_room.room_team_arr);
         io.in(socket.room_id).emit('ui_update', {
             room_obj: active_room
