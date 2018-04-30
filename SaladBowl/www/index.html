@@ -198,14 +198,14 @@ under the License.
             <div id="game_waiting_area_header_wrapper">
                 <h1 class="page_header" id="game_waiting_area_header">GAME WAITING AREA</h1>
                 <div class="room_code_font" id="room_code_text"></div>
-                <h4 id="players_joined_counter">Players Joined: <b>02/15</b></h4>
+                <h4 id="players_joined_counter">Players Joined:</h4>
             </div>
             <div id="fun_fact_of_the_day_wrapper">
                 <div class="eighteen_black" id="fun_fact_header">Fun Fact of The Day</div>
                 <div class="small_pink_line"></div>
                 <h1 id="fun_fact_body_text">"Mongolia was once a fucking cunt that sucked dick munchers"</h1>
             </div>
-            <button class="in_app_orange_buttons"><h2 class="button_text">Start Game</h2></button>
+            <button class="in_app_orange_buttons" id="game_start_btn"><h2 class="button_text">Start Game</h2></button>
             <div id="team_selection_wrapper">
                 <div id="team_selection_background"></div>
                 <div id="team_selection_text_wrapper">
@@ -263,13 +263,13 @@ under the License.
                     <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
                 </div>
             </div>
-            <button class="in_app_orange_buttons submit_to_the_deck_button"><h2 class="button_text">Submit</h2></button>
+            <button class="in_app_orange_buttons submit_to_the_deck_button" id="submit_cards"><h2 class="button_text">Submit</h2></button>
         </div>
         <!-- Pass The Phone Screen -->
         <!-- NEW CODE  -->
         <img src="img/background_color.png" id="in_game_background_color">
         <!-- END OF NEW CODE  -->
-        <div id="in_game_background_color"></div>
+<!--         <div id="in_game_background_color"></div> -->
         <div id="pass_the_phone_to_screen_wrapper">
             <div id="pass_the_phone_header_wrapper">
                 <img src="img/phone_img.svg" id="phone_icon">
@@ -427,71 +427,6 @@ under the License.
         <!-- NEW CODE ENDS HERE -->
         <!--EasyTimer Scripts Link:
         https://albert-gonzalez.github.io/easytimer.js/ -->
-        <!-- Allen's code ..................................... -->
-        <div id="app">
-            <!--  <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div> -->
-            <div id="Salad Bowl Scenes">
-                <!-- home page form -->
-                <!-- <form action="index_submit" method="get" accept-charset="utf-8" id="game_start_join">
-                    <input type="button" id="start_game_init" name="start" value="Start New Game" class="landing_page_buttons">
-                    <input type="button" id="join_game_init" name="join" value="Join Existing Game" class="landing_page_buttons">
-                </form> -->
-                <!-- Form for joining an existing game -->
-                <!--  <form action="index_submit" method="get" accept-charset="utf-8" id="join_game_form">
-                    <label> Player Name: <input type="text" id="game_join_player_name" placeholder="Your name here..."></label>
-                    <label> Game Code: <input type="number" id="game_join_id" name="start" placeholder="Put Game Code Here" min="0" max="99999999"></label>
-                    <input type="button" id="join_game_btn" name="join" value="Join!">
-                    <input type="button" id="return_home_btn_1" value="Exit" class="return_home">
-                </form> -->
-                <!-- game setup form -->
-                <!--  <form action="index_submit" method="get" accept-charset="utf-8" id="game_setup_form">
-                    <label>Your Name: <input type="text" id="master_name" class="game_param" placeholder="What other players will see"></label>
-                    <label># Cards/Player: <input type="number" id="num_cards" value="5" class="game_param" min="5" max="20"></label>
-                    <label># Teams: <input type="number" id="num_teams" value="2" class="game_param" min="2" max="8"></label>
-                    <label># Players: <input type="number" id="num_players" value="4" min="4" max="10" class="game_param"></label>
-                    <label>Turn Time (min): <input type="number" id="turn_time_min" value="1" min="0" max="2" class="game_param"></label>
-                    <label>Turn Time (s): <input type="number" id="turn_time_sec" value="60" min="60" max="120" class="game_param"></label>
-                    <input type="button" id="submit_game_setup" value="Create Game Room">
-                    <input type="button" id="return_home_btn_2" value="Exit" class="return_home">
-                </form> -->
-                <!-- waiting area form -->
-                <form action="index_submit" method="get" accept-charset="utf-8" id="waiting_area_form">
-                    <ul>
-                        Total Players: <li id="total_players"></li>
-                        Players in Game: <li id="players_in_game"></li>
-                        Players who have submitted cards: <li id="players_submitted_cards"></li>
-                    </ul>
-                    <!-- <label>Your game code is: <h1 id="room_code_text"></h1></label> -->
-                    <label>Pick a team:
-                        <select id="team_select">
-                        </select>
-                    </label>
-                    <input type="button" id="open_card_dialog" value="Add To Bowl">
-                    <input type="button" id="return_game_setup" value="Exit" class="return_home">
-                </form>
-                <!-- dialog with cards to be filled out -->
-                <dialog id="card_dialog">
-                <button type="submit" id="submit_cards">Submit Cards</button>
-                <<!-- div id="card_input_div">
-                </div -->>
-                </dialog>
-                <table id="team_table">
-                    <thead>
-                        <tr>
-                            <th>Team Number:</th>
-                        </tr>
-                    </thead>
-                    <tbody id="team_list">
-                        <!-- <tr>
-                            <td>data</td>
-                        </tr> -->
-                    </tbody>
-                </table>
-            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
@@ -510,6 +445,7 @@ under the License.
         // global vars
         var active_room = null;
         var game_settings = null;
+        var is_master = false;
         var game_states = Object.freeze({
             HOME_SCREEN: "home_screen",
             GAME_SETUP: "game_setup",
@@ -535,6 +471,7 @@ under the License.
             $("#team_table").hide();
             $("#game_start_join").hide();
             // new
+            $("#game_start_btn").hide();
             $("#navigation_wrapper").css("display", "block");
             $("#navigation_wrapper_pink").css("display", "none");
             $("#in_game_background_color").css("display", "none");
@@ -623,31 +560,17 @@ under the License.
 
             $("#arrow_left_add_to_deck").on('click', function(event){
                  $("#add_to_the_deck_screen_wrapper").fadeOut(600, function() {
-                            window.scrollTo(0,0);
+                    window.scrollTo(0,0);
+                    $("#team_selection_wrapper").animate({
+                        bottom: "-=55%"
+                    }, 500, function() {
+                         window.scrollTo(0,0);
+                         // $("#game_waiting_area_screen_wrapper")
+                        $(".class_fade_wrapper").fadeIn(600, function() {
+                            stateManager(game_states.WAITING_TEAM_SEL);
+                        });
+                    });
                  });
-                 // $(".class_fade_wrapper").fadeIn(600, function() {
-                 //            // $("#team_selection_background").animate({
-                 //            //     top: "-=45%"
-                 //            // }, 500, function() {
-                 //            //      window.scrollTo(0,0);
-                 //            //     stateManager(game_states.WAITING_CARD_ADD);
-                 //            // });
-                 //         });
-                $("#team_selection_background").css("bottom", "0%");
-                 stateManager(game_states.WAITING_TEAM_SEL);
-                // $("#add_to_the_deck_screen_wrapper").fadeOut(600, function() {
-                //             window.scrollTo(0,0);
-                //  });
-                //  stateManager(game_states.WAITING_TEAM_SEL);
-                            // stateManager(game_states.WAITING_TEAM_SEL);
-                 // $("#add_to_the_deck_background").animate({
-                 //        top: "+=45%"
-                 //    }, 500, function() {
-                 //    });
-                 // $("#add_to_the_deck_screen_wrapper").css("display", "none");
-                 // $("#add_to_the_deck_background").css("display", "none");
-                 // stateManager(game_states.WAITING_TEAM_SEL);
-                 // $("#team_selection_wrapper").css("top", "0%")
             });
 
 
@@ -686,9 +609,20 @@ under the License.
                 global_room_obj = data.room_obj;
                 createTeamCards(data.room_obj, team_list_index);
                 appendTeamNames(data.room_obj.room_team_arr, $("#team_list"));
+                 $("#players_joined_counter").empty();
+                 var number_players = (global_room_obj.room_settings.num_players)*(global_room_obj.room_settings.num_teams);
+                $("#players_joined_counter").text(global_room_obj.room_names_arr.length + ' / ' + number_players);
                 // Total Players: <li id="total_players"></li>
                 //        Players in Game: <li id="players_in_game"></li>
                 //        Players who have submitted cards: <li id="players_submitted_cards"></li>
+            });
+
+            $("#game_start_btn").on('click', function(event){
+                var number_players = (global_room_obj.room_settings.num_players)*(global_room_obj.room_settings.num_teams);
+                // if(number_players === global_room_obj.room_names_arr.length){
+                //     stateManager(gamestate.PASS_PHONE);
+                // }
+                stateManager(gamestate.PASS_PHONE);
             });
             // WAITING_TEAM_SEL end-------------------------------
             // JOIN_GAME start------------------------------------
@@ -758,6 +692,7 @@ under the License.
             // event listener for game master to submit game settings
             $("#submit_game_setup").click(function() {
                 window.scrollTo(0,0);
+                is_master = true;
                 var master_name_c = $("#master_name").val();
                 var num_teams_c = $("#num_teams").val();
                 var num_players_c = $("#num_players").val();
@@ -808,10 +743,7 @@ under the License.
                 }
             });
             // GAME_SETUP end-----------------------------------
-            // debug connections from server-----------------------
-            // $( function() {
-            //     $("#team_selection_wrapper").draggable({ axis: "y" });
-            // });
+
             socket.on('alert_msg', function(data) {
                 console.log(data);
             });
@@ -873,41 +805,7 @@ under the License.
                     createTeamCards(global_room_obj, team_list_index);
                 }
             }
-            //     <div id="team_selection_wrapper">
-            //     <div id="team_selection_background"></div>
-            //     <div id="team_selection_header_wrapper">
-            //         <img src="img/arrow_up.png" id="arrow_up">
-            //         <div class="eighteen_salmon" id="team_selection_header">TEAM SELECTION</div>
-            //     </div>
-            //     <div id="team_identifier_wrapper">
-            //         <h1 id="team_saved_name">SAVED TEAM NAME</h1>
-            //         <div id="change_team_name_wrapper">
-            //             <div class="small_pink_line"></div>
-            //             <h4 id="change_team_name">Change Name</h4>
-            //         </div>
-            //     </div>
-            //     <div id="team_list_icons_wrapper">
-            //         <div class="spot_wrapper">
-            //             <img src="img/pink_person.png" id="spot_icon">
-            //             <div class="eighteen_salmon spot_text">Open</div>
-            //         </div>
-            //     </div>
-            //     <!--  <button class="in_app_grey_buttons"><h2 class="button_text">Leave Team</h2></button> -->
-            //     <button class="in_app_orange_buttons team_selection_button"><h2 class="button_text">Join Team</h2></button>
-            //     <div id="breadcrumb_wrapper">
-            //         <div class="breadcrumb_inactive"></div>
-            //         <div class="breadcrumb_inactive"></div>
-            //         <div class="breadcrumb_inactive"></div>
-            //         <div class="breadcrumb_inactive"></div>
-            //     </div>
-            // </div>
-            // Function delclarations start
-            // card_input_div
-            // <div id="enter_player_name_wrapper">
-                //     <div class="eighteen_black" id="player_name_header">Card 1</div>
-                //     <div class="small_pink_line"></div>
-                //     <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
-                // </div>
+
             var createCardInput = function(num_cards, append_element) {
                 append_element.empty();
                 for (var i = 0; i < num_cards; i++) {
@@ -946,13 +844,13 @@ under the License.
 
 
             var stateManager = function(state) {
-                    if (cards_in_bowl) {
-                        $("#submit_cards").hide();
-                        $("#open_card_dialog").hide();
-                    } else {
-                        $("#submit_cards").show();
-                        $("#open_card_dialog").show();
-                    }
+                    // if (cards_in_bowl) {
+                    //     $("#submit_cards").hide();
+                    //     $("#open_card_dialog").hide();
+                    // } else {
+                    //     $("#submit_cards").show();
+                    //     $("#open_card_dialog").show();
+                    // }
                     switch (state) {
                         case game_states.HOME_SCREEN:
                             // new screens
@@ -1017,6 +915,11 @@ under the License.
                             break;
                         case game_states.WAITING_TEAM_SEL:
                             // new screens
+                           if(is_master){
+                                $("#game_start_btn").show();
+                            } else {
+                                $("#game_start_btn").hide();
+                            }
                             $("#navigation_wrapper").css("display", "block");
                             $("#navigation_wrapper_pink").css("display", "none");
                             $("#home_screen_wrapper").css("display", "none");

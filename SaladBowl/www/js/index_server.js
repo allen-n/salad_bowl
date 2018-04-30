@@ -63,7 +63,8 @@ io.sockets.on('connection', function(socket) {
         socket.join(temp_room_id)
         console.log("Joined room " + temp_room_id);
         io.in(socket.room_id).emit('ui_update', {
-            room_obj: game_room_obj
+            room_obj: game_room_obj,
+            is_master: socket.is_master
         });
     });
 
@@ -85,6 +86,7 @@ io.sockets.on('connection', function(socket) {
                 socket.room_id = data.game_id_c;
                 socket.player_name = data.player_name_c;
                 socket.join(room_id_temp);
+                active_room.room_names_arr.push(socket.player_name);
                 console.log("non master joined room with id " + socket.room_id);
                 socket.in(room_id_temp).emit('alert_msg', 'New User Socket has joined!');
                 game_settings = active_room.room_settings;
