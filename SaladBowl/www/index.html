@@ -529,14 +529,14 @@ under the License.
                 $("#team_selection_wrapper").animate({
                     bottom: "0%"
                 }, 1000, function() {
-                    // Animation complete.
+                    $("#arrow_up").css("transform", "scaleY(-1)"); //FIXME: it weirdly pushes the arrow down when i do this
                 });
                 bool_team_list_up = true;
             } else {
                 $("#team_selection_wrapper").animate({
                     bottom: "-47%"
                 }, 1000, function() {
-                    // Animation complete.
+                    $("#arrow_up").css("transform", "scaleY(1)"); //FIXME
                 });
                 bool_team_list_up = false;
             }
@@ -583,7 +583,7 @@ under the License.
         // allen code still necessary
         $(".team_selection_button").on('click', function(event) {
             console.log('test ' + global_room_obj.room_team_arr[team_list_index].length + ' / ' + global_room_obj.room_settings.num_players);
-            if (global_room_obj.room_team_arr[team_list_index].length >= (global_room_obj.room_settings.num_players - 1)) {
+            if (global_room_obj.room_team_arr[team_list_index].length >= (global_room_obj.room_settings.num_players)) {
                 alert("Team" + team_list_index + " is full, please pick another.")
             } else {
                 socket.emit('team_select', {
