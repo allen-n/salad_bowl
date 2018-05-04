@@ -230,10 +230,10 @@ under the License.
                     <!-- NEW CODE ENDS HERE-->
                     <button class="in_app_orange_buttons team_selection_button"><h2 class="button_text">Join Team</h2></button>
                     <div id="breadcrumb_wrapper" class="class_fade_wrapper" >
+                        <!--  <div class="breadcrumb_inactive"></div>
                         <div class="breadcrumb_inactive"></div>
                         <div class="breadcrumb_inactive"></div>
-                        <div class="breadcrumb_inactive"></div>
-                        <div class="breadcrumb_inactive"></div>
+                        <div class="breadcrumb_inactive"></div> -->
                     </div>
                 </div>
             </div>
@@ -520,8 +520,8 @@ under the License.
         });
         // WAITING_CARD_ADD end--------------------------------
         // WAITING_TEAM_SEL start------------------------------
-                  $(".team_selection_button").css("display", "block");
-                $("#in_a_team_button_wrapper").css("display", "none");
+        $(".team_selection_button").css("display", "block");
+        $("#in_a_team_button_wrapper").css("display", "none");
         // jordans new sliding stuff start
         var bool_team_list_up = false;
         $("#team_selection_header_wrapper").click(function() {
@@ -529,20 +529,20 @@ under the License.
                 $("#team_selection_wrapper").animate({
                     bottom: "0%"
                 }, 1000, function() {
-                    $("#arrow_up").css("transform", "scaleY(-1)"); //FIXME: it weirdly pushes the arrow down when i do this
+                    $("#arrow_up").css({
+                        "transform": "translate(-50%, -50%) scaleY(-1)"
+                    }); //FIXME: it weirdly pushes the arrow down when i do this
                 });
                 bool_team_list_up = true;
             } else {
                 $("#team_selection_wrapper").animate({
                     bottom: "-47%"
                 }, 1000, function() {
-                    $("#arrow_up").css("transform", "scaleY(1)"); //FIXME
+                    $("#arrow_up").css("transform", "translate(-50%, -50%) scaleY(1)"); //FIXME
                 });
                 bool_team_list_up = false;
             }
         });
-
-
         $("#add_to_deck_button").click(function() {
             $(".fadeoutteam").css("opacity", "0");
             $("#add_to_the_deck_header_wrapper").animate({
@@ -556,9 +556,9 @@ under the License.
                 $("#team_selection_wrapper").css("display", "none");
                 $("#game_waiting_area_screen_wrapper").css("display", "none");
                 $("#add_to_the_deck_screen_wrapper").css("display", "block");
+                $("body").css("overflow-y", "scroll");
             });
         });
-
         $("#arrow_left_add_to_deck").click(function() {
             $("#game_waiting_area_screen_wrapper").css("display", "");
             $("#team_selection_wrapper").css("display", "");
@@ -570,13 +570,12 @@ under the License.
             });
             $("#add_to_the_deck_background").animate({
                 bottom: "-85%"
-            }, 800, function() {
-
-            });
+            }, 800, function() {});
             $("#add_to_the_deck_header_wrapper").animate({
                 marginTop: "160%"
             }, 800, function() {
                 $("#add_to_the_deck_screen_wrapper").css("display", "none");
+                $("body").css("overflow-y", "hidden");
             });
         });
         // jordan's new sliding stuff stop
@@ -600,7 +599,6 @@ under the License.
             $(".team_selection_button").css("display", "block");
             $("#in_a_team_button_wrapper").css("display", "none");
         });
-
         socket.on('goto_join_game_success', function(data) {
             if (data.name_correct && data.id_correct) {
                 active_room = data.room_id;
@@ -632,7 +630,7 @@ under the License.
             $("#players_joined_counter").empty();
             var number_players = (global_room_obj.room_settings.num_players) * (global_room_obj.room_settings.num_teams);
             $("#players_joined_counter").text(global_room_obj.room_names_arr.length + ' / ' + number_players);
-
+            // $("#breadcrumb_wrapper").empty();
         });
         // WAITING_TEAM_SEL end-------------------------------
         //Pass the phone--------------------------------------------------------
@@ -663,7 +661,7 @@ under the License.
             global_active_team.question_asker_index = (global_active_team.question_asker_index + 1) % global_room_obj.room_settings.num_players;
             // console.log(global_game_manager);
             // console.log(global_game_manager[global_game_manager_index]);
-             $("#next_question_asker").empty();
+            $("#next_question_asker").empty();
             var str = '' + global_room_obj.room_team_arr[global_game_manager_index][global_active_team.question_asker_index];
             str = str.toUpperCase();
             $("#next_question_asker").text(str);
@@ -674,9 +672,8 @@ under the License.
         // pass the phone end---------------------------------------------------
         // active game start-----------------------------------------------------
         var global_timer = null;
-        $("#pass_the_phone_button").on('click', function(event){
+        $("#pass_the_phone_button").on('click', function(event) {
             stateManager(game_states.QUESTION_ASK);
-
             $("#question_giver").empty();
             var str = '' + global_room_obj.room_team_arr[global_game_manager_index][global_active_team.question_asker_index];
             str = str.toUpperCase();
@@ -685,115 +682,112 @@ under the License.
             $("#team_number").text('TEAM ' + (global_game_manager_index + 1)); //because of 0 indexing
             global_timer = startTimer(global_room_obj.room_settings.turn_time_sec, $("#game_timer"));
             var set_spread = [...global_room_obj.room_card_set];
-            if(set_spread.length === 0) stateManager(game_states.FINAL_SCORE_CARD);
+            if (set_spread.length === 0) stateManager(game_states.FINAL_SCORE_CARD);
             global_active_card = set_spread.pop();
             var new_set = new Set(set_spread)
             global_room_obj.room_card_set = new_set;
             $("#card_value1").text(global_active_card);
             $("#card_1_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
         });
-            function timerCallback(){
-                console.log('timer ended');
-                clearInterval(global_timer);
-                global_room_obj.room_card_set.add(global_active_card);
-                stateManager(game_states.SCORE_CARD);
-            }
-            // src: https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
-            function startTimer(duration, display) {
-                var timer = duration,
-                    minutes, seconds;
-                var out = setInterval(function() {
-                    minutes = parseInt(timer / 60, 10);
-                    seconds = parseInt(timer % 60, 10);
 
-                    minutes = minutes < 10 ? "0" + minutes : minutes;
-                    seconds = seconds < 10 ? "0" + seconds : seconds;
+        function timerCallback() {
+            console.log('timer ended');
+            clearInterval(global_timer);
+            global_room_obj.room_card_set.add(global_active_card);
+            stateManager(game_states.SCORE_CARD);
+        }
+        // src: https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
+        function startTimer(duration, display) {
+            var timer = duration,
+                minutes, seconds;
+            var out = setInterval(function() {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.text(minutes + ":" + seconds);
+                if (--timer < 0) {
+                    timer = duration;
+                    timerCallback();
+                }
+            }, 1000);
+            return out
+        }
 
-                    display.text(minutes + ":" + seconds);
-
-                    if (--timer < 0) {
-                        timer = duration;
-                        timerCallback();
-                    }
-                }, 1000);
-                return out
-            }
-
-            function cardResetCallback() {
-                $("#card_value1").text(global_active_card);
-                $("#card_1_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
-                $("#playing_card1").css("left", "");
+        function cardResetCallback() {
+            $("#card_value1").text(global_active_card);
+            $("#card_1_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
+            $("#playing_card1").css("left", "");
+            $("#playing_card7").css({
+                "right": "",
+                "background-color": ""
+            });
+            $("#playing_card2").css({
+                "bottom": "",
+                "background-color": ""
+            });
+            $("#playing_card3").css({
+                "bottom": "",
+                "background-color": ""
+            });
+            $("#playing_card4").css({
+                "bottom": "",
+                "background-color": ""
+            });
+            $("#playing_card5").css({
+                "bottom": "",
+                "background-color": ""
+            });
+            $("#playing_card6").css({
+                "bottom": "",
+                "background-color": ""
+            });
+        }
+        var global_active_card = null
+        $("#playing_card1").on('click', function() {
+            var speed = 800;
+            global_game_manager[global_game_manager_index].cards_won.push(($("#card_value1").text()));
+            global_game_manager[global_game_manager_index].total_points += 1;
+            console.log(global_game_manager[global_game_manager_index].cards_won);
+            var set_spread = [...global_room_obj.room_card_set];
+            if (set_spread.length === 0) stateManager(game_states.FINAL_SCORE_CARD);
+            global_active_card = set_spread.pop();
+            var new_set = new Set(set_spread)
+            global_room_obj.room_card_set = new_set;
+            $("#card_value2").text(global_active_card);
+            $("#card_2_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
+            $("#playing_card1").animate({
+                left: "500px"
+            }, speed, function() {
                 $("#playing_card7").css({
-                    "right": "",
-                    "background-color": ""
+                    "right": "0px",
+                    "background-color": "#D3A2CC"
                 });
                 $("#playing_card2").css({
-                    "bottom": "",
-                    "background-color": ""
+                    "bottom": "10%",
+                    "background-color": "white"
                 });
                 $("#playing_card3").css({
-                    "bottom": "",
-                    "background-color": ""
+                    "bottom": "12%",
+                    "background-color": "#FFECF7"
                 });
                 $("#playing_card4").css({
-                    "bottom": "",
-                    "background-color": ""
+                    "bottom": "14%",
+                    "background-color": "#FEDAF2"
                 });
                 $("#playing_card5").css({
-                    "bottom": "",
-                    "background-color": ""
+                    "bottom": "16%",
+                    "background-color": "#F3C4E6"
                 });
                 $("#playing_card6").css({
-                    "bottom": "",
-                    "background-color": ""
+                    "bottom": "18%",
+                    "background-color": "#E1B1D7"
                 });
-            }
-
-            var global_active_card = null
-            $("#playing_card1").on('click', function() {
-                var speed = 800;
-                global_game_manager[global_game_manager_index].cards_won.push(($("#card_value1").text()));
-                global_game_manager[global_game_manager_index].total_points += 1;
-                console.log(global_game_manager[global_game_manager_index].cards_won);
-                var set_spread = [...global_room_obj.room_card_set];
-                if(set_spread.length === 0) stateManager(game_states.FINAL_SCORE_CARD);
-                global_active_card = set_spread.pop();
-                var new_set = new Set(set_spread)
-                global_room_obj.room_card_set = new_set;
-                $("#card_value2").text(global_active_card);
-                $("#card_2_header").text('Card #' + global_game_manager[global_game_manager_index].total_points);
-
-                $("#playing_card1").animate({
-                    left: "500px"
-                }, speed, function() {
-                    $("#playing_card7").css({
-                        "right": "0px",
-                        "background-color": "#D3A2CC"
-                    });
-                    $("#playing_card2").css({
-                        "bottom": "10%",
-                        "background-color": "white"
-                    });
-                    $("#playing_card3").css({
-                        "bottom": "12%",
-                        "background-color": "#FFECF7"
-                    });
-                    $("#playing_card4").css({
-                        "bottom": "14%",
-                        "background-color": "#FEDAF2"
-                    });
-                    $("#playing_card5").css({
-                        "bottom": "16%",
-                        "background-color": "#F3C4E6"
-                    });
-                    $("#playing_card6").css({
-                        "bottom": "18%",
-                        "background-color": "#E1B1D7"
-                    });
-                    setTimeout(function(){cardResetCallback()}, speed/2);
-
-                });
+                setTimeout(function() {
+                    cardResetCallback()
+                }, speed / 2);
             });
+        });
         //active game end-----------------------------------------------------
         // JOIN_GAME start------------------------------------
         // event listener to go to join game screen
@@ -862,22 +856,33 @@ under the License.
         // event listener for game master to submit game settings
         $("#submit_game_setup").click(function() {
             window.scrollTo(0, 0);
-            is_master = true;
             var master_name_c = $("#master_name").val();
             var num_teams_c = $("#num_teams").val();
             var num_players_c = $("#num_players").val();
             var turn_time_min_c = null; //$("#turn_time_min").val(); //We'll just use seconds
             var turn_time_sec_c = $("#turn_time_sec").val();
-            var num_cards_c = $("#num_cards").val();;
-            socket.emit('goto_card_submit_master', {
-                master_name_c: master_name_c,
-                num_teams_c: num_teams_c,
-                num_players_c: num_players_c,
-                num_cards_c: num_cards_c,
-                turn_time_min_c: turn_time_min_c,
-                turn_time_sec_c: turn_time_sec_c,
-                active_room_c: active_room
-            });
+            var num_cards_c = $("#num_cards").val();
+            if (master_name_c === "") {
+                alert("Player name can't be blank. Please enter a name to join the game!");
+            } else {
+                is_master = true;
+
+                socket.emit('goto_card_submit_master', {
+                    master_name_c: master_name_c,
+                    num_teams_c: num_teams_c,
+                    num_players_c: num_players_c,
+                    num_cards_c: num_cards_c,
+                    turn_time_min_c: turn_time_min_c,
+                    turn_time_sec_c: turn_time_sec_c,
+                    active_room_c: active_room
+                });
+                //add breadcrumb code here
+                $("#breadcrumb_wrapper").empty();
+                for (var i = 0; i < num_teams_c; i++) {
+                    $("#breadcrumb_wrapper").append('<div class="breadcrumb_inactive id="crumb' + i + '"></div>');
+                }
+            }
+
         });
         var team_list = [];
         socket.on('send_game_settings', function(data) {
@@ -932,6 +937,17 @@ under the License.
                     '<div class="spot_wrapper"><img src="img/pink_person.png" class="spot_icon"><div class="eighteen_salmon spot_text">Open</div></div>'
                 );
             }
+            $("#breadcrumb_wrapper").empty();
+            for (var i = 0; i < global_room_obj.room_settings.num_teams; i++) {
+                $("#breadcrumb_wrapper").append('<div class="breadcrumb_inactive id="crumb' + i + '"></div>');
+            }
+            var crumbs = $(".breadcrumb_inactive");
+            console.log(crumbs);
+            for (var i = 0; i < crumbs.length; i++) {
+                if (i === team_list_index) $(crumbs[i]).css("background-color", "#2b2b2b");
+                else $(crumbs[i]).css("background-color", "#F7A1A1");
+            }
+            // $("#crumb" + team_list_index).css("color", "2b2b2b");
         }
         $("#team_selection_wrapper").on("swipeleft", function(event) {
             var speed = 600;
@@ -1051,13 +1067,14 @@ under the License.
                         $("#in_game_background_color").css("display", "none");
                         $("#pass_the_phone_to_screen_wrapper").css("display", "none");
                         $("#active_game_play_wrapper").css("display", "none");
-                        // old screens
-                        // $("#game_start_join").hide();
-                        // $("#join_game_form").hide();
-                        // $("#game_setup_form").show();
-                        // $("#waiting_area_form").hide();
-                        // $("#card_dialog").hide();
-                        // $("#team_table").hide();
+                        $("body").css("overflow-y", "scroll")
+                            // old screens
+                            // $("#game_start_join").hide();
+                            // $("#join_game_form").hide();
+                            // $("#game_setup_form").show();
+                            // $("#waiting_area_form").hide();
+                            // $("#card_dialog").hide();
+                            // $("#team_table").hide();
                         break;
                     case game_states.JOIN_GAME:
                         // new screens
@@ -1093,6 +1110,8 @@ under the License.
                         $("#team_selection_wrapper").css("bottom", "-46%");
                         $("#team_selection_wrapper").css("display", "block"); //FIXME
                         $("#in_a_team_button_wrapper").css("display", "none");
+                        $("body").css("overflow-y", "hidden");
+                        // $("#game_waiting_area_screen_wrapper").css("overflow","visible");
                         break;
                     case game_states.WAITING_CARD_ADD:
                         $("#navigation_wrapper").css("display", "block");
@@ -1109,6 +1128,8 @@ under the License.
                         $("#in_a_team_button_wrapper").css("display", "none");
                         $("#add_to_the_deck_screen_wrapper").css("display", "block");
                         $("#team_selection_wrapper").css("display", "none"); //FIXME
+                        console.log("SCROLL SHJOULD BE ON");
+                        $("body").css("overflow-y", "scroll");
                         break;
                     case game_states.PASS_PHONE:
                         $("#navigation_wrapper").css("display", "none");

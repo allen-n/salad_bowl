@@ -6,6 +6,7 @@ body {
 	max-width: 100%;
 	margin:0px;
 	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 @font-face {
@@ -333,6 +334,7 @@ h4 {
 
 #home_screen_wrapper {
 	display: none;
+	overflow: hidden;
 }
 
 #salad_bowl_header_wrapper {
@@ -1523,6 +1525,7 @@ bottom: 0%;
 
 #game_waiting_area_screen_wrapper {
 /* display: block;*/
+overflow: hidden;
 }
 
 #add_to_the_deck_screen_wrapper {
