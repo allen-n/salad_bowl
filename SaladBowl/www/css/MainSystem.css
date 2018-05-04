@@ -1170,7 +1170,7 @@ transition: background-color .8s;
 
 
 
-#team_one_wrapper {
+.team_score_wrapper {
 	position: relative;
     display: block;
     width: 290px;
@@ -1232,7 +1232,7 @@ transition: background-color .8s;
 
 #round_break_timer {
 	position: relative;
-	display: block;
+	display: none;
 	margin-bottom: 20px;
 	color: #919191;
 	z-index: 5;
