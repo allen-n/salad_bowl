@@ -67,17 +67,17 @@ under the License.
                 <img id="rules_page_icon" src="img/how_to_play.png">
                 <div id="rules_page_icon_underline"></div>
             </div>
-            <div id="shop_page_icon_wrapper">
+           <!--  <div id="shop_page_icon_wrapper">
                 <img id="shop_page_icon" src="img/shop.png">
                 <div id="shop_page_icon_underline"></div>
-            </div>
+            </div> -->
             <div id="home_page_icon_wrapper">
                 <img class="return_home" id="home_page_icon" src="img/Active_GameIcon.png">
             </div>
-            <div id="random_page_icon_wrapper">
+            <!-- <div id="random_page_icon_wrapper">
                 <img id="random_page_icon" src="img/random.png">
                 <div id="random_page_icon_underline"></div>
-            </div>
+            </div> -->
             <div id="settings_page_icon_wrapper">
                 <img id="settings_page_icon" src="img/settings.png">
                 <div id="settings_page_icon_underline"></div>
@@ -89,17 +89,17 @@ under the License.
                 <img id="rules_page_icon" src="img/purple_nav_icons/how_to_play.png">
                 <div id="rules_page_icon_underline2"></div>
             </div>
-            <div id="shop_page_icon_wrapper">
+            <!-- <div id="shop_page_icon_wrapper">
                 <img id="shop_page_icon" src="img/purple_nav_icons/shop.png">
                 <div id="shop_page_icon_underline2"></div>
-            </div>
+            </div> -->
             <div id="home_page_icon_wrapper">
                 <img id="home_page_icon" class="return_home" src="img/Active_GameIcon.png">
             </div>
-            <div id="random_page_icon_wrapper">
+           <!--  <div id="random_page_icon_wrapper">
                 <img id="random_page_icon" src="img/purple_nav_icons/random.png">
                 <div id="random_page_icon_underline2"></div>
-            </div>
+            </div> -->
             <div id="settings_page_icon_wrapper">
                 <img id="settings_page_icon" src="img/purple_nav_icons/settings.png">
                 <div id="settings_page_icon_underline2"></div>
@@ -434,6 +434,8 @@ under the License.
                 <h3 class="rules_body" id="rule_four_body">The player with the most points at the end of the game with be crowned victorious! Use our final breakdown to read a brief summary about each word.</h3>
             </div>
         </div>
+
+        <!-- Leaving the game dialog box -->
         <!-- NEW CODE ENDS HERE -->
         <!--EasyTimer Scripts Link:
         https://albert-gonzalez.github.io/easytimer.js/ -->
@@ -465,7 +467,8 @@ under the License.
         PASS_PHONE: "pass_phone",
         QUESTION_ASK: "question_ask",
         SCORE_CARD: "score_card",
-        FINAL_SCORE_CARD: "final_score_card"
+        FINAL_SCORE_CARD: "final_score_card",
+        HOW_TO_PLAY: "how_to_play"
     });
     $(document).on("mobileinit", function() { //mobieinit never happens?
         $.mobile.ajaxEnabled = false;
@@ -850,39 +853,6 @@ under the License.
             global_game_manager.sort(teamOrder);
         }
 
-         // <div id="team_one_wrapper">
-         //            <h3 id="team_title_one">TEAM 1:</h3>
-         //            <div class="room_code_font" id="team_score_one">10<h1 class="pink_h1 pts">PTS</h1></div>
-         //        </div>
-        // var team_info = {
-        //                 cards_won: [],
-        //                 total_points: 0,
-        //                 question_asker_index: rand_team_member
-        //             };
-        //             global_game_manager.push(team_info);
-        // <div id="final_breakdown_wrapper">
-        //     <div id="round_breakdown_header_wrapper">
-        //         <h1 id="round_breakdown_header">FINAL BREAKDOWN</h1>
-        //         <h3 id="round_breakdown_body">Great game! Check out what</br>answers you missed</h3>
-        //     </div>
-        //     <div class="final_team_stats_wrapper" id="team1finalscore">
-        //         <table>
-        //             <th class="eighteen_black">Team 1:</th>
-        //             <td class="eighteen_salmon">40PTS</td>
-        //         </table>
-        //         <div class="long_pink_line"></div>
-        //         <div class="answers_wrapper" id="answer1">
-        //             <h4 class="final_answers">Blah Blah Blah</h4>
-        //             <img src="img/checkmark.png" class="checkmark">
-        //         </div>
-        //         <div class="answers_wrapper" id="answer2">
-        //             <h4 class="final_answers">Blah dsasd Blah</h4>
-        //             <img src="img/checkmark.png" class="checkmark">
-        //         </div>
-        //         <div class="answers_wrapper" id="answer3">
-        //             <h4 class="final_answers">Blah Blah</h4>
-        //             <img src="img/checkmark.png" class="checkmark">
-        //         </div>
         // JOIN_GAME start------------------------------------
         // event listener to go to join game screen
         $("#join_game_btn").click(function() {
@@ -1119,6 +1089,18 @@ under the License.
                 console.log('name appended');
             }
         }
+
+        // how to play code
+        $("#rules_page_icon").on("click", function(){
+            if (global_current_state === game_states.HOW_TO_PLAY) {
+                stateManager(global_prev_state);
+            } else {
+                stateManager(game_states.HOW_TO_PLAY);
+            }
+        });
+
+        var global_prev_state = game_states.HOME_SCREEN;
+        var global_current_state = game_states.HOME_SCREEN;
         var stateManager = function(state) {
                 // if (cards_in_bowl) {
                 //     $("#submit_cards").hide();
@@ -1127,6 +1109,8 @@ under the License.
                 //     $("#submit_cards").show();
                 //     $("#open_card_dialog").show();
                 // }
+                global_prev_state = global_current_state;
+                global_current_state = state;
                 switch (state) {
                     case game_states.HOME_SCREEN:
                         // new screens
@@ -1140,13 +1124,9 @@ under the License.
                         $("#in_game_background_color").css("display", "none");
                         $("#pass_the_phone_to_screen_wrapper").css("display", "none");
                         $("#active_game_play_wrapper").css("display", "none");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         // old screens
-                        // $("#game_start_join").show();
-                        // $("#join_game_form").hide();
-                        // $("#game_setup_form").hide();
-                        // $("#waiting_area_form").hide();
-                        // $("#card_dialog").hide();
-                        // $("#team_table").hide();
+
                         window.location.reload();
                         break;
                     case game_states.GAME_SETUP:
@@ -1161,14 +1141,10 @@ under the License.
                         $("#in_game_background_color").css("display", "none");
                         $("#pass_the_phone_to_screen_wrapper").css("display", "none");
                         $("#active_game_play_wrapper").css("display", "none");
-                        $("body").css("overflow-y", "scroll")
+                        $("body").css("overflow-y", "scroll");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                             // old screens
-                            // $("#game_start_join").hide();
-                            // $("#join_game_form").hide();
-                            // $("#game_setup_form").show();
-                            // $("#waiting_area_form").hide();
-                            // $("#card_dialog").hide();
-                            // $("#team_table").hide();
+
                         break;
                     case game_states.JOIN_GAME:
                         // new screens
@@ -1182,6 +1158,7 @@ under the License.
                         $("#in_game_background_color").css("display", "none");
                         $("#pass_the_phone_to_screen_wrapper").css("display", "none");
                         $("#active_game_play_wrapper").css("display", "none");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         // old screens
                         break;
                     case game_states.WAITING_TEAM_SEL:
@@ -1205,6 +1182,7 @@ under the License.
                         $("#team_selection_wrapper").css("display", "block"); //FIXME
                         $("#in_a_team_button_wrapper").css("display", "none");
                         $("body").css("overflow-y", "hidden");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         // $("#game_waiting_area_screen_wrapper").css("overflow","visible");
                         break;
                     case game_states.WAITING_CARD_ADD:
@@ -1222,8 +1200,9 @@ under the License.
                         $("#in_a_team_button_wrapper").css("display", "none");
                         $("#add_to_the_deck_screen_wrapper").css("display", "block");
                         $("#team_selection_wrapper").css("display", "none"); //FIXME
-                        console.log("SCROLL SHJOULD BE ON");
+                        // console.log("SCROLL SHJOULD BE ON");
                         $("body").css("overflow-y", "scroll");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         break;
                     case game_states.PASS_PHONE:
                         $("#navigation_wrapper").css("display", "none");
@@ -1236,6 +1215,7 @@ under the License.
                         window.scrollTo(0, 0);
                         $("body").css("overflow-y", "hidden");
                         $("#round_breakdown_wrapper").css("display", "none");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         break;
                     case game_states.QUESTION_ASK:
                         $("#navigation_wrapper_pink").css("display", "block");
@@ -1244,6 +1224,7 @@ under the License.
                         $("#active_game_play_wrapper").css("display", "block");
                         window.scrollTo(0, 0);
                         $("body").css("overflow-y", "hidden");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         // start timer
                         break;
                     case game_states.SCORE_CARD:
@@ -1254,6 +1235,7 @@ under the License.
                         $("#active_game_play_wrapper").css("display", "none");
                         $("#round_breakdown_wrapper").css("display", "block");
                         $("body").css("overflow-y", "scroll");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         break;
                     case game_states.FINAL_SCORE_CARD:
                         fillFinalBreakdown();
@@ -1263,7 +1245,32 @@ under the License.
                         $("#active_game_play_wrapper").css("display", "none");
                         $("#round_breakdown_wrapper").css("display", "none");
                         $("#final_breakdown_wrapper").css("display", "block");
+                        $("#how_to_play_section_wrapper").css("display", "none");
                         $("body").css("overflow-y", "scroll");
+                        break;
+                    case game_states.HOW_TO_PLAY:
+                        // new screens
+                        // if (is_master) {
+                        //     $("#game_start_btn").show();
+                        // } else {
+                            $("#game_start_btn").hide();
+                        // }
+                        // $("#navigation_wrapper").css("display", "block");
+                        // $("#navigation_wrapper_pink").css("display", "none");
+                        $("#home_screen_wrapper").css("display", "none");
+                        $("#host_game_screen_wrapper").css("display", "none");
+                        $("#join_game_screen_wrapper").css("display", "none");
+                        $("#game_waiting_area_screen_wrapper").css("display", "none");
+                        $("#add_to_the_deck_screen_wrapper").css("display", "none");
+                        $("#in_game_background_color").css("display", "none");
+                        $("#pass_the_phone_to_screen_wrapper").css("display", "none");
+                        $("#active_game_play_wrapper").css("display", "none");
+                        // $("#team_selection_wrapper").css("bottom", "-46%");
+                        $("#team_selection_wrapper").css("display", "none"); //FIXME
+                        $("#in_a_team_button_wrapper").css("display", "none");
+                        $("body").css("overflow-y", "scroll");
+                        $("#how_to_play_section_wrapper").css("display", "block");
+                        // $("#game_waiting_area_screen_wrapper").css("overflow","visible");
                         break;
                     default:
                         break;

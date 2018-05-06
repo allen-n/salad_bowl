@@ -1140,6 +1140,7 @@ transition: background-color .8s;
 	display: block;
     position: relative;
     z-index: 4;
+    margin-bottom: 30px;
 }
 
 #round_breakdown_header_wrapper{
