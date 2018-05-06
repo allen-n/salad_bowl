@@ -1136,6 +1136,12 @@ transition: background-color .8s;
 	display: none;
 }
 
+#round_breakdown_wrapper_outside{
+	display: block;
+    position: relative;
+    z-index: 4;
+}
+
 #round_breakdown_header_wrapper{
 	position: relative;
 	margin-bottom: 60px;

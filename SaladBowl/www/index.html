@@ -840,12 +840,12 @@ under the License.
         var fillRoundBreakdown = function(){
              global_game_manager.sort(compareTeams);
             $("#round_breakdown_wrapper_outside").empty();
-            // $("#final_breakdown_wrapper").append(`<div id="round_breakdown_header_wrapper">
-            //     <h1 id="round_breakdown_header">FINAL BREAKDOWN</h1>
-            //     <h3 id="round_breakdown_body">Great game! Check out what</br>answers you missed</h3>
-            // </div>`);
+           // <div id="team_one_wrapper">
+           //          <h3 id="team_title_one">TEAM 1:</h3>
+           //          <div class="room_code_font" id="team_score_one">10<h1 class="pink_h1 pts">PTS</h1></div>
+           //      </div>
             for (var i = 0; i < global_game_manager.length; i++) {
-                $("#round_breakdown_wrapper_outside").append('<div class="team_score_wrapper" id="team' + global_game_manager[i].team_number +'roundscore"> <h3 id="team_title_'+global_game_manager[i].team_number +'">TEAM ' + global_game_manager[i].team_number+':</h3> <div class="room_code_font" id="team_score_'+global_game_manager[i].team_number +'">'+global_game_manager[i].total_points +'<h1 class="pink_h1 pts">PTS</h1></div></div>');
+                $("#round_breakdown_wrapper_outside").append('<div id="team_one_wrapper"> <h3 id="team_title_one">TEAM ' + global_game_manager[i].team_number+':</h3> <div class="room_code_font" id="team_score_one">'+global_game_manager[i].total_points +'<h1 class="pink_h1 pts">PTS</h1></div></div>');
             }
             global_game_manager.sort(teamOrder);
         }
@@ -1247,6 +1247,7 @@ under the License.
                         // start timer
                         break;
                     case game_states.SCORE_CARD:
+                        fillRoundBreakdown();
                         $("#navigation_wrapper_pink").css("display", "block");
                         $("#in_game_background_color").css("display", "block");
                         $("#pass_the_phone_to_screen_wrapper").css("display", "none");
