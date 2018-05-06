@@ -415,7 +415,7 @@ under the License.
             </div>
             <div id="rule_one_wrapper" class="rules_wrapper">
                 <img src="img/how_to_play/1.png" id="rule_one_image" class="rules_images">
-                <div class="eighteen_black rules_headers" id="rules_one_header">Grab your friends and put  those kitchen bowls away</div>
+                <div class="eighteen_black rules_headers" id="rules_one_header">Grab your friends and put those kitchen bowls away</div>
                 <h3 class="rules_body" id="rule_one_body">Welcome to our modern take on an a popular classic. This digital game allows you to spend more time enjoying your wacky friends and less time searching for a pen and paper.</h3>
             </div>
             <div id="rule_two_wrapper" class="rules_wrapper">
@@ -433,6 +433,19 @@ under the License.
                 <div class="eighteen_black rules_headers" id="rules_four_header">If your team gets the most cards correct you win!</div>
                 <h3 class="rules_body" id="rule_four_body">The player with the most points at the end of the game with be crowned victorious! Use our final breakdown to read a brief summary about each word.</h3>
             </div>
+        </div>
+
+        <div id="exit_wrapper">
+            <div id="exit_header_wrapper">
+                <h1 id="exit_header">LEAVING SO SOON?</h1>
+                <h3 id="exit_body">If you are the host, leaving the</br>game early will terminate your session. </h3>
+            </div>
+            <div id="exit_background"></div>
+            <div id="button_wrapper">
+                <button class="in_app_orange_buttons exit_button" id="confirm_leave_button"><h2 class="button_text">Yes</h2></button>
+                <button class="in_app_orange_buttons exit_button" id="reject_leave_button"><h2 class="button_text">Nah</h2></button>
+            </div>
+            <div id="exit_purple_background"></div>
         </div>
 
         <!-- Leaving the game dialog box -->
@@ -491,6 +504,7 @@ under the License.
         $("#home_screen_wrapper").css("display", "block");
         $("#how_to_play_section_wrapper").css("display", "none");
         $("#game_waiting_area_screen_wrapper").css("display", "none");
+        $("#exit_wrapper").css("display", "none");
         // HOME_SCREEN start-----------------------------------
         $("#start_landing_page_button").click(function(event) {
             stateManager(game_states.GAME_SETUP);
@@ -938,7 +952,8 @@ under the License.
                     num_cards_c: num_cards_c,
                     turn_time_min_c: turn_time_min_c,
                     turn_time_sec_c: turn_time_sec_c,
-                    active_room_c: active_room
+                    active_room_c: active_room,
+                    setting_change: false
                 });
                 //add breadcrumb code here
                 $("#breadcrumb_wrapper").empty();
@@ -962,7 +977,19 @@ under the License.
         });
         // return button to get back to homescreen
         $(".return_home").on('click', function() {
-            stateManager(game_states.HOME_SCREEN);
+            $("#exit_wrapper").css("display", "block");
+            $("#exit_wrapper").animate({
+                    bottom: "0%"
+                }, 1000, function() {});
+        });
+
+        $("#reject_leave_button").on("click", function(){
+            $("body").css("overflow-y", "hidden");
+
+        });
+
+        $("#confirm_leave_button").on("click", function(){
+            stateManager(game_states.HOME_SCREEN); //TODO: add animation and button functionality
             if (active_room) {
                 socket.emit('remove_room_id', {
                     room_id_c: active_room
@@ -1098,6 +1125,7 @@ under the License.
                 stateManager(game_states.HOW_TO_PLAY);
             }
         });
+
 
         var global_prev_state = game_states.HOME_SCREEN;
         var global_current_state = game_states.HOME_SCREEN;
