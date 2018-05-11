@@ -492,9 +492,12 @@ under the License.
     $(document).ready(function() {
         $.mobile.loading().hide();
 
-        $("#app").on('touchmove', function(e){
+        // disable scrolling on home page
+        $("#home_screen_wrapper").on('touchmove', function(e){
             e.preventDefault();
-        });
+            alert('scrolled');
+        }, false);
+        // $("#app").css("overflow", "hidden");
 
         $("#game_start_btn").hide();
         $("#navigation_wrapper").css("display", "block");
@@ -1015,6 +1018,7 @@ under the License.
         //     <div id="exit_purple_background"></div>
         // </div>
 
+        var home_screen_speed = 200;
         // return button to get back to homescreen
         $(".return_home").on('click', function() {
             $(".exit_fade_in").css("opacity", "0");
@@ -1026,13 +1030,13 @@ under the License.
             $("#exit_wrapper").css("display", "block");
             $(".exit_fade_in").animate({
                 opacity: "1"
-            }, 200, function() {
+            }, home_screen_speed/4, function() {
                 $(".exit_slide_up_top").animate({
                     top: "59%"
-                }, 800, function() {});
+                }, home_screen_speed, function() {});
                 $(".exit_slide_up").animate({
                     bottom: "0%"
-                }, 800, function() {});
+                }, home_screen_speed, function() {});
             });
         });
 
@@ -1040,13 +1044,13 @@ under the License.
             // $("body").css("overflow-y", "hidden");
             $(".exit_slide_up_top").animate({
                 top: "134%"
-            }, 800, function() {});
+            }, home_screen_speed, function() {});
             $(".exit_slide_up").animate({
                 bottom: "-75%"
-            }, 800, function() {
+            }, home_screen_speed, function() {
                 $(".exit_fade_in").animate({
                     opacity: "0"
-                }, 200, function() {
+                }, home_screen_speed/4, function() {
                     $("#exit_wrapper").css("display", "none");
                 });
             });
