@@ -1531,7 +1531,7 @@ bottom: 0%;
 }
 
 #game_waiting_area_screen_wrapper {
-/* display: block;*/
+ display: none;
 overflow: hidden;
 }
 

@@ -2,6 +2,7 @@ var port = 3001;
 var io = require('socket.io').listen(port);
 console.log("Listening on allennikka.com:" + port + "/...");
 
+var wikipedia = require("wikipedia-js");
 
 var active_game_rooms = [];
 var game_rooms_set = new Set(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
@@ -121,6 +122,28 @@ io.sockets.on('connection', function(socket) {
         io.in(socket.room_id).emit('ui_update', {
             room_obj: active_room
         });
+
+        // //FIXME:
+        // // var out_str = "";
+        // for (var name of set2) {
+        //     console.log("Going to query the name [name=%s]", name);
+        //     var query = name;
+        //     var options = {
+        //         query: query,
+        //         format: "html",
+        //         summaryOnly: true
+        //     };
+        //     wikipedia.searchArticle(options, function(err, htmlWikiText) {
+        //         if (err) {
+        //             console.log("An error occurred[query=%s, error=%s]", query, err);
+        //         } else {
+        //             // console.log("Query successful[query=%s, html-formatted-wiki-text=%s] \n\n", query, htmlWikiText);
+        //             console.log("%s \n\n", htmlWikiText);
+        //             // out_str += htmlWikiText.toString();
+        //         }
+        //     });
+        // }
+        // console.log(out_str);
     });
 
     // remove a game room identifier
@@ -143,9 +166,41 @@ io.sockets.on('connection', function(socket) {
             var elementPos = arr.indexOf(name);
             if (elementPos !== -1) arr.splice(elementPos, 1);
             delete arr;
+        }
+        if (active_room != null) {
+            removeFromArr(active_room.room_names_arr, name);
             io.in(socket.room_id).emit('ui_update', {
-	            room_obj: active_room
-	        });
+                room_obj: active_room
+            });
+        }
+    });
+
+    // remove a game room on refresh / disconnect
+    socket.on('disconnect', function() {
+        if (socket.is_master) {
+            console.log("ID being removed: " + socket.room_id);
+            game_rooms_set.delete(socket.room_id);
+            clearRoom(socket.room_id, active_game_rooms);
+            console.log("Active Rooms: ");
+            for (let item of game_rooms_set) console.log(item);
+            console.log("active game arr len: " + active_game_rooms.length);
+            socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
+        } else {
+            console.log("Client left, room not being deleted");
+        }
+        var name = socket.player_name;
+        var active_room = getRoom(socket.room_id, active_game_rooms);
+        if (socket.team != null && active_room != null) {
+            var arr = active_room.room_team_arr[socket.team];
+            var elementPos = arr.indexOf(name);
+            if (elementPos !== -1) arr.splice(elementPos, 1);
+            delete arr;
+        }
+        if (active_room != null) {
+            removeFromArr(active_room.room_names_arr, name);
+            io.in(socket.room_id).emit('ui_update', {
+                room_obj: active_room
+            });
         }
     });
 
@@ -163,11 +218,11 @@ io.sockets.on('connection', function(socket) {
         }
         // console.log(active_room);
         // for (let item of active_room.team_arr) console.log(item);
-        if(team === -1){
-        	socket.team = null;
+        if (team === -1) {
+            socket.team = null;
         } else {
-        	active_room.room_team_arr[team].push(name);
-        	socket.team = team;
+            active_room.room_team_arr[team].push(name);
+            socket.team = team;
         }
         console.log(active_room.room_team_arr);
         io.in(socket.room_id).emit('ui_update', {
@@ -175,9 +230,17 @@ io.sockets.on('connection', function(socket) {
         });
     });
 
+
 });
 
+
 // Other Functions-----------------------------------
+
+
+var removeFromArr = function(arr, element) {
+    var elementPos = arr.indexOf(element);
+    if (elementPos !== -1) arr.splice(elementPos, 1);
+}
 
 var getRoom = function(room_id, arr) {
     var elementPos = arr.map(function(x) {
