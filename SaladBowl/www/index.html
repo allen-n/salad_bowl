@@ -436,16 +436,16 @@ under the License.
         </div>
 
         <div id="exit_wrapper">
-            <div id="exit_header_wrapper">
+            <div id="exit_header_wrapper" class="exit_slide_up_top">
                 <h1 id="exit_header">LEAVING SO SOON?</h1>
                 <h3 id="exit_body">If you are the host, leaving the</br>game early will terminate your session. </h3>
             </div>
-            <div id="exit_background"></div>
-            <div id="button_wrapper">
+            <div id="exit_background" class="exit_slide_up"></div>
+            <div id="button_wrapper" class="exit_slide_up">
                 <button class="in_app_orange_buttons exit_button" id="confirm_leave_button"><h2 class="button_text">Yes</h2></button>
                 <button class="in_app_orange_buttons exit_button" id="reject_leave_button"><h2 class="button_text">Nah</h2></button>
             </div>
-            <div id="exit_purple_background"></div>
+            <div id="exit_purple_background" class="exit_fade_in"></div>
         </div>
 
         <!-- Leaving the game dialog box -->
@@ -975,13 +975,40 @@ under the License.
             $("#total_players").text("" + num_players);
             $("#room_code_text").text("" + active_room);
         });
+
+        // <div id="exit_wrapper">
+        //     <div id="exit_header_wrapper">
+        //         <h1 id="exit_header">LEAVING SO SOON?</h1>
+        //         <h3 id="exit_body">If you are the host, leaving the</br>game early will terminate your session. </h3>
+        //     </div>
+        //     <div id="exit_background"></div>
+        //     <div id="button_wrapper">
+        //         <button class="in_app_orange_buttons exit_button" id="confirm_leave_button"><h2 class="button_text">Yes</h2></button>
+        //         <button class="in_app_orange_buttons exit_button" id="reject_leave_button"><h2 class="button_text">Nah</h2></button>
+        //     </div>
+        //     <div id="exit_purple_background"></div>
+        // </div>
+
         // return button to get back to homescreen
-        $(".return_home").on('click', function() {
-            $("#exit_wrapper").css("display", "block");
-            $("#exit_wrapper").animate({
-                    bottom: "0%"
-                }, 1000, function() {});
-        });
+            $(".return_home").on('click', function() {
+                $(".exit_fade_in").css("opacity", "0");
+                $(".exit_slide_up").css("bottom", "-75%");
+                $(".exit_slide_up_top").css({
+                    top: '134%',
+                    transform: 'translate(-50%)'
+                });
+                $("#exit_wrapper").css("display", "block");
+                $(".exit_fade_in").animate({
+                    opacity: "1"
+                }, 300, function() {
+                    $(".exit_slide_up_top").animate({
+                        top: "59%"
+                    }, 1000, function() {});
+                    $(".exit_slide_up").animate({
+                        bottom: "0%"
+                    }, 1000, function() {});
+                });
+            });
 
         $("#reject_leave_button").on("click", function(){
             $("body").css("overflow-y", "hidden");

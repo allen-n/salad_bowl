@@ -1554,7 +1554,7 @@ position: absolute;
 width: 100%;
 height: 100%;
 bottom: 0%;
-/* display: none;*/
+display: none;
 }
 
 #exit_header_wrapper{
@@ -1562,10 +1562,11 @@ position: absolute;
     display: block;
     margin-bottom: 60px;
     z-index: 11;
-    top: 59%;
+    /*top: 59%;*/
+    bottom: 15%;
     left: 50%;
     width: 90%;
-    transform: translate(-50%);
+    /*transform: translate(-50%);*/
 }
 
 #exit_header {
@@ -1579,6 +1580,7 @@ margin-top: 10px;
 
 #exit_body {
 text-align: center;
+display: block;
 z-index: 11;
 }
 
@@ -1610,7 +1612,8 @@ z-index: 11;
 
 #button_wrapper {
 position: absolute;
-top: 78%;
+/*top: 78%;*/
+bottom: 22%;
 transform: translate(-50%);
 left: 50%;
 z-index: 11;
