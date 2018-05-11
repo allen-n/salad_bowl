@@ -535,11 +535,13 @@ under the License.
             } else {
                 window.scrollTo(0, 0);
                 cards_in_bowl = true;
+                global_num_players_ready += 1;
+                $("#add_to_the_deck_screen_wrapper").animate({
+                marginTop: "100%"
+            }, 800, function() {stateManager(game_states.WAITING_TEAM_SEL);});
                 socket.emit('submit_card_data', {
                     card_arr: card_arr
                 });
-                stateManager(game_states.WAITING_TEAM_SEL);
-                global_num_players_ready += 1;
             }
             delete check_set;
         });
@@ -572,7 +574,7 @@ under the License.
             // $(".fadeoutteam").css("opacity", "0");
             $(".fadeoutteam").animate({
                 opacity: "0"
-            }, 800, function() {
+            }, 100, function() {
                 $("#add_to_the_deck_header_wrapper").animate({
                 marginTop: "0%"
             }, 800, function() {
@@ -591,8 +593,8 @@ under the License.
 
         $("#arrow_left_add_to_deck").click(function() {
             $("#game_waiting_area_screen_wrapper").css("display", "block");
-            $("#team_selection_wrapper").css("display", "");
-            $(".fadeoutteam").css("opacity", "");
+            $("#team_selection_wrapper").css("display", "block");
+            $(".fadeoutteam").css("opacity", "1");
             $("#team_selection_wrapper").animate({
                 bottom: "-47%"
             }, 300, function() {
@@ -688,7 +690,7 @@ under the License.
                     alert("Not all players have submitted their cards!");
                 }
             } else {
-                alert("Teams must all have at least 2 players to start the game! Team " + err_str + " all need more players.");
+                alert("Teams must all have at least 2 players to start the game! Team " + err_str + " need more players.");
             }
         });
 
@@ -1120,7 +1122,7 @@ under the License.
             // $("#crumb" + team_list_index).css("color", "2b2b2b");
         }
         $("#team_selection_wrapper").on("swipeleft", function(event) {
-            var speed = 600;
+            var speed = 300;
             $("#team_list_icons_wrapper").hide("slide", {
                 direction: "left"
             }, speed, null);
@@ -1137,7 +1139,7 @@ under the License.
             }, speed, null);
         });
         $("#team_selection_wrapper").on("swiperight", function(event) {
-            var speed = 600;
+            var speed = 300;
             if (team_list_index < 1) team_list_index += global_room_obj.room_settings.num_teams;
             $("#team_list_icons_wrapper").hide("slide", {
                 direction: "right"
@@ -1270,7 +1272,7 @@ under the License.
                         break;
                     case game_states.WAITING_TEAM_SEL:
                         // new screens
-                        if (is_master) {
+                        if (is_master && global_num_players_ready >= 1) {
                             $("#game_start_btn").show();
                         } else {
                             $("#game_start_btn").hide();

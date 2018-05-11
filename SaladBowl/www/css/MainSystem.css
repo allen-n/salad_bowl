@@ -672,6 +672,7 @@ h4 {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
+    font-size: 5vmin;
 }
 
 #team_selection_text_wrapper {
