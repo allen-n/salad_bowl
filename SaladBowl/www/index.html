@@ -203,14 +203,14 @@ under the License.
                     <h4 id="players_joined_counter">Players Joined:</h4>
                 </div>
                 <div id="fun_fact_of_the_day_wrapper">
-                    <div class="eighteen_black" id="fun_fact_header">Fun Fact of The Day</div>
+                    <div class="eighteen_black" id="fun_fact_header">Fun Fact Of The Day</div>
                     <div class="small_pink_line"></div>
                     <h1 id="fun_fact_body_text"></h1>
                 </div>
                 <button class="in_app_orange_buttons" id="game_start_btn"><h2 class="button_text">Start Game</h2></button>
-                <div id="team_selection_wrapper" class="fadeoutteam">
+                <div id="team_selection_wrapper">
                     <div id="team_selection_background"></div>
-                    <div id="team_selection_text_wrapper">
+                    <div id="team_selection_text_wrapper" class="fadeoutteam">
                         <div id="team_selection_header_wrapper" class="class_fade_wrapper" >
                             <img src="img/arrow_up.png" id="arrow_up" class="fadeoutteam">
                             <div class="eighteen_salmon" id="team_selection_header" class="fadeoutteam">TEAM SELECTION</div>
@@ -519,7 +519,7 @@ under the License.
         // callback from homepage to give room id number
         socket.on('return_room_id', function(data) {
             active_room = data.room_id_s;
-            console.log("ACTIVE ROOM: " + active_room);
+            // console.log("ACTIVE ROOM: " + active_room);
         });
         // HOME_SCREEN end-----------------------------------
         // WAITING_CARD_ADD start---------------------------
@@ -539,6 +539,7 @@ under the License.
                     card_arr: card_arr
                 });
                 stateManager(game_states.WAITING_TEAM_SEL);
+                global_num_players_ready += 1;
             }
             delete check_set;
         });
@@ -568,8 +569,11 @@ under the License.
             }
         });
         $("#add_to_deck_button").click(function() {
-            $(".fadeoutteam").css("opacity", "0");
-            $("#add_to_the_deck_header_wrapper").animate({
+            // $(".fadeoutteam").css("opacity", "0");
+            $(".fadeoutteam").animate({
+                opacity: "0"
+            }, 800, function() {
+                $("#add_to_the_deck_header_wrapper").animate({
                 marginTop: "0%"
             }, 800, function() {
                 $("#add_to_the_deck_background").css("bottom", "0%");
@@ -582,9 +586,11 @@ under the License.
                 $("#add_to_the_deck_screen_wrapper").css("display", "block");
                 $("body").css("overflow-y", "scroll");
             });
+            });
         });
+
         $("#arrow_left_add_to_deck").click(function() {
-            $("#game_waiting_area_screen_wrapper").css("display", "");
+            $("#game_waiting_area_screen_wrapper").css("display", "block");
             $("#team_selection_wrapper").css("display", "");
             $(".fadeoutteam").css("opacity", "");
             $("#team_selection_wrapper").animate({
@@ -605,7 +611,7 @@ under the License.
         // jordan's new sliding stuff stop
         // allen code still necessary
         $(".team_selection_button").on('click', function(event) {
-            console.log('test ' + global_room_obj.room_team_arr[team_list_index].length + ' / ' + global_room_obj.room_settings.num_players);
+            // console.log('test ' + global_room_obj.room_team_arr[team_list_index].length + ' / ' + global_room_obj.room_settings.num_players);
             if (global_room_obj.room_team_arr[team_list_index].length >= (global_room_obj.room_settings.num_players)) {
                 alert("Team" + team_list_index + " is full, please pick another.")
             } else {
@@ -629,7 +635,7 @@ under the License.
                 game_settings = data.room_settings;
                 createCardInput(game_settings.num_cards, $("#card_input_div"));
                 createTeamInput(game_settings.num_teams, $("#team_select"));
-                console.log(game_settings);
+                // console.log(game_settings);
                 $("#room_code_text").text("" + active_room);
                 // $("#room_code_text").on('click', function(){
                 //     $("#room_code_text").select();
@@ -647,8 +653,8 @@ under the License.
         });
         var global_room_obj = null;
         socket.on('ui_update', function(data) {
-            console.log('UI UPDATE:');
-            console.log(data);
+            // console.log('UI UPDATE:');
+            // console.log(data);
             global_room_obj = data.room_obj;
             createTeamCards(data.room_obj, team_list_index);
             appendTeamNames(data.room_obj.room_team_arr, $("#team_list"));
@@ -663,22 +669,27 @@ under the License.
         var global_game_manager = [];
         var global_game_manager_index = null;
         var global_active_team = null;
+        var global_num_players_ready = 0;
         $("#game_start_btn").on('click', function(event) {
             // FIXME: enable team length check for actual gameplay
-            nextTurnFunction();
-            // var team_lens = global_room_obj.room_team_arr;
-            // var err_str = "";
-            // for (var i = 0; i < team_lens.length; i++) {
-            //     if(team_lens[i].length < 2) {
-            //         if(i === team_lens.length - 1) err_str += "and " + (i+1);
-            //         else err_str += (i+1) + ", ";
-            //     }
-            // }
-            // if(err_str === ""){
-            //     nextTurnFunction();
-            // } else {
-            //     alert("Teams must all have at least 2 players to start the game! Team " + err_str + " all need more players.");
-            // }
+            // nextTurnFunction();
+            var team_lens = global_room_obj.room_team_arr;
+            var err_str = "";
+            for (var i = 0; i < team_lens.length; i++) {
+                if(team_lens[i].length < 2) {
+                    if(i === team_lens.length - 1) err_str += "and " + (i+1);
+                    else err_str += (i+1) + ", ";
+                }
+            }
+            if(err_str === ""){
+                if(global_num_players_ready === global_room_obj.room_names_arr.length){
+                    nextTurnFunction();
+                } else {
+                    alert("Not all players have submitted their cards!");
+                }
+            } else {
+                alert("Teams must all have at least 2 players to start the game! Team " + err_str + " all need more players.");
+            }
         });
 
         $(".round_breakdown_button").on('click', function(event) {
@@ -707,8 +718,8 @@ under the License.
                 global_game_manager_index = (global_game_manager_index + 1) % global_room_obj.room_settings.num_teams;
                 global_active_team = global_game_manager[global_game_manager_index];
                 global_active_team.question_asker_index = (global_active_team.question_asker_index + 1) % global_room_obj.room_settings.num_players;
-                // console.log(global_game_manager);
-                // console.log(global_game_manager[global_game_manager_index]);
+                // // console.log(global_game_manager);
+                // // console.log(global_game_manager[global_game_manager_index]);
                 $("#next_question_asker").empty();
                 var str = '' + global_room_obj.room_team_arr[global_game_manager_index][global_active_team.question_asker_index];
                 str = str.toUpperCase();
@@ -741,7 +752,7 @@ under the License.
         });
 
         function timerCallback() {
-            console.log('timer ended');
+            // console.log('timer ended');
             clearInterval(global_timer);
             var set_spread = [...global_room_obj.room_card_set];
             if (set_spread.length > 0) {
@@ -802,8 +813,8 @@ under the License.
             var speed = 800;
             global_game_manager[global_game_manager_index].cards_won.push(($("#card_value1").text()));
             global_game_manager[global_game_manager_index].total_points += 1;
-            console.log(global_game_manager[global_game_manager_index].cards_won);
-            console.log('teamNum ' + global_game_manager[global_game_manager_index].team_number);
+            // console.log(global_game_manager[global_game_manager_index].cards_won);
+            // console.log('teamNum ' + global_game_manager[global_game_manager_index].team_number);
             var set_spread = [...global_room_obj.room_card_set];
             if (set_spread.length <= 0) {
                 stateManager(game_states.FINAL_SCORE_CARD);
@@ -867,7 +878,7 @@ under the License.
                 var len = (global_game_manager[i].cards_won).length;
                 for (var j = 0; j < global_game_manager[i].cards_won.length; j++) {
                     $('#team' + (global_game_manager[i].team_number) + 'finalscore').append('<div class="answers_wrapper" id="answer' + global_game_manager[i].team_number + '"><h4 class="final_answers">' + global_game_manager[i].cards_won[j] + '</h4><img src="img/checkmark.png" class="checkmark"></div>');
-                    console.log('count: ' + j);
+                    // console.log('count: ' + j);
                 }
             }
         }
@@ -995,12 +1006,12 @@ under the License.
         var team_list = [];
         socket.on('send_game_settings', function(data) {
             game_settings = data.room_settings;
-            console.log(game_settings);
+            // console.log(game_settings);
             createCardInput(game_settings.num_cards, $("#card_input_div"));
             createTeamInput(game_settings.num_teams, $("#team_select"));
             stateManager(game_states.WAITING_TEAM_SEL);
             var num_players = game_settings.num_players;
-            console.log("numplayers: " + num_players);
+            // console.log("numplayers: " + num_players);
             $("#total_players").text("" + num_players);
             $("#room_code_text").text("" + active_room);
         });
@@ -1078,7 +1089,7 @@ under the License.
         });
         // GAME_SETUP end-----------------------------------
         socket.on('alert_msg', function(data) {
-            console.log(data);
+            // console.log(data);
         });
         var team_list_index = 0;
         var createTeamCards = function(room_obj, team_list_index) {
@@ -1101,7 +1112,7 @@ under the License.
                 $("#breadcrumb_wrapper").append('<div class="breadcrumb_inactive id="crumb' + i + '"></div>');
             }
             var crumbs = $(".breadcrumb_inactive");
-            console.log(crumbs);
+            // console.log(crumbs);
             for (var i = 0; i < crumbs.length; i++) {
                 if (i === team_list_index) $(crumbs[i]).css("background-color", "#2b2b2b");
                 else $(crumbs[i]).css("background-color", "#F7A1A1");
@@ -1181,7 +1192,7 @@ under the License.
                 }
                 str += '</tr>';
                 append_element.append(str);
-                console.log('name appended');
+                // console.log('name appended');
             }
         }
 
@@ -1296,7 +1307,7 @@ under the License.
                         $("#in_a_team_button_wrapper").css("display", "none");
                         $("#add_to_the_deck_screen_wrapper").css("display", "block");
                         $("#team_selection_wrapper").css("display", "none"); //
-                        // console.log("SCROLL SHJOULD BE ON");
+                        // // console.log("SCROLL SHJOULD BE ON");
                         $("body").css("overflow-y", "scroll");
                         $("#how_to_play_section_wrapper").css("display", "none");
                         break;

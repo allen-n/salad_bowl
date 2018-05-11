@@ -411,7 +411,7 @@ h4 {
 	margin-left: 50%;
 	transform: translate(-50%);
 	margin-bottom: 24px;
-	box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.22);
+	/*box-shadow: 0px 5px 5px rgba(152, 112, 75, 0.22);*/
 
 }
 
@@ -1575,7 +1575,7 @@ z-index: 4;
 }
 
 #exit_wrapper {
-z-index: 9;
+z-index: 11;
 position: absolute;
 width: 100%;
 height: 100%;
@@ -1587,7 +1587,7 @@ display: none;
 position: absolute;
     display: block;
     margin-bottom: 60px;
-    z-index: 11;
+    z-index: 13;
     /*top: 59%;*/
     bottom: 15%;
     left: 50%;
@@ -1600,14 +1600,14 @@ position: relative;
 display: block;
 margin-bottom: 10px;
 text-align: center;
-z-index: 11;
+z-index: 13;
 margin-top: 10px;
 }
 
 #exit_body {
 text-align: center;
 display: block;
-z-index: 11;
+z-index: 13;
 }
 
 #exit_background {
@@ -1619,20 +1619,20 @@ position: absolute;
     background-color: white;
     box-shadow: 0px -5px 8px rgba(152, 112, 75, 0.10);
     bottom: 0%;
-    z-index: 10;
+    z-index: 12;
 }
 #exit_purple_background {
 position: absolute;
 height: 100%;
 width: 100%;
 background-color: rgba(96, 69, 115, 0.50);
-z-index: 9;
+z-index: 11;
 bottom: 0%;
 }
 
 .exit_button {
 margin-bottom: 24px;
-z-index: 11;
+z-index: 13;
 
 }
 
@@ -1642,5 +1642,5 @@ position: absolute;
 bottom: 22%;
 transform: translate(-50%);
 left: 50%;
-z-index: 11;
+z-index: 13;
 }
