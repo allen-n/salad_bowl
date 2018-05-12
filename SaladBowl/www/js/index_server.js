@@ -120,7 +120,8 @@ io.sockets.on('connection', function(socket) {
         for (let item of merged) // console.log(item);
         active_room.room_card_set = [...merged];
         io.in(socket.room_id).emit('ui_update', {
-            room_obj: active_room
+            room_obj: active_room,
+            card_submitted: true
         });
 
         // //FIXME:

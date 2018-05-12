@@ -535,7 +535,6 @@ under the License.
             } else {
                 window.scrollTo(0, 0);
                 cards_in_bowl = true;
-                global_num_players_ready += 1;
                 $("#add_to_the_deck_screen_wrapper").animate({
                 marginTop: "100%"
             }, 800, function() {stateManager(game_states.WAITING_TEAM_SEL);});
@@ -657,6 +656,9 @@ under the License.
         socket.on('ui_update', function(data) {
             // console.log('UI UPDATE:');
             // console.log(data);
+            if(data.card_submitted){
+                global_num_players_ready += 1;
+            }
             global_room_obj = data.room_obj;
             createTeamCards(data.room_obj, team_list_index);
             appendTeamNames(data.room_obj.room_team_arr, $("#team_list"));
