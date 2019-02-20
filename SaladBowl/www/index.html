@@ -454,9 +454,10 @@ under the License.
             https://albert-gonzalez.github.io/easytimer.js/ -->
         </div>
         </div>
+        <!-- FIXME: The calls to 52.3.127.241 need to be changed to 52.3.127.241 -->
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="http://allennikka.com:3001/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="http://52.3.127.241:3001/socket.io/socket.io.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <script
     src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -467,7 +468,46 @@ under the License.
     <script type="text/javascript">
     // initialization-----------------------------------
     app.initialize();
-    var socket = io.connect('http://allennikka.com:3001');
+    var socket = io.connect('http://52.3.127.241:3001');
+
+    // // TODO: Refactor code to be split accross muttiple files:
+    // // http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
+    // // https://stackoverflow.com/questions/8752627/how-can-i-split-a-javascript-application-into-multiple-files
+    // var GLOBALS_MOD = (function(){
+    //     var public = {};
+
+    //     public.active_room = null;
+    //     public.game_settings = null;
+    //     public.is_master = false;
+    //     public.game_states = Object.freeze({
+    //         HOME_SCREEN: "home_screen",
+    //         GAME_SETUP: "game_setup",
+    //         JOIN_GAME: "join_game",
+    //         WAITING_TEAM_SEL: "waiting_team_sel",
+    //         WAITING_CARD_ADD: "waiting_card_add",
+    //         PASS_PHONE: "pass_phone",
+    //         QUESTION_ASK: "question_ask",
+    //         SCORE_CARD: "score_card",
+    //         FINAL_SCORE_CARD: "final_score_card",
+    //         HOW_TO_PLAY: "how_to_play"
+    //     });
+
+    //     public.global_room_obj = null;
+    //     public.global_game_manager = [];
+    //     public.global_game_manager_index = null;
+    //     public.global_active_team = null;
+    //     public.global_num_players_ready = 0;
+
+    //     public.global_timer = null;
+
+    //     return public;
+
+    // }());
+
+    // var HOME_SCREEN_MOD = (function(){
+
+    // }());
+
     // global vars
     var active_room = null;
     var game_settings = null;

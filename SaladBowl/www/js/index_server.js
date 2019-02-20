@@ -1,6 +1,6 @@
 var port = 3001;
 var io = require('socket.io').listen(port);
-console.log("Listening on allennikka.com:" + port + "/...");
+console.log("Listening on 52.3.127.241:" + port + "/...");
 
 var wikipedia = require("wikipedia-js");
 
