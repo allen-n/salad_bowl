@@ -7,12 +7,12 @@ var wikipedia = require("wikipedia-js");
 var active_game_rooms = [];
 var game_rooms_set = new Set(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 
-io.sockets.on('connection', function(socket) {
+io.sockets.on('connection', function (socket) {
     // console.log('New Connection from socket: ' + socket);
     // getting a unique identifier for the game room
 
     // Master Functions-----------------------------------
-    socket.on('get_room_id', function() {
+    socket.on('get_room_id', function () {
         // // console.log(generateUnique(game_rooms_set));
         var room_id = generateUnique(game_rooms_set);
         game_rooms_set.add(room_id);
@@ -28,7 +28,7 @@ io.sockets.on('connection', function(socket) {
     });
 
     // add game paramaters to active_game_rooms[], begin card submit phase
-    socket.on('goto_card_submit_master', function(data) {
+    socket.on('goto_card_submit_master', function (data) {
         var temp_room_id = socket.room_id;
         var game_room_settings = {
             master_name: data.master_name_c,
@@ -72,7 +72,7 @@ io.sockets.on('connection', function(socket) {
 
 
     // User Functions-----------------------------------
-    socket.on('goto_join_game', function(data) {
+    socket.on('goto_join_game', function (data) {
         var room_id_temp = data.game_id_c;
         var id_correct = false;
         var name_correct = false;
@@ -109,7 +109,7 @@ io.sockets.on('connection', function(socket) {
 
 
     // Mixed Functions-----------------------------------
-    socket.on('submit_card_data', function(data) {
+    socket.on('submit_card_data', function (data) {
         socket.card_arr = data.card_arr; //cards are associated with sockets that made them
         var active_room = getRoom(socket.room_id, active_game_rooms);
         var set1 = active_room.room_card_set;
@@ -118,7 +118,7 @@ io.sockets.on('connection', function(socket) {
         // for (let item of set2) // console.log(item);
         var merged = getUnion(set1, set2);
         for (let item of merged) // console.log(item);
-        active_room.room_card_set = [...merged];
+            active_room.room_card_set = [...merged];
         io.in(socket.room_id).emit('ui_update', {
             room_obj: active_room,
             card_submitted: true
@@ -148,15 +148,15 @@ io.sockets.on('connection', function(socket) {
     });
 
     // remove a game room identifier
-    socket.on('remove_room_id', function(data) {
+    socket.on('remove_room_id', function (data) {
         if (socket.is_master) {
             // console.log("ID being removed: " + socket.room_id);
             game_rooms_set.delete(socket.room_id);
             clearRoom(socket.room_id, active_game_rooms);
             // console.log("Active Rooms: ");
             for (let item of game_rooms_set) // console.log(item);
-            // console.log("active game arr len: " + active_game_rooms.length);
-            socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
+                // console.log("active game arr len: " + active_game_rooms.length);
+                socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
         } else {
             // console.log("Client left, room not being deleted");
         }
@@ -177,15 +177,15 @@ io.sockets.on('connection', function(socket) {
     });
 
     // remove a game room on refresh / disconnect
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function () {
         if (socket.is_master) {
             // console.log("ID being removed: " + socket.room_id);
             game_rooms_set.delete(socket.room_id);
             clearRoom(socket.room_id, active_game_rooms);
             // console.log("Active Rooms: ");
             for (let item of game_rooms_set) // console.log(item);
-            // console.log("active game arr len: " + active_game_rooms.length);
-            socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
+                // console.log("active game arr len: " + active_game_rooms.length);
+                socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
         } else {
             // console.log("Client left, room not being deleted");
         }
@@ -205,7 +205,7 @@ io.sockets.on('connection', function(socket) {
         }
     });
 
-    socket.on('team_select', function(data) {
+    socket.on('team_select', function (data) {
         var name = socket.player_name;
         var team = data.team;
         // console.log("team val = " + team);
@@ -238,20 +238,20 @@ io.sockets.on('connection', function(socket) {
 // Other Functions-----------------------------------
 
 
-var removeFromArr = function(arr, element) {
+var removeFromArr = function (arr, element) {
     var elementPos = arr.indexOf(element);
     if (elementPos !== -1) arr.splice(elementPos, 1);
 }
 
-var getRoom = function(room_id, arr) {
-    var elementPos = arr.map(function(x) {
+var getRoom = function (room_id, arr) {
+    var elementPos = arr.map(function (x) {
         return x.room_id;
     }).indexOf(room_id);
     return arr[elementPos];
 }
 
-var clearRoom = function(room_id, arr) {
-    var elementPos = arr.map(function(x) {
+var clearRoom = function (room_id, arr) {
+    var elementPos = arr.map(function (x) {
         return x.room_id;
     }).indexOf(room_id);
     if (elementPos !== -1) arr.splice(elementPos, 1);
@@ -263,7 +263,7 @@ var ALPHABET = '0123456789';
 var ID_LENGTH = 5;
 var UNIQUE_RETRIES = 9999;
 
-var generate = function() {
+var generate = function () {
     var rtn = '';
     for (var i = 0; i < ID_LENGTH; i++) {
         rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
@@ -271,7 +271,7 @@ var generate = function() {
     return rtn;
 }
 
-var generateUnique = function(room_set) {
+var generateUnique = function (room_set) {
     // previous = previous || [];
     var retries = 0;
     var id;
@@ -288,7 +288,7 @@ var generateUnique = function(room_set) {
     return id;
 };
 
-var getUnion = function(setA, setB) {
+var getUnion = function (setA, setB) {
     var union = new Set(setA);
     for (var elem of setB) {
         union.add(elem);
