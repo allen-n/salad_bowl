@@ -17,17 +17,20 @@ specific language governing permissions and limitations
 under the License.
 -->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-        <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-        <meta http-equiv="Content-Security-Policy" content="default-src * data: 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-        <!-- Alternate CSP declaration: -->
-        <!-- Allow everything but only from the same origin and foo.com -->
-        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' foo.com"> -->
-        <!-- Good default declaration:
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src * data: 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Alternate CSP declaration: -->
+    <!-- Allow everything but only from the same origin and foo.com -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' foo.com"> -->
+    <!-- Good default declaration:
         * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
         * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
         * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
@@ -35,712 +38,726 @@ under the License.
         * Enable eval(): add 'unsafe-eval' to default-src
         * Create your own at http://cspisawesome.com
         -->
-        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-        <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
-        <link rel="stylesheet" type="text/css" href="css/MainSystem.css">
-        <!-- <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+    <link rel="stylesheet" type="text/css" href="css/MainSystem.css">
+    <!-- <link rel="stylesheet" href="css/jquery-ui.min.css">
         <link rel="stylesheet" href="css/jquery.mobile.min.css"> -->
 
-        <title>Salad Bowl Game</title>
-        <!-- Favicon info -->
-        <link rel="apple-touch-icon" sizes="57x57" href="img/web_icons/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="img/web_icons/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="img/web_icons/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="img/web_icons/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="img/web_icons/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="img/web_icons/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/img/web_icons/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="img/web_icons/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="img/web_icons/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="img/web_icons/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="img/web_icons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="img/web_icons/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="img/web_icons/favicon-16x16.png">
-        <link rel="manifest" href="img/web_icons/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="img/web_icons/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
-    </head>
-    <body>
-        <div class="app">
-            <!-- Navigation -->
-            <div id="navigation_wrapper">
-                <div id="rules_page_icon_wrapper">
-                    <img id="rules_page_icon" src="img/how_to_play.png">
-                    <div id="rules_page_icon_underline"></div>
-                </div>
-                <!--  <div id="shop_page_icon_wrapper">
+    <title>Salad Bowl Game</title>
+    <!-- Favicon info -->
+    <link rel="apple-touch-icon" sizes="57x57" href="img/web_icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/web_icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/web_icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/web_icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/web_icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/web_icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/web_icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/web_icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/web_icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/web_icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/web_icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/web_icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/web_icons/favicon-16x16.png">
+    <link rel="manifest" href="img/web_icons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/web_icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Navigation -->
+        <div id="navigation_wrapper">
+            <div id="rules_page_icon_wrapper">
+                <img id="rules_page_icon" src="img/how_to_play.png">
+                <div id="rules_page_icon_underline"></div>
+            </div>
+            <!--  <div id="shop_page_icon_wrapper">
                     <img id="shop_page_icon" src="img/shop.png">
                     <div id="shop_page_icon_underline"></div>
                 </div> -->
-                <div id="home_page_icon_wrapper">
-                    <img class="return_home" id="home_page_icon" src="img/Active_GameIcon.png">
-                </div>
-                <!-- <div id="random_page_icon_wrapper">
+            <div id="home_page_icon_wrapper">
+                <img class="return_home" id="home_page_icon" src="img/Active_GameIcon.png">
+            </div>
+            <!-- <div id="random_page_icon_wrapper">
                     <img id="random_page_icon" src="img/random.png">
                     <div id="random_page_icon_underline"></div>
                 </div> -->
-                <div id="settings_page_icon_wrapper">
-                    <img id="settings_page_icon" src="img/settings.png">
-                    <div id="settings_page_icon_underline"></div>
-                </div>
+            <div id="settings_page_icon_wrapper">
+                <img id="settings_page_icon" src="img/settings.png">
+                <div id="settings_page_icon_underline"></div>
             </div>
-            <!-- Navigation Pink -->
-            <div id="navigation_wrapper_pink">
-                <div id="rules_page_icon_wrapper">
-                    <img id="rules_page_icon" src="img/purple_nav_icons/how_to_play.png">
-                    <div id="rules_page_icon_underline2"></div>
-                </div>
-                <!-- <div id="shop_page_icon_wrapper">
+        </div>
+        <!-- Navigation Pink -->
+        <div id="navigation_wrapper_pink">
+            <div id="rules_page_icon_wrapper">
+                <img id="rules_page_icon" src="img/purple_nav_icons/how_to_play.png">
+                <div id="rules_page_icon_underline2"></div>
+            </div>
+            <!-- <div id="shop_page_icon_wrapper">
                     <img id="shop_page_icon" src="img/purple_nav_icons/shop.png">
                     <div id="shop_page_icon_underline2"></div>
                 </div> -->
-                <div id="home_page_icon_wrapper">
-                    <img id="home_page_icon" class="return_home" src="img/Active_GameIcon.png">
-                </div>
-                <!--  <div id="random_page_icon_wrapper">
+            <div id="home_page_icon_wrapper">
+                <img id="home_page_icon" class="return_home" src="img/Active_GameIcon.png">
+            </div>
+            <!--  <div id="random_page_icon_wrapper">
                     <img id="random_page_icon" src="img/purple_nav_icons/random.png">
                     <div id="random_page_icon_underline2"></div>
                 </div> -->
-                <div id="settings_page_icon_wrapper">
-                    <img id="settings_page_icon" src="img/purple_nav_icons/settings.png">
-                    <div id="settings_page_icon_underline2"></div>
+            <div id="settings_page_icon_wrapper">
+                <img id="settings_page_icon" src="img/purple_nav_icons/settings.png">
+                <div id="settings_page_icon_underline2"></div>
+            </div>
+        </div>
+        <!-- Home Screen -->
+        <div id="home_screen_wrapper">
+            <div id="salad_bowl_header_wrapper">
+                <img src="img/Asset_11.svg" id="salad_bowl_icon">
+                <h1 id="salad_bowl_header">SALAD BOWL</h1>
+                <h3 id="salad_bowl_body">Why waste the bowl on anything besides mid-game popcorn?</h3>
+            </div>
+            <div id="button_home_screen_wrapper">
+                <button class="landing_page_buttons" id="start_landing_page_button">
+                    <h2 class="button_text">Host a Game</h2>
+                </button>
+                <button class="landing_page_buttons" id="join_landing_page_button">
+                    <h2 class="button_text">Join a Game</h2>
+                </button>
+            </div>
+        </div>
+        <!-- Host Game Screen -->
+        <div id="host_game_screen_wrapper">
+            <div id="host_a_new_game_header_wrapper">
+                <h1 id="salad_bowl_header">HOST A NEW GAME</h1>
+                <h3 id="salad_bowl_body">Ready player one? </br>Set the rules for your game.</h3>
+            </div>
+            <div id="enter_player_name_wrapper">
+                <div class="eighteen_black" id="player_name_header">Player Name</div>
+                <div class="small_pink_line"></div>
+                <input type="text" class="enter_player_name_input" id="master_name" maxlength="6"></input>
+            </div>
+            <div id="enter_number_of_teams_wrapper">
+                <div class="eighteen_black" id="number_of_teams_header">Number of Teams</div>
+                <div class="small_pink_line"></div>
+                <input type="number" class="enter_player_name_input" id="num_teams" min="2" max="10" value="2"></input>
+            </div>
+            <!-- this is my num_players -->
+            <div id="enter_size_of_teams_wrapper">
+                <div class="eighteen_black" id="size_of_teams_header">
+                    Size of Each Team
+                    <input type="hidden" id="num_players" value="2">
+                </div>
+                <div class="small_pink_line"></div>
+                <div id="person_selector_wrapper">
+                    <img class="pink_person_host_page" id="num_players1" src="img/black_person.png" alt="1">
+                    <img class="pink_person_host_page" id="num_players2" src="img/black_person.png" alt="1">
+                    <img class="pink_person_host_page" id="num_players3" src="img/pink_person.png" alt="0">
+                    <img class="pink_person_host_page" id="num_players4" src="img/pink_person.png" alt="0">
+                    <img class="pink_person_host_page" id="num_players5" src="img/pink_person.png" alt="0">
+                    <img class="pink_person_host_page" id="num_players6" src="img/pink_person.png" alt="0">
+                    <img class="pink_person_host_page" id="num_players7" src="img/pink_person.png" alt="0">
                 </div>
             </div>
-            <!-- Home Screen -->
-            <div id="home_screen_wrapper">
-                <div id="salad_bowl_header_wrapper">
-                    <img src="img/Asset_11.svg" id="salad_bowl_icon">
-                    <h1 id="salad_bowl_header">SALAD BOWL</h1>
-                    <h3 id="salad_bowl_body">Why waste the bowl on anything besides mid-game popcorn?</h3>
-                </div>
-                <div id="button_home_screen_wrapper">
-                    <button class="landing_page_buttons" id="start_landing_page_button"><h2 class="button_text">Host a Game</h2></button>
-                    <button class="landing_page_buttons" id="join_landing_page_button"><h2 class="button_text">Join a Game</h2></button>
+            <div id="enter_length_of_turns_wrapper">
+                <div class="eighteen_black" id="length_of_turns_header">Length of Turns</div>
+                <div class="small_pink_line"></div>
+                <div id="length_of_turns_construct_wrapper">
+                    <img src="img/arrow_left.png" id="arrow_left">
+                    <img src="img/arrow_right.png" id="arrow_right">
+                    <div id="length_of_turns_string">
+                        60 Seconds
+                    </div>
+                    <input type="hidden" id="turn_time_sec" name="" value="60" placeholder="">
                 </div>
             </div>
-            <!-- Host Game Screen -->
-            <div id="host_game_screen_wrapper">
-                <div id="host_a_new_game_header_wrapper">
-                    <h1 id="salad_bowl_header">HOST A NEW GAME</h1>
-                    <h3 id="salad_bowl_body">Ready player one? </br>Set the rules for your game.</h3>
+            <div id="enter_cards_per_player_wrapper">
+                <div class="eighteen_black" id="cards_per_player_header">Cards Per Player</div>
+                <div class="small_pink_line"></div>
+                <div id="cards_playground_wrapper">
+                    <img src="img/minus.png" id="minus">
+                    <img src="img/plus.png" id="plus">
+                    <div class="small_cards" id="card1"></div>
                 </div>
-                <div id="enter_player_name_wrapper">
-                    <div class="eighteen_black" id="player_name_header">Player Name</div>
-                    <div class="small_pink_line"></div>
-                    <input type="text" class="enter_player_name_input" id="master_name" maxlength="6"></input>
-                </div>
-                <div id="enter_number_of_teams_wrapper">
-                    <div class="eighteen_black" id="number_of_teams_header">Number of Teams</div>
-                    <div class="small_pink_line"></div>
-                    <input type="number" class="enter_player_name_input" id="num_teams" min="2" max="10" value="2"></input>
-                </div>
-                <!-- this is my num_players -->
-                <div id="enter_size_of_teams_wrapper">
-                    <div class="eighteen_black" id="size_of_teams_header">
-                        Size of Each Team
-                        <input type="hidden" id="num_players" value="2">
-                    </div>
-                    <div class="small_pink_line"></div>
-                    <div id="person_selector_wrapper">
-                        <img class="pink_person_host_page" id="num_players1" src="img/black_person.png" alt="1">
-                        <img class="pink_person_host_page" id="num_players2" src="img/black_person.png" alt="1">
-                        <img class="pink_person_host_page" id="num_players3" src="img/pink_person.png" alt="0">
-                        <img class="pink_person_host_page" id="num_players4" src="img/pink_person.png" alt="0">
-                        <img class="pink_person_host_page" id="num_players5" src="img/pink_person.png" alt="0">
-                        <img class="pink_person_host_page" id="num_players6" src="img/pink_person.png" alt="0">
-                        <img class="pink_person_host_page" id="num_players7" src="img/pink_person.png" alt="0">
-                    </div>
-                </div>
-                <div id="enter_length_of_turns_wrapper">
-                    <div class="eighteen_black" id="length_of_turns_header">Length of Turns</div>
-                    <div class="small_pink_line"></div>
-                    <div id="length_of_turns_construct_wrapper">
-                        <img src="img/arrow_left.png" id="arrow_left">
-                        <img src="img/arrow_right.png" id="arrow_right">
-                        <div id="length_of_turns_string">
-                            60 Seconds
-                        </div>
-                        <input type="hidden" id="turn_time_sec" name="" value="60" placeholder="">
-                    </div>
-                </div>
-                <div id="enter_cards_per_player_wrapper">
-                    <div class="eighteen_black" id="cards_per_player_header">Cards Per Player</div>
-                    <div class="small_pink_line"></div>
-                    <div id="cards_playground_wrapper">
-                        <img src="img/minus.png" id="minus">
-                        <img src="img/plus.png" id="plus">
-                        <div class="small_cards" id="card1"></div>
-                    </div>
-                    <h3 id="number_of_cards_per_player">10 Card(s) Per Player</h3>
-                    <input type="hidden" id="num_cards" value="10">
-                </div>
-                <button class="in_app_orange_buttons"><h2 class="button_text" id="submit_game_setup">Host Game</h2></button>
+                <h3 id="number_of_cards_per_player">10 Card(s) Per Player</h3>
+                <input type="hidden" id="num_cards" value="10">
             </div>
-            <!-- Join Game Screen -->
-            <div id="join_game_screen_wrapper">
-                <div id="join_an_existing_game_header_wrapper">
-                    <h1 class="page_header">JOIN A CURRENT GAME</h1>
-                    <h3 class="page_body">Your friends are all waiting for you.</br>Use your host's room code to join the fun</h3>
-                </div>
-                <div id="enter_player_name_wrapper">
-                    <div class="eighteen_black" id="player_name_header">Player Name</div>
-                    <div class="small_pink_line"></div>
-                    <input type="text" class="enter_player_name_input" id="game_join_player_name" maxlength="15"></input>
-                </div>
-                <div id="enter_room_code_wrapper">
-                    <div class="eighteen_black" id="enter_room_code_header">Room Code</div>
-                    <div class="small_pink_line"></div>
-                    <input type="number" class="enter_room_code_input" id="game_join_id" maxlength="5"></input>
-                </div>
-                <button class="in_app_orange_buttons"><h2 class="button_text" id="join_game_btn">Join Game</h2></button>
+            <button class="in_app_orange_buttons">
+                <h2 class="button_text" id="submit_game_setup">Host Game</h2>
+            </button>
+        </div>
+        <!-- Join Game Screen -->
+        <div id="join_game_screen_wrapper">
+            <div id="join_an_existing_game_header_wrapper">
+                <h1 class="page_header">JOIN A CURRENT GAME</h1>
+                <h3 class="page_body">Your friends are all waiting for you.</br>Use your host's room code to join the
+                    fun</h3>
             </div>
-            <!-- Game Waiting Area -->
-            <div id="game_waiting_area_screen_wrapper">
-                <div id="game_waiting_area_header_wrapper">
-                    <h1 class="page_header" id="game_waiting_area_header">GAME WAITING AREA</h1>
-                    <div class="room_code_font" id="room_code_text"></div>
-                    <h4 id="players_joined_counter">Players Joined:</h4>
-                </div>
-                <div id="fun_fact_of_the_day_wrapper">
-                    <div class="eighteen_black" id="fun_fact_header">Fun Fact Of The Day</div>
-                    <div class="small_pink_line"></div>
-                    <h1 id="fun_fact_body_text"></h1>
-                </div>
-                <button class="in_app_orange_buttons" id="game_start_btn"><h2 class="button_text">Start Game</h2></button>
-                <div id="team_selection_wrapper">
-                    <div id="team_selection_background"></div>
-                    <div id="team_selection_text_wrapper" class="fadeoutteam">
-                        <div id="team_selection_header_wrapper" class="class_fade_wrapper" >
-                            <img src="img/arrow_up.png" id="arrow_up" class="fadeoutteam">
-                            <div class="eighteen_salmon" id="team_selection_header" class="fadeoutteam">TEAM SELECTION</div>
+            <div id="enter_player_name_wrapper">
+                <div class="eighteen_black" id="player_name_header">Player Name</div>
+                <div class="small_pink_line"></div>
+                <input type="text" class="enter_player_name_input" id="game_join_player_name" maxlength="15"></input>
+            </div>
+            <div id="enter_room_code_wrapper">
+                <div class="eighteen_black" id="enter_room_code_header">Room Code</div>
+                <div class="small_pink_line"></div>
+                <input type="number" class="enter_room_code_input" id="game_join_id" maxlength="5"></input>
+            </div>
+            <button class="in_app_orange_buttons">
+                <h2 class="button_text" id="join_game_btn">Join Game</h2>
+            </button>
+        </div>
+        <!-- Game Waiting Area -->
+        <div id="game_waiting_area_screen_wrapper">
+            <div id="game_waiting_area_header_wrapper">
+                <h1 class="page_header" id="game_waiting_area_header">GAME WAITING AREA</h1>
+                <div class="room_code_font" id="room_code_text"></div>
+                <h4 id="players_joined_counter">Players Joined:</h4>
+            </div>
+            <div id="fun_fact_of_the_day_wrapper">
+                <div class="eighteen_black" id="fun_fact_header">Fun Fact Of The Day</div>
+                <div class="small_pink_line"></div>
+                <h1 id="fun_fact_body_text"></h1>
+            </div>
+            <button class="in_app_orange_buttons" id="game_start_btn">
+                <h2 class="button_text">Start Game</h2>
+            </button>
+            <div id="team_selection_wrapper">
+                <div id="team_selection_background"></div>
+                <div id="team_selection_text_wrapper" class="fadeoutteam">
+                    <div id="team_selection_header_wrapper" class="class_fade_wrapper">
+                        <img src="img/arrow_up.png" id="arrow_up" class="fadeoutteam">
+                        <div class="eighteen_salmon" id="team_selection_header" class="fadeoutteam">TEAM SELECTION</div>
+                    </div>
+                    <div id="team_identifier_wrapper" class="class_fade_wrapper" class="fadeoutteam">
+                        <h1 id="team_saved_name">SAVED TEAM NAME</h1>
+                    </div>
+                    <div id="team_list_icons_wrapper" class="class_fade_wrapper">
+                        <div class="spot_wrapper">
+                            <img src="img/pink_person.png" id="spot_icon">
+                            <div class="eighteen_salmon spot_text">Open</div>
                         </div>
-                        <div id="team_identifier_wrapper" class="class_fade_wrapper" class="fadeoutteam">
-                            <h1 id="team_saved_name">SAVED TEAM NAME</h1>
-                        </div>
-                        <div id="team_list_icons_wrapper" class="class_fade_wrapper" >
-                            <div class="spot_wrapper">
-                                <img src="img/pink_person.png" id="spot_icon">
-                                <div class="eighteen_salmon spot_text">Open</div>
-                            </div>
-                        </div>
-                        <!-- NEW CODE -->
-                        <div id="in_a_team_button_wrapper" class="fadeoutteam" >
-                            <button class="in_app_grey_buttons team_selected_button"><h2 class="button_text_grey" id="leave_team_button">Leave Team</h2></button>
-                            <button class="in_app_orange_buttons team_selected_button" id="add_to_deck_button"><h2 class="button_text">Add to Bowl</h2></button>
-                        </div>
-                        <!-- NEW CODE ENDS HERE-->
-                        <button class="in_app_orange_buttons team_selection_button"><h2 class="button_text">Join Team</h2></button>
-                        <div id="breadcrumb_wrapper" class="class_fade_wrapper" >
-                            <!--  <div class="breadcrumb_inactive"></div>
+                    </div>
+                    <!-- NEW CODE -->
+                    <div id="in_a_team_button_wrapper" class="fadeoutteam">
+                        <button class="in_app_grey_buttons team_selected_button">
+                            <h2 class="button_text_grey" id="leave_team_button">Leave Team</h2>
+                        </button>
+                        <button class="in_app_orange_buttons team_selected_button" id="add_to_deck_button">
+                            <h2 class="button_text">Add to Bowl</h2>
+                        </button>
+                    </div>
+                    <!-- NEW CODE ENDS HERE-->
+                    <button class="in_app_orange_buttons team_selection_button">
+                        <h2 class="button_text">Join Team</h2>
+                    </button>
+                    <div id="breadcrumb_wrapper" class="class_fade_wrapper">
+                        <!--  <div class="breadcrumb_inactive"></div>
                             <div class="breadcrumb_inactive"></div>
                             <div class="breadcrumb_inactive"></div>
                             <div class="breadcrumb_inactive"></div> -->
-                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Add To The Deck (A Part Of Game Waiting Area) Screen -->
-            <div id="add_to_the_deck_screen_wrapper">
-                <div id="add_to_the_deck_header_wrapper">
-                    <h1 id="add_to_the_deck_header">ADD TO THE DECK</h1>
-                    <img src="img/arrow_left.png" id="arrow_left_add_to_deck">
-                    <h3 id="add_to_the_deck_body">Pick your favorite fictional</br>or non-fictional characters</h3>
-                </div>
-                <div id="add_to_the_deck_background"></div>
-                <div id="card_input_div">
-                    <div id="enter_player_name_wrapper">
-                        <div class="eighteen_black" id="player_name_header">Card 1</div>
-                        <div class="small_pink_line"></div>
-                        <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
-                    </div>
-                    <div id="enter_player_name_wrapper">
-                        <div class="eighteen_black" id="player_name_header">Card 2</div>
-                        <div class="small_pink_line"></div>
-                        <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
-                    </div>
-                    <div id="enter_player_name_wrapper">
-                        <div class="eighteen_black" id="player_name_header">Card 3</div>
-                        <div class="small_pink_line"></div>
-                        <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
-                    </div>
-                </div>
-                <button class="in_app_orange_buttons submit_to_the_deck_button" id="submit_cards"><h2 class="button_text">Submit</h2></button>
+        </div>
+        <!-- Add To The Deck (A Part Of Game Waiting Area) Screen -->
+        <div id="add_to_the_deck_screen_wrapper">
+            <div id="add_to_the_deck_header_wrapper">
+                <h1 id="add_to_the_deck_header">ADD TO THE DECK</h1>
+                <img src="img/arrow_left.png" id="arrow_left_add_to_deck">
+                <h3 id="add_to_the_deck_body">Pick your favorite fictional</br>or non-fictional characters</h3>
             </div>
-            <!-- Pass The Phone Screen -->
-            <!-- NEW CODE  -->
-            <img src="img/background_color.png" id="in_game_background_color">
-            <!-- END OF NEW CODE  -->
-            <!--         <div id="in_game_background_color"></div> -->
-            <div id="pass_the_phone_to_screen_wrapper">
-                <div id="pass_the_phone_header_wrapper">
-                    <img src="img/phone_img.svg" id="phone_icon">
-                    <h1 id="pass_the_phone_body">Pass the phone to</br> <span class="pink_h1" id="next_question_asker">JORDAN</span> on <span class="pink_h1" id="next_question_asker_team">TEAM 2</span></h1>
+            <div id="add_to_the_deck_background"></div>
+            <div id="card_input_div">
+                <div id="enter_player_name_wrapper">
+                    <div class="eighteen_black" id="player_name_header">Card 1</div>
+                    <div class="small_pink_line"></div>
+                    <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
                 </div>
-                <img src="img/pass_phone_button.png" id="pass_the_phone_button">
-            </div>
-            <!-- In-Game Card Swiping -->
-            <div id="active_game_play_wrapper">
-                <div id="question_master_wrapper">
-                    <h1 class="white_h1" id="question_giver_header">QUESTION MASTER</h1>
-                    <div class="eighteen_white" id="team_number">TEAM 1</div>
-                    <div class="small_white_line"></div>
-                    <h1 class="white_h1" id="question_giver">JORDAN</h1>
+                <div id="enter_player_name_wrapper">
+                    <div class="eighteen_black" id="player_name_header">Card 2</div>
+                    <div class="small_pink_line"></div>
+                    <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
                 </div>
-                <div id="playing_cards_wrapper">
-                    <div id="playing_card1">
-                        <div class="eighteen_black" id="card_1_header">Card #1</div>
-                        <div class="small_pink_line"></div>
-                        <div class="pink_h1 textsubmission" id="card_value1">PARIS HILTON</div>
-                        <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
-                    </div>
-                    <div id="playing_card2">
-                        <div class="eighteen_black" id="card_2_header">Card #2</div>
-                        <div class="small_pink_line"></div>
-                        <div class="pink_h1 textsubmission" id="card_value2">PARIS HILTON</div>
-                        <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
-                    </div>
-                    <div id="playing_card3">
-                        <div class="eighteen_black" id="card_1_header">Card #3</div>
-                        <div class="small_pink_line"></div>
-                        <div class="pink_h1 textsubmission">PARIS HILTON</div>
-                        <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
-                    </div>
-                    <div id="playing_card4">
-                        <div class="eighteen_black" id="card_1_header">Card #1</div>
-                        <div class="small_pink_line"></div>
-                        <div class="pink_h1 textsubmission">PARIS HILTON</div>
-                        <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
-                    </div>
-                    <div id="playing_card5">
-                        <div class="eighteen_black" id="card_1_header">Card #1</div>
-                        <div class="small_pink_line"></div>
-                        <div class="pink_h1 textsubmission">PARIS HILTON</div>
-                        <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
-                    </div>
-                    <div id="playing_card6">
-                        <div class="eighteen_black" id="card_1_header">Card #1</div>
-                        <div class="small_pink_line"></div>
-                        <div class="pink_h1 textsubmission">PARIS HILTON</div>
-                        <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
-                    </div>
-                    <div id="playing_card7">
-                        <div class="eighteen_black" id="card_1_header">Card #1</div>
-                        <div class="small_pink_line"></div>
-                        <div class="pink_h1 textsubmission">PARIS HILTON</div>
-                        <img src="img/correct_card_button.png"  id="correct_card_button1" class="correct_card_button">
-                    </div>
-                </div>
-                <div class="game_timer_font" id="game_timer"> GO </div>
-            </div>
-            <div id="round_breakdown_wrapper">
-                <div id="round_breakdown_header_wrapper">
-                    <h1 id="round_breakdown_header">ROUND BREAKDOWN</h1>
-                    <h3 id="round_breakdown_body">See how your team is keeping</br>up with the rest of the competition</h3>
-                </div>
-                <div id="round_breakdown_background"></div>
-                <div id="round_breakdown_wrapper_outside">
-                    <div id="team_one_wrapper">
-                        <h3 id="team_title_one">TEAM 1:</h3>
-                        <div class="room_code_font" id="team_score_one">10<h1 class="pink_h1 pts">PTS</h1></div>
-                    </div>
-                    <div id="team_two_wrapper">
-                        <h3 id="team_title_one">TEAM 2:</h3>
-                        <div class="room_code_font" id="team_score_one">8<h1 class="pink_h1 pts">PTS</h1></div>
-                    </div>
-                    <div id="team_three_wrapper">
-                        <h3 id="team_title_one">TEAM 3:</h3>
-                        <div class="room_code_font" id="team_score_one">6<h1 class="pink_h1 pts">PTS</h1></div>
-                    </div>
-                    <div id="team_four_wrapper">
-                        <h3 id="team_title_one">TEAM 4:</h3>
-                        <div class="room_code_font" id="team_score_one">5<h1 class="pink_h1 pts">PTS</h1></div>
-                    </div>
-                </div>
-                <button class="in_app_orange_buttons round_breakdown_button"><h2 class="button_text">Next Round</h2></button>
-                <!-- <h2 id="round_break_timer">1:00</h2> -->
-            </div>
-            <div id="final_breakdown_wrapper">
-                <div id="round_breakdown_header_wrapper">
-                    <h1 id="round_breakdown_header">FINAL BREAKDOWN</h1>
-                    <h3 id="round_breakdown_body">Great game! Check out what</br>answers you got</h3>
-                </div>
-                <div id="final_team_stats_wrapper_outside">
-                    <div class="final_team_stats_wrapper" id="team1finalscore">
-                        <table>
-                            <th class="eighteen_black">Team 1:</th>
-                            <td class="eighteen_salmon">40PTS</td>
-                        </table>
-                        <div class="long_pink_line"></div>
-                        <div class="answers_wrapper" id="answer1">
-                            <h4 class="final_answers">Blah Blah Blah</h4>
-                            <img src="img/checkmark.png" class="checkmark">
-                        </div>
-                        <div class="answers_wrapper" id="answer2">
-                            <h4 class="final_answers">Blah dsasd Blah</h4>
-                            <img src="img/checkmark.png" class="checkmark">
-                        </div>
-                        <div class="answers_wrapper" id="answer3">
-                            <h4 class="final_answers">Blah Blah</h4>
-                            <img src="img/checkmark.png" class="checkmark">
-                        </div>
-                    </div>
-                    <div class="final_team_stats_wrapper" id="team2finalscore">
-                        <table>
-                            <th class="eighteen_black">Team 2:</th>
-                            <td class="eighteen_salmon">32PTS</td>
-                        </table>
-                        <div class="long_pink_line"></div>
-                        <div class="answers_wrapper" id="answer1">
-                            <h4 class="final_answers">Blah Blah Blah</h4>
-                            <img src="img/checkmark.png" class="checkmark">
-                        </div>
-                        <div class="answers_wrapper" id="answer2">
-                            <h4 class="final_answers">Blah dsasd Blah</h4>
-                            <img src="img/checkmark.png" class="checkmark">
-                        </div>
-                        <div class="answers_wrapper" id="answer3">
-                            <h4 class="final_answers">Blah Blah</h4>
-                            <img src="img/checkmark.png" class="checkmark">
-                        </div>
-                    </div>
-                </div>
-                <!-- <button class="in_app_orange_buttons final_breakdown_button" id="rematch_button"><h2 class="button_text">Rematch</h2></button> -->
-                <button class="in_app_orange_buttons final_breakdown_button return_home" id="end_game_button"><h2 class="button_text">End Game</h2></button>
-                <div id="final_breakdown_background"></div>
-            </div>
-            <!-- NEW CODE -->
-            <div id="how_to_play_section_wrapper">
-                <div id="how_to_play_header_wrapper">
-                    <h1 id="how_to_play_header">HOW TO PLAY</h1>
-                    <h3 id="how_to_play_body">Never played Salad Bowl before?</br>Don’t worry we’ve got you covered</h3>
-                </div>
-                <div id="rule_one_wrapper" class="rules_wrapper">
-                    <img src="img/how_to_play/1.png" id="rule_one_image" class="rules_images">
-                    <div class="eighteen_black rules_headers" id="rules_one_header">Grab your friends and put those kitchen bowls away</div>
-                    <h3 class="rules_body" id="rule_one_body">Welcome to our modern take on an a popular classic. This digital game allows you to spend more time enjoying your wacky friends and less time searching for a pen and paper.</h3>
-                </div>
-                <div id="rule_two_wrapper" class="rules_wrapper">
-                    <img src="img/how_to_play/2.png" id="rule_two_image" class="rules_images">
-                    <div class="eighteen_black rules_headers" id="rules_two_header">Once everyone adds words to the deck you may begin</div>
-                    <h3 class="rules_body" id="rule_two_body">Pick a host and have them set up your new favorite group activity. Once everyone has joined a team and added their hardest word choices to the pile the game can begin on the host's phone.</h3>
-                </div>
-                <div id="rule_three_wrapper" class="rules_wrapper">
-                    <img src="img/how_to_play/3.png" id="rule_three_image" class="rules_images">
-                    <div class="eighteen_black rules_headers" id="rules_three_header">Each round your team will guess as many words possible.</div>
-                    <h3 class="rules_body" id="rule_three_body">Work together with the rest of your team to interpret what your question master is trying to say to earn the most points. There are no passes in this game so don’t give up early!</h3>
-                </div>
-                <div id="rule_four_wrapper" class="rules_wrapper">
-                    <img src="img/how_to_play/4.png" id="rule_four_image" class="rules_images">
-                    <div class="eighteen_black rules_headers" id="rules_four_header">If your team gets the most cards correct you win!</div>
-                    <h3 class="rules_body" id="rule_four_body">The player with the most points at the end of the game with be crowned victorious! Use our final breakdown to read a brief summary about each word.</h3>
+                <div id="enter_player_name_wrapper">
+                    <div class="eighteen_black" id="player_name_header">Card 3</div>
+                    <div class="small_pink_line"></div>
+                    <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
                 </div>
             </div>
-            <div id="exit_wrapper">
-                <div id="exit_header_wrapper" class="exit_slide_up_top">
-                    <h1 id="exit_header">LEAVING SO SOON?</h1>
-                    <h3 id="exit_body">If you are the host, leaving the</br>game early will terminate your session. </h3>
-                </div>
-                <div id="exit_background" class="exit_slide_up"></div>
-                <div id="button_wrapper" class="exit_slide_up">
-                    <button class="in_app_orange_buttons exit_button" id="confirm_leave_button"><h2 class="button_text">Yes</h2></button>
-                    <button class="in_app_orange_buttons exit_button" id="reject_leave_button"><h2 class="button_text">Nah</h2></button>
-                </div>
-                <div id="exit_purple_background" class="exit_fade_in"></div>
+            <button class="in_app_orange_buttons submit_to_the_deck_button" id="submit_cards">
+                <h2 class="button_text">Submit</h2>
+            </button>
+        </div>
+        <!-- Pass The Phone Screen -->
+        <!-- NEW CODE  -->
+        <img src="img/background_color.png" id="in_game_background_color">
+        <!-- END OF NEW CODE  -->
+        <!--         <div id="in_game_background_color"></div> -->
+        <div id="pass_the_phone_to_screen_wrapper">
+            <div id="pass_the_phone_header_wrapper">
+                <img src="img/phone_img.svg" id="phone_icon">
+                <h1 id="pass_the_phone_body">Pass the phone to</br> <span class="pink_h1"
+                        id="next_question_asker">JORDAN</span> on <span class="pink_h1"
+                        id="next_question_asker_team">TEAM 2</span></h1>
             </div>
-            <!-- Leaving the game dialog box -->
-            <!-- NEW CODE ENDS HERE -->
-            <!--EasyTimer Scripts Link:
+            <img src="img/pass_phone_button.png" id="pass_the_phone_button">
+        </div>
+        <!-- In-Game Card Swiping -->
+        <div id="active_game_play_wrapper">
+            <div id="question_master_wrapper">
+                <h1 class="white_h1" id="question_giver_header">QUESTION MASTER</h1>
+                <div class="eighteen_white" id="team_number">TEAM 1</div>
+                <div class="small_white_line"></div>
+                <h1 class="white_h1" id="question_giver">JORDAN</h1>
+            </div>
+            <div id="playing_cards_wrapper">
+                <div id="playing_card1">
+                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission" id="card_value1">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png" id="correct_card_button1" class="correct_card_button">
+                </div>
+                <div id="playing_card2">
+                    <div class="eighteen_black" id="card_2_header">Card #2</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission" id="card_value2">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png" id="correct_card_button1" class="correct_card_button">
+                </div>
+                <div id="playing_card3">
+                    <div class="eighteen_black" id="card_1_header">Card #3</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png" id="correct_card_button1" class="correct_card_button">
+                </div>
+                <div id="playing_card4">
+                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png" id="correct_card_button1" class="correct_card_button">
+                </div>
+                <div id="playing_card5">
+                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png" id="correct_card_button1" class="correct_card_button">
+                </div>
+                <div id="playing_card6">
+                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png" id="correct_card_button1" class="correct_card_button">
+                </div>
+                <div id="playing_card7">
+                    <div class="eighteen_black" id="card_1_header">Card #1</div>
+                    <div class="small_pink_line"></div>
+                    <div class="pink_h1 textsubmission">PARIS HILTON</div>
+                    <img src="img/correct_card_button.png" id="correct_card_button1" class="correct_card_button">
+                </div>
+            </div>
+            <div class="game_timer_font" id="game_timer"> GO </div>
+        </div>
+        <div id="round_breakdown_wrapper">
+            <div id="round_breakdown_header_wrapper">
+                <h1 id="round_breakdown_header">ROUND BREAKDOWN</h1>
+                <h3 id="round_breakdown_body">See how your team is keeping</br>up with the rest of the competition</h3>
+            </div>
+            <div id="round_breakdown_background"></div>
+            <div id="round_breakdown_wrapper_outside">
+                <div id="team_one_wrapper">
+                    <h3 id="team_title_one">TEAM 1:</h3>
+                    <div class="room_code_font" id="team_score_one">10<h1 class="pink_h1 pts">PTS</h1>
+                    </div>
+                </div>
+                <div id="team_two_wrapper">
+                    <h3 id="team_title_one">TEAM 2:</h3>
+                    <div class="room_code_font" id="team_score_one">8<h1 class="pink_h1 pts">PTS</h1>
+                    </div>
+                </div>
+                <div id="team_three_wrapper">
+                    <h3 id="team_title_one">TEAM 3:</h3>
+                    <div class="room_code_font" id="team_score_one">6<h1 class="pink_h1 pts">PTS</h1>
+                    </div>
+                </div>
+                <div id="team_four_wrapper">
+                    <h3 id="team_title_one">TEAM 4:</h3>
+                    <div class="room_code_font" id="team_score_one">5<h1 class="pink_h1 pts">PTS</h1>
+                    </div>
+                </div>
+            </div>
+            <button class="in_app_orange_buttons round_breakdown_button">
+                <h2 class="button_text">Next Round</h2>
+            </button>
+            <!-- <h2 id="round_break_timer">1:00</h2> -->
+        </div>
+        <div id="final_breakdown_wrapper">
+            <div id="round_breakdown_header_wrapper">
+                <h1 id="round_breakdown_header">FINAL BREAKDOWN</h1>
+                <h3 id="round_breakdown_body">Great game! Check out what</br>answers you got</h3>
+            </div>
+            <div id="final_team_stats_wrapper_outside">
+                <div class="final_team_stats_wrapper" id="team1finalscore">
+                    <table>
+                        <th class="eighteen_black">Team 1:</th>
+                        <td class="eighteen_salmon">40PTS</td>
+                    </table>
+                    <div class="long_pink_line"></div>
+                    <div class="answers_wrapper" id="answer1">
+                        <h4 class="final_answers">Blah Blah Blah</h4>
+                        <img src="img/checkmark.png" class="checkmark">
+                    </div>
+                    <div class="answers_wrapper" id="answer2">
+                        <h4 class="final_answers">Blah dsasd Blah</h4>
+                        <img src="img/checkmark.png" class="checkmark">
+                    </div>
+                    <div class="answers_wrapper" id="answer3">
+                        <h4 class="final_answers">Blah Blah</h4>
+                        <img src="img/checkmark.png" class="checkmark">
+                    </div>
+                </div>
+                <div class="final_team_stats_wrapper" id="team2finalscore">
+                    <table>
+                        <th class="eighteen_black">Team 2:</th>
+                        <td class="eighteen_salmon">32PTS</td>
+                    </table>
+                    <div class="long_pink_line"></div>
+                    <div class="answers_wrapper" id="answer1">
+                        <h4 class="final_answers">Blah Blah Blah</h4>
+                        <img src="img/checkmark.png" class="checkmark">
+                    </div>
+                    <div class="answers_wrapper" id="answer2">
+                        <h4 class="final_answers">Blah dsasd Blah</h4>
+                        <img src="img/checkmark.png" class="checkmark">
+                    </div>
+                    <div class="answers_wrapper" id="answer3">
+                        <h4 class="final_answers">Blah Blah</h4>
+                        <img src="img/checkmark.png" class="checkmark">
+                    </div>
+                </div>
+            </div>
+            <!-- <button class="in_app_orange_buttons final_breakdown_button" id="rematch_button"><h2 class="button_text">Rematch</h2></button> -->
+            <button class="in_app_orange_buttons final_breakdown_button return_home" id="end_game_button">
+                <h2 class="button_text">End Game</h2>
+            </button>
+            <div id="final_breakdown_background"></div>
+        </div>
+        <!-- NEW CODE -->
+        <div id="how_to_play_section_wrapper">
+            <div id="how_to_play_header_wrapper">
+                <h1 id="how_to_play_header">HOW TO PLAY</h1>
+                <h3 id="how_to_play_body">Never played Salad Bowl before?</br>Don’t worry we’ve got you covered</h3>
+            </div>
+            <div id="rule_one_wrapper" class="rules_wrapper">
+                <img src="img/how_to_play/1.png" id="rule_one_image" class="rules_images">
+                <div class="eighteen_black rules_headers" id="rules_one_header">Grab your friends and put those kitchen
+                    bowls away</div>
+                <h3 class="rules_body" id="rule_one_body">Welcome to our modern take on an a popular classic. This
+                    digital game allows you to spend more time enjoying your wacky friends and less time searching for a
+                    pen and paper.</h3>
+            </div>
+            <div id="rule_two_wrapper" class="rules_wrapper">
+                <img src="img/how_to_play/2.png" id="rule_two_image" class="rules_images">
+                <div class="eighteen_black rules_headers" id="rules_two_header">Once everyone adds words to the deck you
+                    may begin</div>
+                <h3 class="rules_body" id="rule_two_body">Pick a host and have them set up your new favorite group
+                    activity. Once everyone has joined a team and added their hardest word choices to the pile the game
+                    can begin on the host's phone.</h3>
+            </div>
+            <div id="rule_three_wrapper" class="rules_wrapper">
+                <img src="img/how_to_play/3.png" id="rule_three_image" class="rules_images">
+                <div class="eighteen_black rules_headers" id="rules_three_header">Each round your team will guess as
+                    many words possible.</div>
+                <h3 class="rules_body" id="rule_three_body">Work together with the rest of your team to interpret what
+                    your question master is trying to say to earn the most points. There are no passes in this game so
+                    don’t give up early!</h3>
+            </div>
+            <div id="rule_four_wrapper" class="rules_wrapper">
+                <img src="img/how_to_play/4.png" id="rule_four_image" class="rules_images">
+                <div class="eighteen_black rules_headers" id="rules_four_header">If your team gets the most cards
+                    correct you win!</div>
+                <h3 class="rules_body" id="rule_four_body">The player with the most points at the end of the game with
+                    be crowned victorious! Use our final breakdown to read a brief summary about each word.</h3>
+            </div>
+        </div>
+        <div id="exit_wrapper">
+            <div id="exit_header_wrapper" class="exit_slide_up_top">
+                <h1 id="exit_header">LEAVING SO SOON?</h1>
+                <h3 id="exit_body">If you are the host, leaving the</br>game early will terminate your session. </h3>
+            </div>
+            <div id="exit_background" class="exit_slide_up"></div>
+            <div id="button_wrapper" class="exit_slide_up">
+                <button class="in_app_orange_buttons exit_button" id="confirm_leave_button">
+                    <h2 class="button_text">Yes</h2>
+                </button>
+                <button class="in_app_orange_buttons exit_button" id="reject_leave_button">
+                    <h2 class="button_text">Nah</h2>
+                </button>
+            </div>
+            <div id="exit_purple_background" class="exit_fade_in"></div>
+        </div>
+        <!-- Leaving the game dialog box -->
+        <!-- NEW CODE ENDS HERE -->
+        <!--EasyTimer Scripts Link:
             https://albert-gonzalez.github.io/easytimer.js/ -->
-        </div>
-        </div>
-        <!-- FIXME: The calls to 52.3.127.241 need to be changed to 52.3.127.241 -->
+    </div>
+    </div>
+    <!-- FIXME: The calls to localhost need to be changed to 52.3.127.241 -->
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="http://52.3.127.241:3001/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <script
-    src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/jquery.mobile.custom.min.js"></script>
     <script type="text/javascript">
-    // initialization-----------------------------------
-    app.initialize();
-    var socket = io.connect('http://52.3.127.241:3001');
+        // initialization-----------------------------------
+        app.initialize();
+        var socket = io.connect('http://52.3.127.241:3001');
 
-    // // TODO: Refactor code to be split accross muttiple files:
-    // // http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
-    // // https://stackoverflow.com/questions/8752627/how-can-i-split-a-javascript-application-into-multiple-files
-    // var GLOBALS_MOD = (function(){
-    //     var public = {};
+        // TODO: Refactor code to be split accross muttiple files:
 
-    //     public.active_room = null;
-    //     public.game_settings = null;
-    //     public.is_master = false;
-    //     public.game_states = Object.freeze({
-    //         HOME_SCREEN: "home_screen",
-    //         GAME_SETUP: "game_setup",
-    //         JOIN_GAME: "join_game",
-    //         WAITING_TEAM_SEL: "waiting_team_sel",
-    //         WAITING_CARD_ADD: "waiting_card_add",
-    //         PASS_PHONE: "pass_phone",
-    //         QUESTION_ASK: "question_ask",
-    //         SCORE_CARD: "score_card",
-    //         FINAL_SCORE_CARD: "final_score_card",
-    //         HOW_TO_PLAY: "how_to_play"
-    //     });
-
-    //     public.global_room_obj = null;
-    //     public.global_game_manager = [];
-    //     public.global_game_manager_index = null;
-    //     public.global_active_team = null;
-    //     public.global_num_players_ready = 0;
-
-    //     public.global_timer = null;
-
-    //     return public;
-
-    // }());
-
-    // var HOME_SCREEN_MOD = (function(){
-
-    // }());
-
-    // global vars
-    var active_room = null;
-    var game_settings = null;
-    var is_master = false;
-    var game_states = Object.freeze({
-        HOME_SCREEN: "home_screen",
-        GAME_SETUP: "game_setup",
-        JOIN_GAME: "join_game",
-        WAITING_TEAM_SEL: "waiting_team_sel",
-        WAITING_CARD_ADD: "waiting_card_add",
-        PASS_PHONE: "pass_phone",
-        QUESTION_ASK: "question_ask",
-        SCORE_CARD: "score_card",
-        FINAL_SCORE_CARD: "final_score_card",
-        HOW_TO_PLAY: "how_to_play"
-    });
-    $(document).on("mobileinit", function() { //mobieinit never happens?
-        $.mobile.ajaxEnabled = false;
-        $.mobile.loadingMessage = false;
-        alert("done");
-    });
-    $(document).ready(function() {
-        $.mobile.loading().hide();
-
-        // disable scrolling on home page
-        $("#home_screen_wrapper").on('touchmove', function(e){
-            e.preventDefault();
-            alert('scrolled');
-        }, false);
-        // $("#app").css("overflow", "hidden");
-
-        $("#game_start_btn").hide();
-        $("#navigation_wrapper").css("display", "block");
-        $("#navigation_wrapper_pink").css("display", "none");
-        $("#in_game_background_color").css("display", "none");
-        $("#home_screen_wrapper").css("display", "block");
-        $("#how_to_play_section_wrapper").css("display", "none");
-        $("#game_waiting_area_screen_wrapper").css("display", "none");
-        $("#exit_wrapper").css("display", "none");
-        $("body").css("overflow-y", "hidden");
-        // HOME_SCREEN start-----------------------------------
-        $("#start_landing_page_button").click(function(event) {
-            stateManager(game_states.GAME_SETUP);
-            socket.emit('get_room_id', {})
+        // Game state variables (i.e. global scoped variables within game_states)
+        var active_room = null;
+        var game_settings = null;
+        var is_master = false;
+        var game_states = Object.freeze({
+            HOME_SCREEN: "home_screen",
+            GAME_SETUP: "game_setup",
+            JOIN_GAME: "join_game",
+            WAITING_TEAM_SEL: "waiting_team_sel",
+            WAITING_CARD_ADD: "waiting_card_add",
+            PASS_PHONE: "pass_phone",
+            QUESTION_ASK: "question_ask",
+            SCORE_CARD: "score_card",
+            FINAL_SCORE_CARD: "final_score_card",
+            HOW_TO_PLAY: "how_to_play"
         });
-        $("#join_landing_page_button").click(function(event) {
-            stateManager(game_states.JOIN_GAME);
+
+        // TODO: Determine why mobieinit never happens?
+        $(document).on("mobileinit", function () {
+            $.mobile.ajaxEnabled = false;
+            $.mobile.loadingMessage = false;
+            alert("done");
         });
-        // callback from homepage to give room id number
-        socket.on('return_room_id', function(data) {
-            active_room = data.room_id_s;
-            // console.log("ACTIVE ROOM: " + active_room);
-        });
-        // HOME_SCREEN end-----------------------------------
-        // WAITING_CARD_ADD start---------------------------
-        $("#open_card_dialog").click(function() {
-            stateManager(game_states.WAITING_CARD_ADD);
-        });
-        var cards_in_bowl = false;
-        $("#submit_cards").click(function() {
-            var card_arr = getCardInput(game_settings.num_cards);
-            var check_set = new Set(card_arr);
-            if (check_set.has("") || check_set.has(" ")) {
-                alert("You must fill in all the cards!")
-            } else {
-                window.scrollTo(0, 0);
-                cards_in_bowl = true;
-                $("#add_to_the_deck_screen_wrapper").animate({
-                marginTop: "100%"
-            }, 800, function() {stateManager(game_states.WAITING_TEAM_SEL);});
-                socket.emit('submit_card_data', {
-                    card_arr: card_arr
-                });
-            }
-            delete check_set;
-        });
-        // WAITING_CARD_ADD end--------------------------------
-        // WAITING_TEAM_SEL start------------------------------
-        $(".team_selection_button").css("display", "block");
-        $("#in_a_team_button_wrapper").css("display", "none");
-        // jordans new sliding stuff start
-        var bool_team_list_up = false;
-        $("#team_selection_header_wrapper").click(function() {
-            if (!bool_team_list_up) {
-                $("#team_selection_wrapper").animate({
-                    bottom: "0%"
-                }, 1000, function() {
-                    $("#arrow_up").css({
-                        "transform": "translate(-50%, -50%) scaleY(-1)"
+        $(document).ready(function () {
+            $.mobile.loading().hide();
+
+            // disable scrolling on home page
+            $("#home_screen_wrapper").on('touchmove', function (e) {
+                e.preventDefault();
+                alert('scrolled');
+            }, false);
+            // $("#app").css("overflow", "hidden");
+
+            // Initlialize page visibilities
+            $("#game_start_btn").hide();
+            $("#navigation_wrapper").css("display", "block");
+            $("#navigation_wrapper_pink").css("display", "none");
+            $("#in_game_background_color").css("display", "none");
+            $("#home_screen_wrapper").css("display", "block");
+            $("#how_to_play_section_wrapper").css("display", "none");
+            $("#game_waiting_area_screen_wrapper").css("display", "none");
+            $("#exit_wrapper").css("display", "none");
+            $("body").css("overflow-y", "hidden");
+
+            // HOME_SCREEN start-----------------------------------
+            $("#start_landing_page_button").click(function (event) {
+                stateManager(game_states.GAME_SETUP);
+                socket.emit('get_room_id', {})
+            });
+            $("#join_landing_page_button").click(function (event) {
+                stateManager(game_states.JOIN_GAME);
+            });
+            // callback from homepage to give room id number
+            socket.on('return_room_id', function (data) {
+                active_room = data.room_id_s;
+                // console.log("ACTIVE ROOM: " + active_room);
+            });
+            // HOME_SCREEN end-----------------------------------
+            // WAITING_CARD_ADD start---------------------------
+            $("#open_card_dialog").click(function () {
+                stateManager(game_states.WAITING_CARD_ADD);
+            });
+            var cards_in_bowl = false;
+            $("#submit_cards").click(function () {
+                var card_arr = getCardInput(game_settings.num_cards);
+                var check_set = new Set(card_arr);
+                if (check_set.has("") || check_set.has(" ")) {
+                    alert("You must fill in all the cards!")
+                } else {
+                    window.scrollTo(0, 0);
+                    cards_in_bowl = true;
+                    $("#add_to_the_deck_screen_wrapper").animate({
+                        marginTop: "100%"
+                    }, 800, function () { stateManager(game_states.WAITING_TEAM_SEL); });
+                    socket.emit('submit_card_data', {
+                        card_arr: card_arr
                     });
-                });
-                bool_team_list_up = true;
-            } else {
-                $("#team_selection_wrapper").animate({
-                    bottom: "-47%"
-                }, 1000, function() {
-                    $("#arrow_up").css("transform", "translate(-50%, -50%) scaleY(1)"); //(global_game_manager[global_game_manager_index].total_points + 1)
-                });
-                bool_team_list_up = false;
-            }
-        });
-        $("#add_to_deck_button").click(function() {
-            // $(".fadeoutteam").css("opacity", "0");
-            $(".fadeoutteam").animate({
-                opacity: "0"
-            }, 100, function() {
-                $("#add_to_the_deck_header_wrapper").animate({
-                marginTop: "0%"
-            }, 800, function() {
-                $("#add_to_the_deck_background").css("bottom", "0%");
+                }
+                delete check_set;
             });
-            $("#team_selection_wrapper").animate({
-                bottom: "22%"
-            }, 800, function() {
-                $("#team_selection_wrapper").css("display", "none");
-                $("#game_waiting_area_screen_wrapper").css("display", "none");
-                $("#add_to_the_deck_screen_wrapper").css("display", "block");
-                $("body").css("overflow-y", "scroll");
-            });
-            });
-        });
+            // WAITING_CARD_ADD end--------------------------------
 
-        $("#arrow_left_add_to_deck").click(function() {
-            $("#game_waiting_area_screen_wrapper").css("display", "block");
-            $("#team_selection_wrapper").css("display", "block");
-            $(".fadeoutteam").css("opacity", "1");
-            $("#team_selection_wrapper").animate({
-                bottom: "-47%"
-            }, 300, function() {
-                // Animation complete.
-            });
-            $("#add_to_the_deck_background").animate({
-                bottom: "-85%"
-            }, 800, function() {});
-            $("#add_to_the_deck_header_wrapper").animate({
-                marginTop: "160%"
-            }, 800, function() {
-                $("#add_to_the_deck_screen_wrapper").css("display", "none");
-                $("body").css("overflow-y", "hidden");
-            });
-        });
-        // jordan's new sliding stuff stop
-        // allen code still necessary
-        $(".team_selection_button").on('click', function(event) {
-            // console.log('test ' + global_room_obj.room_team_arr[team_list_index].length + ' / ' + global_room_obj.room_settings.num_players);
-            if (global_room_obj.room_team_arr[team_list_index].length >= (global_room_obj.room_settings.num_players)) {
-                alert("Team" + team_list_index + " is full, please pick another.")
-            } else {
-                socket.emit('team_select', {
-                    team: team_list_index
-                });
-                $(".team_selection_button").css("display", "none");
-                $("#in_a_team_button_wrapper").css("display", "block");
-            }
-        });
-        $("#leave_team_button").on('click', function(event) {
-            socket.emit('team_select', {
-                team: -1
-            });
+            // WAITING_TEAM_SEL start------------------------------
             $(".team_selection_button").css("display", "block");
             $("#in_a_team_button_wrapper").css("display", "none");
-        });
-        socket.on('goto_join_game_success', function(data) {
-            if (data.name_correct && data.id_correct) {
-                active_room = data.room_id;
-                game_settings = data.room_settings;
-                createCardInput(game_settings.num_cards, $("#card_input_div"));
-                createTeamInput(game_settings.num_teams, $("#team_select"));
-                // console.log(game_settings);
-                $("#room_code_text").text("" + active_room);
-                // $("#room_code_text").on('click', function(){
-                //     $("#room_code_text").select();
-                //     document.execCommand("Copy");
-                // });
-                stateManager(game_states.WAITING_TEAM_SEL);
-            } else if (data.id_correct) {
-                $("#game_join_player_name").val('');
-                alert("Someone in Game Room " + data.room_id + " aleready has that name, please pick another.");
-            } else {
-                $("#game_join_id").val('');
-                $("#game_join_player_name").val('');
-                alert("Game Room " + data.room_id + " is invalid, please check and try again.");
-            }
-        });
-        var global_room_obj = null;
-        socket.on('ui_update', function(data) {
-            // console.log('UI UPDATE:');
-            // console.log(data);
-            if(data.card_submitted){
-                global_num_players_ready += 1;
-            }
-            global_room_obj = data.room_obj;
-            createTeamCards(data.room_obj, team_list_index);
-            appendTeamNames(data.room_obj.room_team_arr, $("#team_list"));
-            $("#players_joined_counter").empty();
-            var number_players = (global_room_obj.room_settings.num_players) * (global_room_obj.room_settings.num_teams);
-            $("#players_joined_counter").text(global_room_obj.room_names_arr.length + ' / ' + number_players);
-            // $("#breadcrumb_wrapper").empty();
-        });
-        // WAITING_TEAM_SEL end-------------------------------
-        //Pass the phone--------------------------------------------------------
-        // next_question_asker next_question_asker_team
-        var global_game_manager = [];
-        var global_game_manager_index = null;
-        var global_active_team = null;
-        var global_num_players_ready = 0;
-        $("#game_start_btn").on('click', function(event) {
-            // FIXME: enable team length check for actual gameplay
-            // nextTurnFunction();
-            var team_lens = global_room_obj.room_team_arr;
-            var err_str = "";
-            for (var i = 0; i < team_lens.length; i++) {
-                if(team_lens[i].length < 2) {
-                    if(i === team_lens.length - 1) err_str += "and " + (i+1);
-                    else err_str += (i+1) + ", ";
-                }
-            }
-            if(err_str === ""){
-                if(global_num_players_ready === global_room_obj.room_names_arr.length){
-                    nextTurnFunction();
+            // jordans new sliding stuff start
+            var bool_team_list_up = false;
+            $("#team_selection_header_wrapper").click(function () {
+                if (!bool_team_list_up) {
+                    $("#team_selection_wrapper").animate({
+                        bottom: "0%"
+                    }, 1000, function () {
+                        $("#arrow_up").css({
+                            "transform": "translate(-50%, -50%) scaleY(-1)"
+                        });
+                    });
+                    bool_team_list_up = true;
                 } else {
-                    alert("Not all players have submitted their cards!");
+                    $("#team_selection_wrapper").animate({
+                        bottom: "-47%"
+                    }, 1000, function () {
+                        $("#arrow_up").css("transform", "translate(-50%, -50%) scaleY(1)"); //(global_game_manager[global_game_manager_index].total_points + 1)
+                    });
+                    bool_team_list_up = false;
                 }
-            } else {
-                alert("Teams must all have at least 2 players to start the game! Team " + err_str + " need more players.");
-            }
-        });
+            });
+            $("#add_to_deck_button").click(function () {
+                // $(".fadeoutteam").css("opacity", "0");
+                $(".fadeoutteam").animate({
+                    opacity: "0"
+                }, 100, function () {
+                    $("#add_to_the_deck_header_wrapper").animate({
+                        marginTop: "0%"
+                    }, 800, function () {
+                        $("#add_to_the_deck_background").css("bottom", "0%");
+                    });
+                    $("#team_selection_wrapper").animate({
+                        bottom: "22%"
+                    }, 800, function () {
+                        $("#team_selection_wrapper").css("display", "none");
+                        $("#game_waiting_area_screen_wrapper").css("display", "none");
+                        $("#add_to_the_deck_screen_wrapper").css("display", "block");
+                        $("body").css("overflow-y", "scroll");
+                    });
+                });
+            });
 
-        $(".round_breakdown_button").on('click', function(event) {
-            nextTurnFunction();
-        });
+            $("#arrow_left_add_to_deck").click(function () {
+                $("#game_waiting_area_screen_wrapper").css("display", "block");
+                $("#team_selection_wrapper").css("display", "block");
+                $(".fadeoutteam").css("opacity", "1");
+                $("#team_selection_wrapper").animate({
+                    bottom: "-47%"
+                }, 300, function () {
+                    // Animation complete.
+                });
+                $("#add_to_the_deck_background").animate({
+                    bottom: "-85%"
+                }, 800, function () { });
+                $("#add_to_the_deck_header_wrapper").animate({
+                    marginTop: "160%"
+                }, 800, function () {
+                    $("#add_to_the_deck_screen_wrapper").css("display", "none");
+                    $("body").css("overflow-y", "hidden");
+                });
+            });
+            // jordan's new sliding stuff stop
+            // allen code still necessary
+            $(".team_selection_button").on('click', function (event) {
+                // console.log('test ' + global_room_obj.room_team_arr[team_list_index].length + ' / ' + global_room_obj.room_settings.num_players);
+                if (global_room_obj.room_team_arr[team_list_index].length >= (global_room_obj.room_settings.num_players)) {
+                    alert("Team" + team_list_index + " is full, please pick another.")
+                } else {
+                    socket.emit('team_select', {
+                        team: team_list_index
+                    });
+                    $(".team_selection_button").css("display", "none");
+                    $("#in_a_team_button_wrapper").css("display", "block");
+                }
+            });
+            $("#leave_team_button").on('click', function (event) {
+                socket.emit('team_select', {
+                    team: -1
+                });
+                $(".team_selection_button").css("display", "block");
+                $("#in_a_team_button_wrapper").css("display", "none");
+            });
+            socket.on('goto_join_game_success', function (data) {
+                if (data.name_correct && data.id_correct) {
+                    active_room = data.room_id;
+                    game_settings = data.room_settings;
+                    createCardInput(game_settings.num_cards, $("#card_input_div"));
+                    createTeamInput(game_settings.num_teams, $("#team_select"));
+                    // console.log(game_settings);
+                    $("#room_code_text").text("" + active_room);
+                    // $("#room_code_text").on('click', function(){
+                    //     $("#room_code_text").select();
+                    //     document.execCommand("Copy");
+                    // });
+                    stateManager(game_states.WAITING_TEAM_SEL);
+                } else if (data.id_correct) {
+                    $("#game_join_player_name").val('');
+                    alert("Someone in Game Room " + data.room_id + " aleready has that name, please pick another.");
+                } else {
+                    $("#game_join_id").val('');
+                    $("#game_join_player_name").val('');
+                    alert("Game Room " + data.room_id + " is invalid, please check and try again.");
+                }
+            });
+            var global_room_obj = null;
+            socket.on('ui_update', function (data) {
+                // console.log('UI UPDATE:');
+                // console.log(data);
+                if (data.card_submitted) {
+                    global_num_players_ready += 1;
+                }
+                global_room_obj = data.room_obj;
+                createTeamCards(data.room_obj, team_list_index);
+                appendTeamNames(data.room_obj.room_team_arr, $("#team_list"));
+                $("#players_joined_counter").empty();
+                var number_players = (global_room_obj.room_settings.num_players) * (global_room_obj.room_settings.num_teams);
+                $("#players_joined_counter").text(global_room_obj.room_names_arr.length + ' / ' + number_players);
+                // $("#breadcrumb_wrapper").empty();
+            });
+            // WAITING_TEAM_SEL end-------------------------------
+            //Pass the phone--------------------------------------------------------
+            // next_question_asker next_question_asker_team
+            var global_game_manager = [];
+            var global_game_manager_index = null;
+            var global_active_team = null;
+            var global_num_players_ready = 0;
+            $("#game_start_btn").on('click', function (event) {
+                // DEBUG: check following screens without full game/players
+                // nextTurnFunction();
 
-        var nextTurnFunction = function() {
+                // Checking if we're ready to start the game (teams full, cards submitted)
+                var team_lens = global_room_obj.room_team_arr;
+                var err_str = "";
+                for (var i = 0; i < team_lens.length; i++) {
+                    if (team_lens[i].length < 2) {
+                        if (i === team_lens.length - 1) err_str += "and " + (i + 1);
+                        else err_str += (i + 1) + ", ";
+                    }
+                }
+                if (err_str === "") {
+                    if (global_num_players_ready === global_room_obj.room_names_arr.length) {
+                        nextTurnFunction();
+                    } else {
+                        alert("Not all players have submitted their cards!");
+                    }
+                } else {
+                    alert("Teams must all have at least 2 players to start the game! Team " + err_str + " need more players.");
+                }
+            });
+
+            $(".round_breakdown_button").on('click', function (event) {
+                nextTurnFunction();
+            });
+
+            var nextTurnFunction = function () {
                 var number_players = (global_room_obj.room_settings.num_players) * (global_room_obj.room_settings.num_teams);
                 // if(number_players === global_room_obj.room_names_arr.length){
                 //     stateManager(game_states.PASS_PHONE);
@@ -774,485 +791,484 @@ under the License.
             }
             // pass the phone end---------------------------------------------------
             // active game start-----------------------------------------------------
-        var global_timer = null;
-        $("#pass_the_phone_button").on('click', function(event) {
-            stateManager(game_states.QUESTION_ASK);
-            $("#question_giver").empty();
-            var str = '' + global_room_obj.room_team_arr[global_game_manager_index][global_active_team.question_asker_index];
-            str = str.toUpperCase();
-            $("#question_giver").text(str);
-            $("#team_number").empty();
-            $("#team_number").text('TEAM ' + (global_game_manager_index + 1)); //because of 0 indexing
-            global_timer = startTimer(global_room_obj.room_settings.turn_time_sec, $("#game_timer"));
-            var set_spread = [...global_room_obj.room_card_set];
-            if (set_spread.length === 0) {
-                stateManager(game_states.FINAL_SCORE_CARD);
-            }
-            global_active_card = set_spread.pop();
-            var new_set = new Set(set_spread)
-            global_room_obj.room_card_set = new_set;
-            $("#card_value1").text(global_active_card);
-            $("#card_1_header").text('Card #' + (global_game_manager[global_game_manager_index].total_points + 1));
-        });
-
-        function timerCallback() {
-            // console.log('timer ended');
-            clearInterval(global_timer);
-            var set_spread = [...global_room_obj.room_card_set];
-            if (set_spread.length > 0) {
-                global_room_obj.room_card_set.add(global_active_card);
-                stateManager(game_states.SCORE_CARD);
-            }
-
-        }
-        // src: https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
-        function startTimer(duration, display) {
-            var timer = duration,
-                minutes, seconds;
-            var out = setInterval(function() {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                display.text(minutes + ":" + seconds);
-                if (--timer < 0) {
-                    timer = duration;
-                    timerCallback();
+            var global_timer = null;
+            $("#pass_the_phone_button").on('click', function (event) {
+                stateManager(game_states.QUESTION_ASK);
+                $("#question_giver").empty();
+                var str = '' + global_room_obj.room_team_arr[global_game_manager_index][global_active_team.question_asker_index];
+                str = str.toUpperCase();
+                $("#question_giver").text(str);
+                $("#team_number").empty();
+                $("#team_number").text('TEAM ' + (global_game_manager_index + 1)); //because of 0 indexing
+                global_timer = startTimer(global_room_obj.room_settings.turn_time_sec, $("#game_timer"));
+                var set_spread = [...global_room_obj.room_card_set];
+                if (set_spread.length === 0) {
+                    stateManager(game_states.FINAL_SCORE_CARD);
                 }
-            }, 1000);
-            return out
-        }
+                global_active_card = set_spread.pop();
+                var new_set = new Set(set_spread)
+                global_room_obj.room_card_set = new_set;
+                $("#card_value1").text(global_active_card);
+                $("#card_1_header").text('Card #' + (global_game_manager[global_game_manager_index].total_points + 1));
+            });
 
-        function cardResetCallback() {
-            $("#card_value1").text(global_active_card);
-            $("#card_1_header").text('Card #' + (global_game_manager[global_game_manager_index].total_points + 1));
-            $("#playing_card1").css("left", "");
-            $("#playing_card7").css({
-                "right": "",
-                "background-color": ""
-            });
-            $("#playing_card2").css({
-                "bottom": "",
-                "background-color": ""
-            });
-            $("#playing_card3").css({
-                "bottom": "",
-                "background-color": ""
-            });
-            $("#playing_card4").css({
-                "bottom": "",
-                "background-color": ""
-            });
-            $("#playing_card5").css({
-                "bottom": "",
-                "background-color": ""
-            });
-            $("#playing_card6").css({
-                "bottom": "",
-                "background-color": ""
-            });
-        }
-        var global_active_card = null
-        $("#playing_card1").on('click', function() {
-            var speed = 800;
-            global_game_manager[global_game_manager_index].cards_won.push(($("#card_value1").text()));
-            global_game_manager[global_game_manager_index].total_points += 1;
-            // console.log(global_game_manager[global_game_manager_index].cards_won);
-            // console.log('teamNum ' + global_game_manager[global_game_manager_index].team_number);
-            var set_spread = [...global_room_obj.room_card_set];
-            if (set_spread.length <= 0) {
-                stateManager(game_states.FINAL_SCORE_CARD);
+            function timerCallback() {
+                // console.log('timer ended');
+                clearInterval(global_timer);
+                var set_spread = [...global_room_obj.room_card_set];
+                if (set_spread.length > 0) {
+                    global_room_obj.room_card_set.add(global_active_card);
+                    stateManager(game_states.SCORE_CARD);
+                }
+
             }
-            global_active_card = set_spread.pop();
-            var new_set = new Set(set_spread)
-            global_room_obj.room_card_set = new_set;
-            $("#card_value2").text(global_active_card);
-            $("#card_2_header").text('Card #' + (global_game_manager[global_game_manager_index].total_points + 1));
-            $("#playing_card1").animate({
-                left: "500px"
-            }, speed, function() {
+            // src: https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
+            function startTimer(duration, display) {
+                var timer = duration,
+                    minutes, seconds;
+                var out = setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    display.text(minutes + ":" + seconds);
+                    if (--timer < 0) {
+                        timer = duration;
+                        timerCallback();
+                    }
+                }, 1000);
+                return out
+            }
+
+            function cardResetCallback() {
+                $("#card_value1").text(global_active_card);
+                $("#card_1_header").text('Card #' + (global_game_manager[global_game_manager_index].total_points + 1));
+                $("#playing_card1").css("left", "");
                 $("#playing_card7").css({
-                    "right": "0px",
-                    "background-color": "#D3A2CC"
+                    "right": "",
+                    "background-color": ""
                 });
                 $("#playing_card2").css({
-                    "bottom": "10%",
-                    "background-color": "white"
+                    "bottom": "",
+                    "background-color": ""
                 });
                 $("#playing_card3").css({
-                    "bottom": "12%",
-                    "background-color": "#FFECF7"
+                    "bottom": "",
+                    "background-color": ""
                 });
                 $("#playing_card4").css({
-                    "bottom": "14%",
-                    "background-color": "#FEDAF2"
+                    "bottom": "",
+                    "background-color": ""
                 });
                 $("#playing_card5").css({
-                    "bottom": "16%",
-                    "background-color": "#F3C4E6"
+                    "bottom": "",
+                    "background-color": ""
                 });
                 $("#playing_card6").css({
-                    "bottom": "18%",
-                    "background-color": "#E1B1D7"
+                    "bottom": "",
+                    "background-color": ""
                 });
-                setTimeout(function() {
-                    cardResetCallback()
-                }, speed / 2);
+            }
+            var global_active_card = null
+            $("#playing_card1").on('click', function () {
+                var speed = 800;
+                global_game_manager[global_game_manager_index].cards_won.push(($("#card_value1").text()));
+                global_game_manager[global_game_manager_index].total_points += 1;
+                // console.log(global_game_manager[global_game_manager_index].cards_won);
+                // console.log('teamNum ' + global_game_manager[global_game_manager_index].team_number);
+                var set_spread = [...global_room_obj.room_card_set];
+                if (set_spread.length <= 0) {
+                    stateManager(game_states.FINAL_SCORE_CARD);
+                }
+                global_active_card = set_spread.pop();
+                var new_set = new Set(set_spread)
+                global_room_obj.room_card_set = new_set;
+                $("#card_value2").text(global_active_card);
+                $("#card_2_header").text('Card #' + (global_game_manager[global_game_manager_index].total_points + 1));
+                $("#playing_card1").animate({
+                    left: "500px"
+                }, speed, function () {
+                    $("#playing_card7").css({
+                        "right": "0px",
+                        "background-color": "#D3A2CC"
+                    });
+                    $("#playing_card2").css({
+                        "bottom": "10%",
+                        "background-color": "white"
+                    });
+                    $("#playing_card3").css({
+                        "bottom": "12%",
+                        "background-color": "#FFECF7"
+                    });
+                    $("#playing_card4").css({
+                        "bottom": "14%",
+                        "background-color": "#FEDAF2"
+                    });
+                    $("#playing_card5").css({
+                        "bottom": "16%",
+                        "background-color": "#F3C4E6"
+                    });
+                    $("#playing_card6").css({
+                        "bottom": "18%",
+                        "background-color": "#E1B1D7"
+                    });
+                    setTimeout(function () {
+                        cardResetCallback()
+                    }, speed / 2);
+                });
             });
-        });
-        //active game end-----------------------------------------------------
-        // final score card start
-        var compareTeams = function(a, b) {
-            return b.total_points - a.total_points;
-        }
+            //active game end-----------------------------------------------------
+            // final score card start
+            var compareTeams = function (a, b) {
+                return b.total_points - a.total_points;
+            }
 
-        var teamOrder = function(a, b) {
-            return a.team_number - b.team_number;
-        }
+            var teamOrder = function (a, b) {
+                return a.team_number - b.team_number;
+            }
 
-        var fillFinalBreakdown = function() {
-            global_game_manager.sort(compareTeams);
-            $("#final_team_stats_wrapper_outside").empty();
-            // $("#final_breakdown_wrapper").append(`<div id="round_breakdown_header_wrapper">
-            //     <h1 id="round_breakdown_header">FINAL BREAKDOWN</h1>
-            //     <h3 id="round_breakdown_body">Great game! Check out what</br>answers you missed</h3>
-            // </div>`);
-            for (var i = 0; i < global_game_manager.length; i++) {
-                $("#final_team_stats_wrapper_outside").append('<div class="final_team_stats_wrapper" id="team' + global_game_manager[i].team_number + 'finalscore"> <table><th class="eighteen_black">Team ' + global_game_manager[i].team_number + ':</th><td class="eighteen_salmon">' + global_game_manager[i].total_points + 'PTS</td></table><div class="long_pink_line"></div>');
-                var len = (global_game_manager[i].cards_won).length;
-                for (var j = 0; j < global_game_manager[i].cards_won.length; j++) {
-                    $('#team' + (global_game_manager[i].team_number) + 'finalscore').append('<div class="answers_wrapper" id="answer' + global_game_manager[i].team_number + '"><h4 class="final_answers">' + global_game_manager[i].cards_won[j] + '</h4><img src="img/checkmark.png" class="checkmark"></div>');
-                    // console.log('count: ' + j);
+            var fillFinalBreakdown = function () {
+                global_game_manager.sort(compareTeams);
+                $("#final_team_stats_wrapper_outside").empty();
+                // $("#final_breakdown_wrapper").append(`<div id="round_breakdown_header_wrapper">
+                //     <h1 id="round_breakdown_header">FINAL BREAKDOWN</h1>
+                //     <h3 id="round_breakdown_body">Great game! Check out what</br>answers you missed</h3>
+                // </div>`);
+                for (var i = 0; i < global_game_manager.length; i++) {
+                    $("#final_team_stats_wrapper_outside").append('<div class="final_team_stats_wrapper" id="team' + global_game_manager[i].team_number + 'finalscore"> <table><th class="eighteen_black">Team ' + global_game_manager[i].team_number + ':</th><td class="eighteen_salmon">' + global_game_manager[i].total_points + 'PTS</td></table><div class="long_pink_line"></div>');
+                    var len = (global_game_manager[i].cards_won).length;
+                    for (var j = 0; j < global_game_manager[i].cards_won.length; j++) {
+                        $('#team' + (global_game_manager[i].team_number) + 'finalscore').append('<div class="answers_wrapper" id="answer' + global_game_manager[i].team_number + '"><h4 class="final_answers">' + global_game_manager[i].cards_won[j] + '</h4><img src="img/checkmark.png" class="checkmark"></div>');
+                        // console.log('count: ' + j);
+                    }
                 }
             }
-        }
 
-        var fillRoundBreakdown = function() {
-            global_game_manager.sort(compareTeams);
-            $("#round_breakdown_wrapper_outside").empty();
-            // <div id="team_one_wrapper">
-            //          <h3 id="team_title_one">TEAM 1:</h3>
-            //          <div class="room_code_font" id="team_score_one">10<h1 class="pink_h1 pts">PTS</h1></div>
-            //      </div>
-            for (var i = 0; i < global_game_manager.length; i++) {
-                $("#round_breakdown_wrapper_outside").append('<div id="team_one_wrapper"> <h3 id="team_title_one">TEAM ' + global_game_manager[i].team_number + ':</h3> <div class="room_code_font" id="team_score_one">' + global_game_manager[i].total_points + '<h1 class="pink_h1 pts">PTS</h1></div></div>');
+            var fillRoundBreakdown = function () {
+                global_game_manager.sort(compareTeams);
+                $("#round_breakdown_wrapper_outside").empty();
+                // <div id="team_one_wrapper">
+                //          <h3 id="team_title_one">TEAM 1:</h3>
+                //          <div class="room_code_font" id="team_score_one">10<h1 class="pink_h1 pts">PTS</h1></div>
+                //      </div>
+                for (var i = 0; i < global_game_manager.length; i++) {
+                    $("#round_breakdown_wrapper_outside").append('<div id="team_one_wrapper"> <h3 id="team_title_one">TEAM ' + global_game_manager[i].team_number + ':</h3> <div class="room_code_font" id="team_score_one">' + global_game_manager[i].total_points + '<h1 class="pink_h1 pts">PTS</h1></div></div>');
+                }
+                global_game_manager.sort(teamOrder);
             }
-            global_game_manager.sort(teamOrder);
-        }
 
-        // JOIN_GAME start------------------------------------
-        // event listener to go to join game screen
-        $("#join_game_btn").click(function() {
-            var game_id_c = $("#game_join_id").val();
-            var player_name_c = $("#game_join_player_name").val();
-            //check for name before joining
-            if (player_name_c === "") {
-                alert("Player name can't be blank. Please enter a name to join the game!");
-            } else {
-                socket.emit('goto_join_game', {
-                    game_id_c: game_id_c,
-                    player_name_c: player_name_c
-                });
-            }
-        });
-        // JOIN_GAME end-----------------------------------
-        // GAME_SETUP start--------------------------------
-        $("#plus").click(function() {
-            $("#number_of_cards_per_player").empty();
-            var value = parseInt($("#num_cards").val());
-            if (value < 30) value += 1;
-            $("#num_cards").val(value);
-            $("#number_of_cards_per_player").append(value + ' Card(s) Per Player');
-        });
-        $("#minus").click(function() {
-            $("#number_of_cards_per_player").empty();
-            var value = parseInt($("#num_cards").val());
-            if (value > 5) value -= 1;
-            $("#num_cards").val(value);
-            $("#number_of_cards_per_player").append(value + ' Card(s) Per Player');
-        });
-        $("#arrow_left").click(function() {
-            $("#length_of_turns_string").empty();
-            var value = parseInt($("#turn_time_sec").val());
-            if (value > 30) value -= 10;
-            $("#turn_time_sec").val(value);
-            $("#length_of_turns_string").append(value + ' Seconds');
-        });
-        $("#arrow_right").on('click', function() {
-            $("#length_of_turns_string").empty();
-            var value = parseInt($("#turn_time_sec").val());
-            if (value < 120) value += 10;
-            $("#turn_time_sec").val(value);
-            $("#length_of_turns_string").append(value + ' Seconds');
-        });
-        var pink_guys = $(".pink_person_host_page");
-        for (var i = 2; i < pink_guys.length; i++) {
-            var pink_id = pink_guys[i].id;
-            var str = "#" + pink_id
-            $(str).on('click', function(obj) {
-                var my_obj = "#" + obj.currentTarget.id
-                if (obj.currentTarget.alt === "1") {
-                    $(my_obj).attr("src", "img/pink_person.png");
-                    $(my_obj).attr("alt", "0");
-                    var old_num = parseInt($("#num_players").val());
-                    $("#num_players").val(old_num - 1);
+            // JOIN_GAME start------------------------------------
+            // event listener to go to join game screen
+            $("#join_game_btn").click(function () {
+                var game_id_c = $("#game_join_id").val();
+                var player_name_c = $("#game_join_player_name").val();
+                //check for name before joining
+                if (player_name_c === "") {
+                    alert("Player name can't be blank. Please enter a name to join the game!");
                 } else {
-                    $(my_obj).attr("src", "img/black_person.png");
-                    $(my_obj).attr("alt", "1");
-                    var old_num = parseInt($("#num_players").val());
-                    $("#num_players").val(old_num + 1);
+                    socket.emit('goto_join_game', {
+                        game_id_c: game_id_c,
+                        player_name_c: player_name_c
+                    });
                 }
             });
-        }
-
-        // populate "fun fact of the day"
-        $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('http://www.unkno.com/') + '&callback=?', function(data) {
-            var my_html = $.parseHTML(data.contents);
-            var txt = my_html[my_html.length - 1];
-            $("body").append("<div id='temp_div'></div>");
-            $("#temp_div").css("display", "none");
-            $("#temp_div").append(txt);
-            $("#fun_fact_body_text").text($("#content").text());
-            $("#temp_div").remove();
-        });
-        // event listener for game master to submit game settings
-        $("#submit_game_setup").click(function() {
-            window.scrollTo(0, 0);
-            var master_name_c = $("#master_name").val();
-            var num_teams_c = $("#num_teams").val();
-            var num_players_c = $("#num_players").val();
-            var turn_time_min_c = null; //$("#turn_time_min").val(); //We'll just use secondsc
-            var turn_time_sec_c = $("#turn_time_sec").val();
-            var num_cards_c = $("#num_cards").val();
-            if (master_name_c === "") {
-                alert("Player name can't be blank. Please enter a name to join the game!");
-            } else {
-                is_master = true;
-
-                socket.emit('goto_card_submit_master', {
-                    master_name_c: master_name_c,
-                    num_teams_c: num_teams_c,
-                    num_players_c: num_players_c,
-                    num_cards_c: num_cards_c,
-                    turn_time_min_c: turn_time_min_c,
-                    turn_time_sec_c: turn_time_sec_c,
-                    active_room_c: active_room,
-                    setting_change: false
+            // JOIN_GAME end-----------------------------------
+            // GAME_SETUP start--------------------------------
+            $("#plus").click(function () {
+                $("#number_of_cards_per_player").empty();
+                var value = parseInt($("#num_cards").val());
+                if (value < 30) value += 1;
+                $("#num_cards").val(value);
+                $("#number_of_cards_per_player").append(value + ' Card(s) Per Player');
+            });
+            $("#minus").click(function () {
+                $("#number_of_cards_per_player").empty();
+                var value = parseInt($("#num_cards").val());
+                if (value > 5) value -= 1;
+                $("#num_cards").val(value);
+                $("#number_of_cards_per_player").append(value + ' Card(s) Per Player');
+            });
+            $("#arrow_left").click(function () {
+                $("#length_of_turns_string").empty();
+                var value = parseInt($("#turn_time_sec").val());
+                if (value > 30) value -= 10;
+                $("#turn_time_sec").val(value);
+                $("#length_of_turns_string").append(value + ' Seconds');
+            });
+            $("#arrow_right").on('click', function () {
+                $("#length_of_turns_string").empty();
+                var value = parseInt($("#turn_time_sec").val());
+                if (value < 120) value += 10;
+                $("#turn_time_sec").val(value);
+                $("#length_of_turns_string").append(value + ' Seconds');
+            });
+            var pink_guys = $(".pink_person_host_page");
+            for (var i = 2; i < pink_guys.length; i++) {
+                var pink_id = pink_guys[i].id;
+                var str = "#" + pink_id
+                $(str).on('click', function (obj) {
+                    var my_obj = "#" + obj.currentTarget.id
+                    if (obj.currentTarget.alt === "1") {
+                        $(my_obj).attr("src", "img/pink_person.png");
+                        $(my_obj).attr("alt", "0");
+                        var old_num = parseInt($("#num_players").val());
+                        $("#num_players").val(old_num - 1);
+                    } else {
+                        $(my_obj).attr("src", "img/black_person.png");
+                        $(my_obj).attr("alt", "1");
+                        var old_num = parseInt($("#num_players").val());
+                        $("#num_players").val(old_num + 1);
+                    }
                 });
-                //add breadcrumb code here
+            }
+
+            // populate "fun fact of the day"
+            $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('http://www.unkno.com/') + '&callback=?', function (data) {
+                var my_html = $.parseHTML(data.contents);
+                var txt = my_html[my_html.length - 1];
+                $("body").append("<div id='temp_div'></div>");
+                $("#temp_div").css("display", "none");
+                $("#temp_div").append(txt);
+                $("#fun_fact_body_text").text($("#content").text());
+                $("#temp_div").remove();
+            });
+            // event listener for game master to submit game settings
+            $("#submit_game_setup").click(function () {
+                window.scrollTo(0, 0);
+                var master_name_c = $("#master_name").val();
+                var num_teams_c = $("#num_teams").val();
+                var num_players_c = $("#num_players").val();
+                var turn_time_min_c = null; //$("#turn_time_min").val(); //We'll just use secondsc
+                var turn_time_sec_c = $("#turn_time_sec").val();
+                var num_cards_c = $("#num_cards").val();
+                if (master_name_c === "") {
+                    alert("Player name can't be blank. Please enter a name to join the game!");
+                } else {
+                    is_master = true;
+
+                    socket.emit('goto_card_submit_master', {
+                        master_name_c: master_name_c,
+                        num_teams_c: num_teams_c,
+                        num_players_c: num_players_c,
+                        num_cards_c: num_cards_c,
+                        turn_time_min_c: turn_time_min_c,
+                        turn_time_sec_c: turn_time_sec_c,
+                        active_room_c: active_room,
+                        setting_change: false
+                    });
+                    //add breadcrumb code here
+                    $("#breadcrumb_wrapper").empty();
+                    for (var i = 0; i < num_teams_c; i++) {
+                        $("#breadcrumb_wrapper").append('<div class="breadcrumb_inactive id="crumb' + i + '"></div>');
+                    }
+                }
+
+            });
+            var team_list = [];
+            socket.on('send_game_settings', function (data) {
+                game_settings = data.room_settings;
+                // console.log(game_settings);
+                createCardInput(game_settings.num_cards, $("#card_input_div"));
+                createTeamInput(game_settings.num_teams, $("#team_select"));
+                stateManager(game_states.WAITING_TEAM_SEL);
+                var num_players = game_settings.num_players;
+                // console.log("numplayers: " + num_players);
+                $("#total_players").text("" + num_players);
+                $("#room_code_text").text("" + active_room);
+            });
+
+            // <div id="exit_wrapper">
+            //     <div id="exit_header_wrapper">
+            //         <h1 id="exit_header">LEAVING SO SOON?</h1>
+            //         <h3 id="exit_body">If you are the host, leaving the</br>game early will terminate your session. </h3>
+            //     </div>
+            //     <div id="exit_background"></div>
+            //     <div id="button_wrapper">
+            //         <button class="in_app_orange_buttons exit_button" id="confirm_leave_button"><h2 class="button_text">Yes</h2></button>
+            //         <button class="in_app_orange_buttons exit_button" id="reject_leave_button"><h2 class="button_text">Nah</h2></button>
+            //     </div>
+            //     <div id="exit_purple_background"></div>
+            // </div>
+
+            var home_screen_speed = 200;
+            // return button to get back to homescreen
+            $(".return_home").on('click', function () {
+                $(".exit_fade_in").css("opacity", "0");
+                $(".exit_slide_up").css("bottom", "-75%");
+                $(".exit_slide_up_top").css({
+                    top: '134%',
+                    transform: 'translate(-50%)'
+                });
+                $("#exit_wrapper").css("display", "block");
+                $(".exit_fade_in").animate({
+                    opacity: "1"
+                }, home_screen_speed / 4, function () {
+                    $(".exit_slide_up_top").animate({
+                        top: "59%"
+                    }, home_screen_speed, function () { });
+                    $(".exit_slide_up").animate({
+                        bottom: "0%"
+                    }, home_screen_speed, function () { });
+                });
+            });
+
+            $("#reject_leave_button").on("click", function () {
+                // $("body").css("overflow-y", "hidden");
+                $(".exit_slide_up_top").animate({
+                    top: "134%"
+                }, home_screen_speed, function () { });
+                $(".exit_slide_up").animate({
+                    bottom: "-75%"
+                }, home_screen_speed, function () {
+                    $(".exit_fade_in").animate({
+                        opacity: "0"
+                    }, home_screen_speed / 4, function () {
+                        $("#exit_wrapper").css("display", "none");
+                    });
+                });
+            });
+
+            $("#confirm_leave_button").on("click", function () {
+                stateManager(game_states.HOME_SCREEN); //TODO: add animation and button functionality
+                if (active_room) {
+                    socket.emit('remove_room_id', {
+                        room_id_c: active_room
+                    });
+                    active_room = null;
+                    cards_in_bowl = null;
+                    game_settings = null;
+                }
+            });
+            socket.on('kick_from_game', function (data) {
+                alert(data);
+                stateManager(game_states.HOME_SCREEN);
+                if (active_room) {
+                    active_room = null;
+                    cards_in_bowl = null;
+                    game_settings = null;
+                }
+            });
+            // GAME_SETUP end-----------------------------------
+            socket.on('alert_msg', function (data) {
+                // console.log(data);
+            });
+            var team_list_index = 0;
+            var createTeamCards = function (room_obj, team_list_index) {
+                $("#team_saved_name").text("Team " + (team_list_index + 1));
+                var current_team = room_obj.room_team_arr[team_list_index];
+                var num_players = room_obj.room_settings.num_players;
+                $("#team_list_icons_wrapper").empty();
+                for (var i = 0; i < current_team.length; i++) {
+                    $("#team_list_icons_wrapper").append(
+                        '<div class="spot_wrapper"><img src="img/black_person.png" class="spot_icon"><div class="eighteen_black spot_text">' + current_team[i] + '</div></div>'
+                    );
+                }
+                for (var i = 0; i < (num_players - current_team.length); i++) {
+                    $("#team_list_icons_wrapper").append(
+                        '<div class="spot_wrapper"><img src="img/pink_person.png" class="spot_icon"><div class="eighteen_salmon spot_text">Open</div></div>'
+                    );
+                }
                 $("#breadcrumb_wrapper").empty();
-                for (var i = 0; i < num_teams_c; i++) {
+                for (var i = 0; i < global_room_obj.room_settings.num_teams; i++) {
                     $("#breadcrumb_wrapper").append('<div class="breadcrumb_inactive id="crumb' + i + '"></div>');
                 }
-            }
-
-        });
-        var team_list = [];
-        socket.on('send_game_settings', function(data) {
-            game_settings = data.room_settings;
-            // console.log(game_settings);
-            createCardInput(game_settings.num_cards, $("#card_input_div"));
-            createTeamInput(game_settings.num_teams, $("#team_select"));
-            stateManager(game_states.WAITING_TEAM_SEL);
-            var num_players = game_settings.num_players;
-            // console.log("numplayers: " + num_players);
-            $("#total_players").text("" + num_players);
-            $("#room_code_text").text("" + active_room);
-        });
-
-        // <div id="exit_wrapper">
-        //     <div id="exit_header_wrapper">
-        //         <h1 id="exit_header">LEAVING SO SOON?</h1>
-        //         <h3 id="exit_body">If you are the host, leaving the</br>game early will terminate your session. </h3>
-        //     </div>
-        //     <div id="exit_background"></div>
-        //     <div id="button_wrapper">
-        //         <button class="in_app_orange_buttons exit_button" id="confirm_leave_button"><h2 class="button_text">Yes</h2></button>
-        //         <button class="in_app_orange_buttons exit_button" id="reject_leave_button"><h2 class="button_text">Nah</h2></button>
-        //     </div>
-        //     <div id="exit_purple_background"></div>
-        // </div>
-
-        var home_screen_speed = 200;
-        // return button to get back to homescreen
-        $(".return_home").on('click', function() {
-            $(".exit_fade_in").css("opacity", "0");
-            $(".exit_slide_up").css("bottom", "-75%");
-            $(".exit_slide_up_top").css({
-                top: '134%',
-                transform: 'translate(-50%)'
-            });
-            $("#exit_wrapper").css("display", "block");
-            $(".exit_fade_in").animate({
-                opacity: "1"
-            }, home_screen_speed/4, function() {
-                $(".exit_slide_up_top").animate({
-                    top: "59%"
-                }, home_screen_speed, function() {});
-                $(".exit_slide_up").animate({
-                    bottom: "0%"
-                }, home_screen_speed, function() {});
-            });
-        });
-
-        $("#reject_leave_button").on("click", function() {
-            // $("body").css("overflow-y", "hidden");
-            $(".exit_slide_up_top").animate({
-                top: "134%"
-            }, home_screen_speed, function() {});
-            $(".exit_slide_up").animate({
-                bottom: "-75%"
-            }, home_screen_speed, function() {
-                $(".exit_fade_in").animate({
-                    opacity: "0"
-                }, home_screen_speed/4, function() {
-                    $("#exit_wrapper").css("display", "none");
-                });
-            });
-        });
-
-        $("#confirm_leave_button").on("click", function() {
-            stateManager(game_states.HOME_SCREEN); //TODO: add animation and button functionality
-            if (active_room) {
-                socket.emit('remove_room_id', {
-                    room_id_c: active_room
-                });
-                active_room = null;
-                cards_in_bowl = null;
-                game_settings = null;
-            }
-        });
-        socket.on('kick_from_game', function(data) {
-            alert(data);
-            stateManager(game_states.HOME_SCREEN);
-            if (active_room) {
-                active_room = null;
-                cards_in_bowl = null;
-                game_settings = null;
-            }
-        });
-        // GAME_SETUP end-----------------------------------
-        socket.on('alert_msg', function(data) {
-            // console.log(data);
-        });
-        var team_list_index = 0;
-        var createTeamCards = function(room_obj, team_list_index) {
-            $("#team_saved_name").text("Team " + (team_list_index + 1));
-            var current_team = room_obj.room_team_arr[team_list_index];
-            var num_players = room_obj.room_settings.num_players;
-            $("#team_list_icons_wrapper").empty();
-            for (var i = 0; i < current_team.length; i++) {
-                $("#team_list_icons_wrapper").append(
-                    '<div class="spot_wrapper"><img src="img/black_person.png" class="spot_icon"><div class="eighteen_black spot_text">' + current_team[i] + '</div></div>'
-                );
-            }
-            for (var i = 0; i < (num_players - current_team.length); i++) {
-                $("#team_list_icons_wrapper").append(
-                    '<div class="spot_wrapper"><img src="img/pink_person.png" class="spot_icon"><div class="eighteen_salmon spot_text">Open</div></div>'
-                );
-            }
-            $("#breadcrumb_wrapper").empty();
-            for (var i = 0; i < global_room_obj.room_settings.num_teams; i++) {
-                $("#breadcrumb_wrapper").append('<div class="breadcrumb_inactive id="crumb' + i + '"></div>');
-            }
-            var crumbs = $(".breadcrumb_inactive");
-            // console.log(crumbs);
-            for (var i = 0; i < crumbs.length; i++) {
-                if (i === team_list_index) $(crumbs[i]).css("background-color", "#2b2b2b");
-                else $(crumbs[i]).css("background-color", "#F7A1A1");
-            }
-            // $("#crumb" + team_list_index).css("color", "2b2b2b");
-        }
-        $("#team_selection_wrapper").on("swipeleft", function(event) {
-            var speed = 300;
-            $("#team_list_icons_wrapper").hide("slide", {
-                direction: "left"
-            }, speed, null);
-            $("#team_saved_name").hide("slide", {
-                direction: "left"
-            }, speed, null);
-            team_list_index = (1 + team_list_index) % global_room_obj.room_settings.num_teams;
-            setTimeout(callback(), speed / 2);
-            $("#team_list_icons_wrapper").show("slide", {
-                direction: "right"
-            }, speed, null);
-            $("#team_saved_name").show("slide", {
-                direction: "right"
-            }, speed, null);
-        });
-        $("#team_selection_wrapper").on("swiperight", function(event) {
-            var speed = 300;
-            if (team_list_index < 1) team_list_index += global_room_obj.room_settings.num_teams;
-            $("#team_list_icons_wrapper").hide("slide", {
-                direction: "right"
-            }, speed, null);
-            $("#team_saved_name").hide("slide", {
-                direction: "right"
-            }, speed, null);
-            team_list_index = (team_list_index - 1) % global_room_obj.room_settings.num_teams;
-            setTimeout(callback(), parseInt(speed) / 2);
-            $("#team_list_icons_wrapper").show("slide", {
-                direction: "left"
-            }, speed, null);
-            $("#team_saved_name").show("slide", {
-                direction: "left"
-            }, speed, null);
-        });
-
-        function callback() {
-            return function() {
-                createTeamCards(global_room_obj, team_list_index);
-            }
-        }
-        var createCardInput = function(num_cards, append_element) {
-            append_element.empty();
-            for (var i = 0; i < num_cards; i++) {
-                append_element.append('<div id="enter_player_name_wrapper"><div class="eighteen_black" id="player_name_header">Card ' + (i + 1) + '</div><div class="small_pink_line"></div><input type="text" class="enter_player_name_input_deck_add player_cards" maxlength="15"></input></div>');
-                // '<input type="text" name="card" value="" placeholder="Type Here..." id="card' + i + '" class="player_cards">'
-            }
-        }
-        var getCardInput = function(num_cards) {
-            var card_arr = new Set();
-            var cards = $(".player_cards");
-            for (var i = 0; i < cards.length; i++) {
-                card_arr.add(cards[i].value);
-            }
-            return [...card_arr]
-        }
-        var createTeamInput = function(num_teams, append_element) {
-            append_element.empty();
-            append_element.append('<option value="noTeam">Pick Below</option>');
-            for (var i = 1; i <= num_teams; i++) {
-                append_element.append('<option value="' + i + '"> Team ' + i + '</option>');
-            }
-        }
-        var appendTeamNames = function(room_team_arr, append_element) {
-            append_element.empty();
-            for (var i = 0; i < room_team_arr.length; i++) {
-                var k = i + 1;
-                var str = '<tr> <td> Team ' + k + ': </td>';
-                for (var j = 0; j < room_team_arr[i].length; j++) {
-                    str += '<td>' + room_team_arr[i][j] + ',</td>';
+                var crumbs = $(".breadcrumb_inactive");
+                // console.log(crumbs);
+                for (var i = 0; i < crumbs.length; i++) {
+                    if (i === team_list_index) $(crumbs[i]).css("background-color", "#2b2b2b");
+                    else $(crumbs[i]).css("background-color", "#F7A1A1");
                 }
-                str += '</tr>';
-                append_element.append(str);
-                // console.log('name appended');
+                // $("#crumb" + team_list_index).css("color", "2b2b2b");
             }
-        }
+            $("#team_selection_wrapper").on("swipeleft", function (event) {
+                var speed = 300;
+                $("#team_list_icons_wrapper").hide("slide", {
+                    direction: "left"
+                }, speed, null);
+                $("#team_saved_name").hide("slide", {
+                    direction: "left"
+                }, speed, null);
+                team_list_index = (1 + team_list_index) % global_room_obj.room_settings.num_teams;
+                setTimeout(callback(), speed / 2);
+                $("#team_list_icons_wrapper").show("slide", {
+                    direction: "right"
+                }, speed, null);
+                $("#team_saved_name").show("slide", {
+                    direction: "right"
+                }, speed, null);
+            });
+            $("#team_selection_wrapper").on("swiperight", function (event) {
+                var speed = 300;
+                if (team_list_index < 1) team_list_index += global_room_obj.room_settings.num_teams;
+                $("#team_list_icons_wrapper").hide("slide", {
+                    direction: "right"
+                }, speed, null);
+                $("#team_saved_name").hide("slide", {
+                    direction: "right"
+                }, speed, null);
+                team_list_index = (team_list_index - 1) % global_room_obj.room_settings.num_teams;
+                setTimeout(callback(), parseInt(speed) / 2);
+                $("#team_list_icons_wrapper").show("slide", {
+                    direction: "left"
+                }, speed, null);
+                $("#team_saved_name").show("slide", {
+                    direction: "left"
+                }, speed, null);
+            });
 
-        // how to play code
-        $("#rules_page_icon").on("click", function() {
-            if (global_current_state === game_states.HOW_TO_PLAY) {
-                stateManager(global_prev_state);
-            } else {
-                stateManager(game_states.HOW_TO_PLAY);
+            function callback() {
+                return function () {
+                    createTeamCards(global_room_obj, team_list_index);
+                }
             }
-        });
+            var createCardInput = function (num_cards, append_element) {
+                append_element.empty();
+                for (var i = 0; i < num_cards; i++) {
+                    append_element.append('<div id="enter_player_name_wrapper"><div class="eighteen_black" id="player_name_header">Card ' + (i + 1) + '</div><div class="small_pink_line"></div><input type="text" class="enter_player_name_input_deck_add player_cards" maxlength="15"></input></div>');
+                    // '<input type="text" name="card" value="" placeholder="Type Here..." id="card' + i + '" class="player_cards">'
+                }
+            }
+            var getCardInput = function (num_cards) {
+                var card_arr = new Set();
+                var cards = $(".player_cards");
+                for (var i = 0; i < cards.length; i++) {
+                    card_arr.add(cards[i].value);
+                }
+                return [...card_arr]
+            }
+            var createTeamInput = function (num_teams, append_element) {
+                append_element.empty();
+                append_element.append('<option value="noTeam">Pick Below</option>');
+                for (var i = 1; i <= num_teams; i++) {
+                    append_element.append('<option value="' + i + '"> Team ' + i + '</option>');
+                }
+            }
+            var appendTeamNames = function (room_team_arr, append_element) {
+                append_element.empty();
+                for (var i = 0; i < room_team_arr.length; i++) {
+                    var k = i + 1;
+                    var str = '<tr> <td> Team ' + k + ': </td>';
+                    for (var j = 0; j < room_team_arr[i].length; j++) {
+                        str += '<td>' + room_team_arr[i][j] + ',</td>';
+                    }
+                    str += '</tr>';
+                    append_element.append(str);
+                    // console.log('name appended');
+                }
+            }
 
+            // how to play code
+            $("#rules_page_icon").on("click", function () {
+                if (global_current_state === game_states.HOW_TO_PLAY) {
+                    stateManager(global_prev_state);
+                } else {
+                    stateManager(game_states.HOW_TO_PLAY);
+                }
+            });
 
-        var global_prev_state = game_states.HOME_SCREEN;
-        var global_current_state = game_states.HOME_SCREEN;
-        var stateManager = function(state) {
+            var global_prev_state = game_states.HOME_SCREEN;
+            var global_current_state = game_states.HOME_SCREEN;
+            var stateManager = function (state) {
                 // if (cards_in_bowl) {
                 //     $("#submit_cards").hide();
                 //     $("#open_card_dialog").hide();
@@ -1435,7 +1451,8 @@ under the License.
             //         });
             //     });
             // });
-    });
-</script>
+        });
+    </script>
 </body>
+
 </html>
