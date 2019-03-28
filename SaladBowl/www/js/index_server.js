@@ -1,19 +1,25 @@
 var port = 3001;
 var io = require('socket.io').listen(port);
+var isDebug = false;
 console.log("Listening on 52.3.127.241:" + port + "/...");
+console.log("Debugging enabled: " + isDebug);
 
-var wikipedia = require("wikipedia-js");
+// var wikipedia = require("wikipedia-js");
 
 var active_game_rooms = [];
 var game_rooms_set = new Set(); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 
 io.sockets.on('connection', function (socket) {
-    // console.log('New Connection from socket: ' + socket);
+    if (isDebug) {
+        console.log('New Connection from socket: ' + socket);
+    }
     // getting a unique identifier for the game room
 
     // Master Functions-----------------------------------
     socket.on('get_room_id', function () {
-        // // console.log(generateUnique(game_rooms_set));
+        if (isDebug) {
+            console.log(generateUnique(game_rooms_set));
+        }
         var room_id = generateUnique(game_rooms_set);
         game_rooms_set.add(room_id);
         socket.room_id = room_id;
@@ -21,10 +27,12 @@ io.sockets.on('connection', function (socket) {
         socket.emit('return_room_id', {
             room_id_s: room_id
         });
-        // console.log("Active Rooms: ");
-        // for (let item of game_rooms_set) console.log(item);
-        // console.log("My rom ID: " + socket.room_id);
-        // console.log("active game arr len: " + active_game_rooms.length);
+        if (isDebug) {
+            console.log("Active Rooms: ");
+            for (let item of game_rooms_set) console.log(item);
+            console.log("My rom ID: " + socket.room_id);
+            console.log("active game arr len: " + active_game_rooms.length);
+        }
     });
 
     // add game paramaters to active_game_rooms[], begin card submit phase
@@ -59,10 +67,14 @@ io.sockets.on('connection', function (socket) {
         socket.emit('send_game_settings', {
             room_settings: active_room.room_settings
         });
-        // // console.log("Room ID " + socket.room_id);
-        // // console.log(socket.room_settings);
+        if (isDebug) {
+            console.log("Room ID " + socket.room_id);
+            console.log(socket.room_settings);
+        }
         socket.join(temp_room_id)
-        // console.log("Joined room " + temp_room_id);
+        if (isDebug) {
+            console.log("Joined room " + temp_room_id);
+        }
         io.in(socket.room_id).emit('ui_update', {
             room_obj: game_room_obj,
             is_master: socket.is_master
@@ -88,7 +100,9 @@ io.sockets.on('connection', function (socket) {
                 socket.player_name = data.player_name_c;
                 socket.join(room_id_temp);
                 active_room.room_names_arr.push(socket.player_name);
-                // console.log("non master joined room with id " + socket.room_id);
+                if (isDebug) {
+                    console.log("non master joined room with id " + socket.room_id);
+                }
                 socket.in(room_id_temp).emit('alert_msg', 'New User Socket has joined!');
                 game_settings = active_room.room_settings;
                 delete name_check;
@@ -114,51 +128,34 @@ io.sockets.on('connection', function (socket) {
         var active_room = getRoom(socket.room_id, active_game_rooms);
         var set1 = active_room.room_card_set;
         var set2 = new Set(data.card_arr);
-        // for (let item of set1) // console.log(item);
-        // for (let item of set2) // console.log(item);
+        if (isDebug) {
+            for (let item of set1) console.log(item);
+            for (let item of set2) console.log(item);
+        }
         var merged = getUnion(set1, set2);
-        for (let item of merged) // console.log(item);
+        for (let item of merged)
             active_room.room_card_set = [...merged];
         io.in(socket.room_id).emit('ui_update', {
             room_obj: active_room,
             card_submitted: true
         });
 
-        // //FIXME:
-        // // var out_str = "";
-        // for (var name of set2) {
-        //     // console.log("Going to query the name [name=%s]", name);
-        //     var query = name;
-        //     var options = {
-        //         query: query,
-        //         format: "html",
-        //         summaryOnly: true
-        //     };
-        //     wikipedia.searchArticle(options, function(err, htmlWikiText) {
-        //         if (err) {
-        //             // console.log("An error occurred[query=%s, error=%s]", query, err);
-        //         } else {
-        //             // // console.log("Query successful[query=%s, html-formatted-wiki-text=%s] \n\n", query, htmlWikiText);
-        //             // console.log("%s \n\n", htmlWikiText);
-        //             // out_str += htmlWikiText.toString();
-        //         }
-        //     });
-        // }
-        // // console.log(out_str);
     });
 
     // remove a game room identifier
     socket.on('remove_room_id', function (data) {
         if (socket.is_master) {
-            // console.log("ID being removed: " + socket.room_id);
+            if (isDebug) console.log("ID being removed: " + socket.room_id);
             game_rooms_set.delete(socket.room_id);
             clearRoom(socket.room_id, active_game_rooms);
-            // console.log("Active Rooms: ");
-            for (let item of game_rooms_set) // console.log(item);
-                // console.log("active game arr len: " + active_game_rooms.length);
-                socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
+            if (isDebug) {
+                console.log("Active Rooms: ");
+                for (let item of game_rooms_set) console.log(item);
+                console.log("active game arr len: " + active_game_rooms.length);
+            }
+            socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
         } else {
-            // console.log("Client left, room not being deleted");
+            if (isDebug) console.log("Client left, room not being deleted");
         }
         var name = socket.player_name;
         var active_room = getRoom(socket.room_id, active_game_rooms);
@@ -179,15 +176,17 @@ io.sockets.on('connection', function (socket) {
     // remove a game room on refresh / disconnect
     socket.on('disconnect', function () {
         if (socket.is_master) {
-            // console.log("ID being removed: " + socket.room_id);
+            if (isDebug) console.log("ID being removed: " + socket.room_id);
             game_rooms_set.delete(socket.room_id);
             clearRoom(socket.room_id, active_game_rooms);
-            // console.log("Active Rooms: ");
-            for (let item of game_rooms_set) // console.log(item);
-                // console.log("active game arr len: " + active_game_rooms.length);
-                socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
+            if (isDebug) {
+                console.log("Active Rooms: ");
+                for (let item of game_rooms_set) console.log(item);
+                console.log("active game arr len: " + active_game_rooms.length);
+            }
+            socket.to(socket.room_id).emit('kick_from_game', 'The game host has left, so the lobby is now closed');
         } else {
-            // console.log("Client left, room not being deleted");
+            if (isDebug) console.log("Client left, room not being deleted");
         }
         var name = socket.player_name;
         var active_room = getRoom(socket.room_id, active_game_rooms);
@@ -208,8 +207,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('team_select', function (data) {
         var name = socket.player_name;
         var team = data.team;
-        // console.log("team val = " + team);
-        // team -= 1; //acount for non 0 indexing
+        if (isDebug) console.log("team val = " + team);
         var active_room = getRoom(socket.room_id, active_game_rooms);
         if (socket.team != null) {
             var arr = active_room.room_team_arr[socket.team];
@@ -217,15 +215,13 @@ io.sockets.on('connection', function (socket) {
             if (elementPos !== -1) arr.splice(elementPos, 1);
             delete arr;
         }
-        // // console.log(active_room);
-        // for (let item of active_room.team_arr) // console.log(item);
         if (team === -1) {
             socket.team = null;
         } else {
             active_room.room_team_arr[team].push(name);
             socket.team = team;
         }
-        // console.log(active_room.room_team_arr);
+        if (isDebug) console.log("Team array: " + active_room.room_team_arr);
         io.in(socket.room_id).emit('ui_update', {
             room_obj: active_room
         });
