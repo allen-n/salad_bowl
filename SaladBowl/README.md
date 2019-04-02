@@ -13,8 +13,8 @@
 - increment through team buffers on each round
 - implement timer on app side
 - implement score calculation on server side -->
-- wikiepedia mofos
-- jordan "I love 'jew' money" Sturner's shop
+- wikiepedia Integration
+- Jordan's shop idea
 
 A PhoneGap Hello World template
 
