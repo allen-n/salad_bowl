@@ -1,0 +1,25 @@
+{
+  "name": "salad_bowl",
+  "version": "1.0.0",
+  "description": "Port of Salad Bowl Card game to mobile using PhoneGap",
+  "main": "index_server.js",
+  "scripts": {
+    "test": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allen-n/salad_bowl.git"
+  },
+  "keywords": [
+    "salad-bowl"
+  ],
+  "author": "allen-n",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allen-n/salad_bowl/issues"
+  },
+  "homepage": "https://github.com/allen-n/salad_bowl#readme",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
