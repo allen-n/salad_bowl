@@ -6,6 +6,16 @@ We wanted to be able to play salad bowl, but using our phones. We were young and
 ## Downloads
 Download the latest .apk from [here](https://build.phonegap.com/apps/3158719/share).
 
+<img src=https://build.phonegap.com/apps/3158719/badge/2010412052/version.svg />
+
+<img src=https://build.phonegap.com/apps/3158719/badge/2010412052.svg />
+
+<img src=https://build.phonegap.com/apps/3158719/badge/2010412052/ios.svg />
+
+<img src=https://build.phonegap.com/apps/3158719/badge/2010412052/android.svg />
+
+<img src=https://build.phonegap.com/apps/3158719/badge/2010412052/winphone.svg />
+
 ## Contributing:
 * This is still pretty disorganized, so please contact [me](https://github.com/allen-n) or just make a pull request.
 
