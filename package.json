@@ -4,7 +4,7 @@
   "description": "Port of Salad Bowl Card game to mobile using PhoneGap",
   "main": "index_server.js",
   "scripts": {
-    "test": "node"
+    "start": "node SaladBowl/www/js/index_server.js"
   },
   "repository": {
     "type": "git",

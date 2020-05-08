@@ -1,1 +1,1 @@
-web: node SaladBowl/www/index_server.js
+web: node SaladBowl/www/js/index_server.js

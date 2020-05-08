@@ -1,7 +1,7 @@
-var port = 3001;
-var io = require('socket.io').listen(port);
+const PORT = process.env.PORT || 3001;
+var io = require('socket.io').listen(PORT);
 var isDebug = false;
-console.log("Listening on 52.3.127.241:" + port + "/...");
+console.log("Listening on 52.3.127.241:" + PORT + "/...");
 console.log("Debugging enabled: " + isDebug);
 
 // var wikipedia = require("wikipedia-js");
