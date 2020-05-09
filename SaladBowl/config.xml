@@ -10,7 +10,8 @@
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="phonegap-version" value="cli-9.0.0" />
+    <!-- Seems that cli version 8.x.x + don't work for iOS, must use 7.0.2 -->
+    <preference name="phonegap-version" value="cli-7.1.0" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="android-targetSdkVersion" value="28" />
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
