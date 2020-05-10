@@ -42,11 +42,7 @@
       "cordova-plugin-vibration": {},
       "cordova-plugin-whitelist": {}
     },
-    "platforms": [
-      "ios"
-    ]
+    "platforms": []
   },
-  "dependencies": {
-    "cordova-ios": "^5.1.1"
-  }
+  "dependencies": {}
 }
