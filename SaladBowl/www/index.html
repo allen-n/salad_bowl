@@ -66,7 +66,7 @@ under the License.
 </head>
 
 <body>
-    <div class="app">
+    <div id="deviceready" class="app">
         <!-- Navigation -->
         <div id="navigation_wrapper">
             <div id="rules_page_icon_wrapper">
@@ -224,7 +224,7 @@ under the License.
             <div id="fun_fact_of_the_day_wrapper">
                 <div class="eighteen_black" id="fun_fact_header">Fun Fact Of The Day</div>
                 <div class="small_pink_line"></div>
-                <h1 id="fun_fact_body_text"></h1>
+                <h1 id="fun_fact_body_text"> We had a problem getting that for you, sorry!</h1>
             </div>
             <button class="in_app_orange_buttons" id="game_start_btn">
                 <h2 class="button_text">Start Game</h2>
@@ -1035,12 +1035,13 @@ under the License.
             // populate "fun fact of the day"
             $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('http://www.unkno.com/') + '&callback=?', function (data) {
                 var my_html = $.parseHTML(data.contents);
-                var txt = my_html[my_html.length - 1];
-                $("body").append("<div id='temp_div'></div>");
-                $("#temp_div").css("display", "none");
-                $("#temp_div").append(txt);
-                $("#fun_fact_body_text").text($("#content").text());
-                $("#temp_div").remove();
+                var txt = my_html[my_html.length - 1]; // TODO: FIX
+                $("#fun_fact_body_text").text(txt.outerHTML);
+                // $("body").append("<div id='temp_div'></div>");
+                // $("#temp_div").css("display", "none");
+                // $("#temp_div").append(txt);
+                // $("#fun_fact_body_text").text($("#content").text());
+                // $("#temp_div").remove();
             });
             // event listener for game master to submit game settings
             $("#submit_game_setup").click(function () {
