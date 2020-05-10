@@ -129,63 +129,66 @@ under the License.
         </div>
         <!-- Host Game Screen -->
         <div id="host_game_screen_wrapper">
-            <div id="host_a_new_game_header_wrapper">
-                <h1 id="salad_bowl_header">HOST A NEW GAME</h1>
-                <h3 id="salad_bowl_body">Ready player one? </br>Set the rules for your game.</h3>
-            </div>
-            <div id="enter_player_name_wrapper">
-                <div class="eighteen_black" id="player_name_header">Player Name</div>
-                <div class="small_pink_line"></div>
-                <input type="text" class="enter_player_name_input" id="master_name" maxlength="6"></input>
-            </div>
-            <div id="enter_number_of_teams_wrapper">
-                <div class="eighteen_black" id="number_of_teams_header">Number of Teams</div>
-                <div class="small_pink_line"></div>
-                <input type="number" class="enter_player_name_input" id="num_teams" min="2" max="10" value="2"></input>
-            </div>
-            <!-- this is my num_players -->
-            <div id="enter_size_of_teams_wrapper">
-                <div class="eighteen_black" id="size_of_teams_header">
-                    Size of Each Team
-                    <input type="hidden" id="num_players" value="2">
+            <form onsubmit="return false;">
+                <div id="host_a_new_game_header_wrapper">
+                    <h1 id="salad_bowl_header">HOST A NEW GAME</h1>
+                    <h3 id="salad_bowl_body">Ready player one? </br>Set the rules for your game.</h3>
                 </div>
-                <div class="small_pink_line"></div>
-                <div id="person_selector_wrapper">
-                    <img class="pink_person_host_page" id="num_players1" src="img/black_person.png" alt="1">
-                    <img class="pink_person_host_page" id="num_players2" src="img/black_person.png" alt="1">
-                    <img class="pink_person_host_page" id="num_players3" src="img/pink_person.png" alt="0">
-                    <img class="pink_person_host_page" id="num_players4" src="img/pink_person.png" alt="0">
-                    <img class="pink_person_host_page" id="num_players5" src="img/pink_person.png" alt="0">
-                    <img class="pink_person_host_page" id="num_players6" src="img/pink_person.png" alt="0">
-                    <img class="pink_person_host_page" id="num_players7" src="img/pink_person.png" alt="0">
+                <div id="enter_player_name_wrapper">
+                    <div class="eighteen_black" id="player_name_header">Player Name</div>
+                    <div class="small_pink_line"></div>
+                    <input type="text" class="enter_player_name_input" id="master_name" maxlength="6"></input>
                 </div>
-            </div>
-            <div id="enter_length_of_turns_wrapper">
-                <div class="eighteen_black" id="length_of_turns_header">Length of Turns</div>
-                <div class="small_pink_line"></div>
-                <div id="length_of_turns_construct_wrapper">
-                    <img src="img/arrow_left.png" id="arrow_left">
-                    <img src="img/arrow_right.png" id="arrow_right">
-                    <div id="length_of_turns_string">
-                        60 Seconds
+                <div id="enter_number_of_teams_wrapper">
+                    <div class="eighteen_black" id="number_of_teams_header">Number of Teams</div>
+                    <div class="small_pink_line"></div>
+                    <input type="number" class="enter_player_name_input" id="num_teams" min="2" max="10"
+                        value="2"></input>
+                </div>
+                <!-- this is my num_players -->
+                <div id="enter_size_of_teams_wrapper">
+                    <div class="eighteen_black" id="size_of_teams_header">
+                        Size of Each Team
+                        <input type="hidden" id="num_players" value="2">
                     </div>
-                    <input type="hidden" id="turn_time_sec" name="" value="60" placeholder="">
+                    <div class="small_pink_line"></div>
+                    <div id="person_selector_wrapper">
+                        <img class="pink_person_host_page" id="num_players1" src="img/black_person.png" alt="1">
+                        <img class="pink_person_host_page" id="num_players2" src="img/black_person.png" alt="1">
+                        <img class="pink_person_host_page" id="num_players3" src="img/pink_person.png" alt="0">
+                        <img class="pink_person_host_page" id="num_players4" src="img/pink_person.png" alt="0">
+                        <img class="pink_person_host_page" id="num_players5" src="img/pink_person.png" alt="0">
+                        <img class="pink_person_host_page" id="num_players6" src="img/pink_person.png" alt="0">
+                        <img class="pink_person_host_page" id="num_players7" src="img/pink_person.png" alt="0">
+                    </div>
                 </div>
-            </div>
-            <div id="enter_cards_per_player_wrapper">
-                <div class="eighteen_black" id="cards_per_player_header">Cards Per Player</div>
-                <div class="small_pink_line"></div>
-                <div id="cards_playground_wrapper">
-                    <img src="img/minus.png" id="minus">
-                    <img src="img/plus.png" id="plus">
-                    <div class="small_cards" id="card1"></div>
+                <div id="enter_length_of_turns_wrapper">
+                    <div class="eighteen_black" id="length_of_turns_header">Length of Turns</div>
+                    <div class="small_pink_line"></div>
+                    <div id="length_of_turns_construct_wrapper">
+                        <img src="img/arrow_left.png" id="arrow_left">
+                        <img src="img/arrow_right.png" id="arrow_right">
+                        <div id="length_of_turns_string">
+                            60 Seconds
+                        </div>
+                        <input type="hidden" id="turn_time_sec" name="" value="60" placeholder="">
+                    </div>
                 </div>
-                <h3 id="number_of_cards_per_player">10 Card(s) Per Player</h3>
-                <input type="hidden" id="num_cards" value="10">
-            </div>
-            <button class="in_app_orange_buttons">
-                <h2 class="button_text" id="submit_game_setup">Host Game</h2>
-            </button>
+                <div id="enter_cards_per_player_wrapper">
+                    <div class="eighteen_black" id="cards_per_player_header">Cards Per Player</div>
+                    <div class="small_pink_line"></div>
+                    <div id="cards_playground_wrapper">
+                        <img src="img/minus.png" id="minus">
+                        <img src="img/plus.png" id="plus">
+                        <div class="small_cards" id="card1"></div>
+                    </div>
+                    <h3 id="number_of_cards_per_player">10 Card(s) Per Player</h3>
+                    <input type="hidden" id="num_cards" value="10">
+                </div>
+                <button class="in_app_orange_buttons">
+                    <h2 class="button_text" id="submit_game_setup">Host Game</h2>
+                </button>
+            </form>
         </div>
         <!-- Join Game Screen -->
         <div id="join_game_screen_wrapper">
@@ -194,19 +197,22 @@ under the License.
                 <h3 class="page_body">Your friends are all waiting for you.</br>Use your host's room code to join the
                     fun</h3>
             </div>
-            <div id="enter_player_name_wrapper">
-                <div class="eighteen_black" id="player_name_header">Player Name</div>
-                <div class="small_pink_line"></div>
-                <input type="text" class="enter_player_name_input" id="game_join_player_name" maxlength="15"></input>
-            </div>
-            <div id="enter_room_code_wrapper">
-                <div class="eighteen_black" id="enter_room_code_header">Room Code</div>
-                <div class="small_pink_line"></div>
-                <input type="number" class="enter_room_code_input" id="game_join_id" maxlength="5"></input>
-            </div>
-            <button class="in_app_orange_buttons">
-                <h2 class="button_text" id="join_game_btn">Join Game</h2>
-            </button>
+            <form onsubmit="return false;">
+                <div id="enter_player_name_wrapper">
+                    <div class="eighteen_black" id="player_name_header">Player Name</div>
+                    <div class="small_pink_line"></div>
+                    <input type="text" class="enter_player_name_input" id="game_join_player_name"
+                        maxlength="15"></input>
+                </div>
+                <div id="enter_room_code_wrapper">
+                    <div class="eighteen_black" id="enter_room_code_header">Room Code</div>
+                    <div class="small_pink_line"></div>
+                    <input type="number" class="enter_room_code_input" id="game_join_id" maxlength="5"></input>
+                </div>
+                <button class="in_app_orange_buttons">
+                    <h2 class="button_text" id="join_game_btn">Join Game</h2>
+                </button>
+            </form>
         </div>
         <!-- Game Waiting Area -->
         <div id="game_waiting_area_screen_wrapper">
@@ -269,23 +275,25 @@ under the License.
                 <h3 id="add_to_the_deck_body">Pick your favorite fictional</br>or non-fictional characters</h3>
             </div>
             <div id="add_to_the_deck_background"></div>
-            <div id="card_input_div">
-                <div id="enter_player_name_wrapper">
-                    <div class="eighteen_black" id="player_name_header">Card 1</div>
-                    <div class="small_pink_line"></div>
-                    <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
+            <form onclick="return false;">
+                <div id="card_input_div">
+                    <div id="enter_player_name_wrapper">
+                        <div class="eighteen_black" id="player_name_header">Card 1</div>
+                        <div class="small_pink_line"></div>
+                        <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
+                    </div>
+                    <div id="enter_player_name_wrapper">
+                        <div class="eighteen_black" id="player_name_header">Card 2</div>
+                        <div class="small_pink_line"></div>
+                        <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
+                    </div>
+                    <div id="enter_player_name_wrapper">
+                        <div class="eighteen_black" id="player_name_header">Card 3</div>
+                        <div class="small_pink_line"></div>
+                        <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
+                    </div>
                 </div>
-                <div id="enter_player_name_wrapper">
-                    <div class="eighteen_black" id="player_name_header">Card 2</div>
-                    <div class="small_pink_line"></div>
-                    <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
-                </div>
-                <div id="enter_player_name_wrapper">
-                    <div class="eighteen_black" id="player_name_header">Card 3</div>
-                    <div class="small_pink_line"></div>
-                    <input type="text" class="enter_player_name_input_deck_add" maxlength="15"></input>
-                </div>
-            </div>
+            </form>
             <button class="in_app_orange_buttons submit_to_the_deck_button" id="submit_cards">
                 <h2 class="button_text">Submit</h2>
             </button>
