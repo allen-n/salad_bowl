@@ -1037,12 +1037,12 @@ under the License.
             $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('http://www.unkno.com/') + '&callback=?', function (data) {
                 var my_html = $.parseHTML(data.contents);
                 var txt = my_html[my_html.length - 1]; // TODO: FIX
-                $("#fun_fact_body_text").text(txt.outerHTML);
-                // $("body").append("<div id='temp_div'></div>");
-                // $("#temp_div").css("display", "none");
-                // $("#temp_div").append(txt);
-                // $("#fun_fact_body_text").text($("#content").text());
-                // $("#temp_div").remove();
+                // $("#fun_fact_body_text").text(txt.outerHTML);
+                $("body").append("<div id='temp_div'></div>");
+                $("#temp_div").css("display", "none");
+                $("#temp_div").append(txt);
+                $("#fun_fact_body_text").text($("#content").text());
+                $("#temp_div").remove();
             });
             // event listener for game master to submit game settings
             $("#submit_game_setup").click(function () {
