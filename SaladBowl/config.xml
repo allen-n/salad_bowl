@@ -16,6 +16,9 @@
     <preference name="phonegap-version" value="cli-9.0.0" />
     <!-- <preference name="android-minSdkVersion" value="19" /> -->
     <preference name="android-targetSdkVersion" value="28" />
+    <!-- To fix "ERROR ITMS-90596" on Transporter upload to appStore according to:
+    https://community.adobe.com/t5/phonegap/error-itms-90596-invalid-bundle-the-asset-catalog-at-payload-myapp-assets-car-can-t-be-processed/td-p/10863853?page=1 -->
+    <preference name='pgb-builder-version' value='1' />
 
     <plugin name="cordova-plugin-battery-status" spec="~2.0.3" />
     <plugin name="cordova-plugin-camera" spec="~4.1.0" />
